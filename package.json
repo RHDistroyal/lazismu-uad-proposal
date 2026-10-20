@@ -1,4 +1,11 @@
 {
+  "name": "lazismu-uad-proposal",
+  "version": "1.0.0",
+  "description": "Sistem Pengajuan, Approval Berjenjang, dan Pelaporan Proposal Dana Kebajikan Lazismu UAD",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
   "dependencies": {
     "docx": "^9.12.0",
     "xlsx": "^0.18.5"
