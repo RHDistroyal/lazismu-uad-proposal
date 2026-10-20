@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Cetak Berita Acara Serah Terima (BAST) - Lazismu UAD</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      margin: 0;
+      padding: 40px;
+      color: #000;
+      line-height: 1.6;
+    }
+    .bast-letterhead {
+      text-align: center;
+      border-bottom: 3px double #000;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+    .bast-univ {
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .bast-institution {
+      font-size: 22px;
+      font-weight: bold;
+      color: #0B2545;
+    }
+    .bast-address {
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+      color: #444;
+    }
+    .bast-doc-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .bast-doc-title h2 {
+      font-size: 16px;
+      text-decoration: underline;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .bast-doc-title p {
+      font-size: 12px;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13.5px;
+    }
+    table.data-table td {
+      padding: 5px 0;
+      vertical-align: top;
+    }
+    .label-col {
+      width: 220px;
+      font-weight: bold;
+    }
+    .signatures {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      text-align: center;
+    }
+    .sig-col {
+      width: 45%;
+    }
+    .sig-space {
+      height: 80px;
+    }
+    .print-actions {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .btn-print {
+      background: #F37021;
+      color: #fff;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: sans-serif;
+      font-weight: bold;
+    }
+    @media print {
+      .print-actions {
+        display: none;
+      }
+      body {
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-actions">
+    <button class="btn-print" onclick="window.print()">Cetak Dokumen / Simpan PDF</button>
+  </div>
+
+  <div class="bast-letterhead">
+    <div class="bast-univ">UNIVERSITAS AHMAD DAHLAN</div>
+    <div class="bast-institution">KANTOR LAYANAN LAZISMU UAD</div>
+    <div class="bast-address">
+      Gedung ITC Kampus 1 UAD, Jl. Kapas No. 9, Semaki, Umbulharjo, Yogyakarta 55166<br>
+      Email: lazismu@uad.ac.id | Website: lazismu.uad.ac.id | Telp: (0274) 563515
+    </div>
+  </div>
+
+  <div class="bast-doc-title">
+    <h2>BERITA ACARA SERAH TERIMA (BAST) BANTUAN DANA KEBAJIKAN</h2>
+    <p>Nomor: 042/BAST/LAZISMU-UAD/X/2026</p>
+  </div>
+
+  <p style="text-align: justify; font-size: 13px;">
+    Pada hari ini, bertempat di Kantor Layanan Lazismu Universitas Ahmad Dahlan, telah dilaksanakan penyerahan bantuan dana kebajikan dengan rincian data sebagai berikut:
+  </p>
+
+  <table class="data-table">
+    <tr>
+      <td class="label-col">PIHAK PERTAMA (Pemberi)</td>
+      <td>: Kantor Layanan Lazismu Universitas Ahmad Dahlan</td>
+    </tr>
+    <tr>
+      <td class="label-col">PIHAK KEDUA (Penerima)</td>
+      <td>: <strong>Drs. H. Bambang Sujarwo</strong> (NIK: 3471060905620002)</td>
+    </tr>
+    <tr>
+      <td class="label-col">Instansi / Lembaga</td>
+      <td>: Takmir Masjid Al-Ikhlas & PRM Umbulharjo</td>
+    </tr>
+    <tr>
+      <td class="label-col">Judul Usulan / Program</td>
+      <td>: Khitanan Massal Dhuafa & Layanan Cek Kesehatan Gratis Milad Muhammadiyah</td>
+    </tr>
+    <tr>
+      <td class="label-col">Pilar Lazismu</td>
+      <td>: Pilar Kesehatan</td>
+    </tr>
+    <tr>
+      <td class="label-col">Jumlah Nominal Disetujui</td>
+      <td>: <strong>Rp 5.000.000,- (Lima Juta Rupiah)</strong></td>
+    </tr>
+  </table>
+
+  <p style="text-align: justify; font-size: 13px;">
+    PIHAK KEDUA menyatakan telah menerima bantuan dana tersebut secara penuh dan berkewajiban menggunakan dana sesuai rincian anggaran biaya (RAB) yang disetujui, serta menyerahkan <strong>Laporan Pertanggungjawaban (LPJ)</strong> selambat-lambatnya 14 (empat belas) hari kalender setelah kegiatan selesai diselenggarakan.
+  </p>
+
+  <div class="signatures">
+    <div class="sig-col">
+      <p>PIHAK KEDUA<br>Penerima Bantuan Dana,</p>
+      <div class="sig-space"></div>
+      <p><strong>( Drs. H. Bambang Sujarwo )</strong><br><span style="font-size: 11px;">Ketua Takmir Masjid Al-Ikhlas</span></p>
+    </div>
+    <div class="sig-col">
+      <p>PIHAK PERTAMA<br>Kantor Layanan Lazismu UAD,</p>
+      <div class="sig-space"></div>
+      <p><strong>( Siti Nurhaliza, S.E )</strong><br><span style="font-size: 11px;">Divisi Keuangan Lazismu UAD</span></p>
+    </div>
+  </div>
+
+</body>
+</html>

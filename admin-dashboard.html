@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Manajemen Proposal - Internal Lazismu UAD</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: var(--laz-gray-100);">
+
+  <div class="admin-layout">
+    <!-- SIDEBAR NAVIGASI INTERNAL -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <div class="brand-emblem" style="width: 34px; height: 34px; font-size: 16px;">L</div>
+        <div>
+          <div class="admin-sidebar-title">LAZISMU <span>UAD</span></div>
+          <div style="font-size: 10px; color: var(--laz-gray-400); text-transform: uppercase;">Portal Manajemen Usulan</div>
+        </div>
+      </div>
+
+      <nav class="admin-sidebar-nav">
+        <a href="javascript:void(0)" class="admin-nav-item active" id="navTabAll" onclick="setAdminTab('all')">
+          Semua Data Usulan
+        </a>
+        <a href="javascript:void(0)" class="admin-nav-item" id="navTabStaff" onclick="setAdminTab('staff')">
+          Verifikasi Staf (Level 1)
+        </a>
+        <a href="javascript:void(0)" class="admin-nav-item" id="navTabBidang" onclick="setAdminTab('bidang')">
+          Review Bidang (Level 2)
+        </a>
+        <a href="javascript:void(0)" class="admin-nav-item" id="navTabKetua" onclick="setAdminTab('ketua')">
+          Persetujuan Pimpinan (Level 3)
+        </a>
+        <a href="javascript:void(0)" class="admin-nav-item" id="navTabKeuangan" onclick="setAdminTab('keuangan')">
+          Keuangan & BAST
+        </a>
+        <a href="javascript:void(0)" class="admin-nav-item" id="navTabLpj" onclick="setAdminTab('lpj')">
+          Monitoring LPJ (14 Hari)
+        </a>
+
+        <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+          <a href="javascript:void(0)" class="admin-nav-item" onclick="resetDatabase()" style="color: #FCA5A5;">
+            Reset Basis Data Asli
+          </a>
+          <a href="index.html" class="admin-nav-item">
+            Kembali ke Web Publik
+          </a>
+        </div>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <div class="admin-user-info">
+          <div class="admin-avatar-initials" id="sidebarAvatar">HK</div>
+          <div>
+            <div style="font-size: 12px; font-weight: 700; color: #fff;" id="sidebarUserName">Ust. Hendra Kurniawan</div>
+            <div style="font-size: 10px; color: var(--laz-orange);" id="sidebarUserRole">Staf SE (Level 1)</div>
+          </div>
+        </div>
+        <div style="margin-top: 8px;">
+          <a href="admin-login.html" style="font-size: 11px; color: var(--laz-gray-400); text-decoration: none;">
+            Ganti Akun Login →
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- KONTEN UTAMA ADMIN -->
+    <main class="admin-main">
+      <!-- TOPBAR ADMIN -->
+      <header class="admin-topbar">
+        <div>
+          <div style="font-size: 11px; color: var(--laz-gray-500); text-transform: uppercase;">Internal Lazismu UAD / Rekapitulasi Usulan</div>
+          <h2 style="font-size: 17px; color: var(--laz-navy); margin-top: 2px;" id="adminPageHeading">
+            Daftar Seluruh Usulan Proposal Masuk
+          </h2>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn btn-secondary btn-sm" onclick="exportToCsv()">
+            Ekspor CSV
+          </button>
+          <a href="ajukan.html" target="_blank" class="btn btn-primary btn-sm">
+            + Input Usulan Baru
+          </a>
+        </div>
+      </header>
+
+      <!-- BODY DASHBOARD -->
+      <div class="admin-content-body">
+        
+        <!-- 5 KPI METRIC CARDS -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 20px;">
+          <div class="card" style="padding: 14px 16px; margin-bottom: 0; cursor: pointer;" onclick="setAdminTab('all')">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-gray-500); text-transform: uppercase;">Total Usulan</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--laz-navy); margin-top: 2px;" id="kpiTotal">0</div>
+            <div style="font-size: 11px; color: var(--laz-gray-500);">Basis data sistem</div>
+          </div>
+
+          <div class="card" style="padding: 14px 16px; margin-bottom: 0; border-left: 3px solid var(--laz-gold); cursor: pointer;" onclick="setAdminTab('staff')">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-gold); text-transform: uppercase;">Verifikasi Staf (L1)</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--laz-gold); margin-top: 2px;" id="kpiStaff">0</div>
+            <div style="font-size: 11px; color: var(--laz-gray-500);">Pemeriksaan berkas</div>
+          </div>
+
+          <div class="card" style="padding: 14px 16px; margin-bottom: 0; border-left: 3px solid var(--laz-blue); cursor: pointer;" onclick="setAdminTab('bidang')">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-blue); text-transform: uppercase;">Review Bidang (L2)</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--laz-blue); margin-top: 2px;" id="kpiBidang">0</div>
+            <div style="font-size: 11px; color: var(--laz-gray-500);">Penilaian 6 pilar & RAB</div>
+          </div>
+
+          <div class="card" style="padding: 14px 16px; margin-bottom: 0; border-left: 3px solid var(--laz-purple); cursor: pointer;" onclick="setAdminTab('ketua')">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-purple); text-transform: uppercase;">Putusan Pimpinan (L3)</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--laz-purple); margin-top: 2px;" id="kpiKetua">0</div>
+            <div style="font-size: 11px; color: var(--laz-gray-500);">Persetujuan final ACC</div>
+          </div>
+
+          <div class="card" style="padding: 14px 16px; margin-bottom: 0; border-left: 3px solid var(--laz-green); cursor: pointer;" onclick="setAdminTab('keuangan')">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-green); text-transform: uppercase;">Keuangan & LPJ</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--laz-green); margin-top: 2px;" id="kpiKeuangan">0</div>
+            <div style="font-size: 11px; color: var(--laz-gray-500);">BAST fisik & LPJ 14 hr</div>
+          </div>
+        </div>
+
+        <!-- TABEL DATA PROPOSAL -->
+        <div class="card" style="padding: 0; overflow: hidden;">
+          
+          <!-- TOOLBAR FILTER -->
+          <div style="padding: 14px 18px; border-bottom: 1px solid var(--laz-gray-200); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: #ffffff;">
+            <!-- SEARCH INPUT -->
+            <div style="display: flex; gap: 8px; flex: 1; max-width: 380px;">
+              <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari nama pemohon, judul, atau nomor proposal..." oninput="handleAdminSearch()">
+            </div>
+
+            <!-- PILAR FILTER -->
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span style="font-size: 12px; font-weight: 600; color: var(--laz-gray-600);">Pilar Program:</span>
+              <select class="form-control" id="pilarFilterSelect" style="width: auto; font-size: 12px; padding: 6px 10px;" onchange="handleAdminFilter()">
+                <option value="ALL">Semua Pilar</option>
+                <option value="pendidikan">Pendidikan</option>
+                <option value="dakwah">Sosial Dakwah</option>
+                <option value="kesehatan">Kesehatan</option>
+                <option value="ekonomi">Ekonomi</option>
+                <option value="kemanusiaan">Kemanusiaan</option>
+                <option value="lingkungan">Lingkungan</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- TABEL -->
+          <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table class="custom-table" id="adminTable">
+              <thead>
+                <tr>
+                  <th style="width: 105px;">Kode / Tanggal</th>
+                  <th style="width: 200px;">Pemohon & Instansi</th>
+                  <th>Perihal Usulan Kegiatan</th>
+                  <th style="width: 120px;">Pilar & Asnaf</th>
+                  <th style="width: 130px;">Nominal (Usulan / ACC)</th>
+                  <th style="width: 155px;">Posisi Level Saat Ini</th>
+                  <th style="width: 130px;">Dokumen Sistem</th>
+                  <th style="width: 100px; text-align: center;">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody">
+                <!-- Injected by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <div style="padding: 12px 18px; background: var(--laz-gray-50); border-top: 1px solid var(--laz-gray-200); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--laz-gray-500);">
+            <div id="tableCountInfo">Menampilkan 0 data proposal</div>
+            <div>Gunakan tombol "Review Usulan" untuk membuka lembar evaluasi berjenjang.</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let currentTab = 'all';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      if (tabParam) currentTab = tabParam;
+
+      initGlobalFlowBar(currentTab === 'staff' ? 'staff' : (currentTab === 'bidang' ? 'bidang' : (currentTab === 'ketua' ? 'ketua' : (currentTab === 'keuangan' ? 'keuangan' : 'admin'))));
+
+      const sess = getAdminSession();
+      document.getElementById('sidebarUserName').textContent = sess.name;
+      document.getElementById('sidebarUserRole').textContent = sess.title;
+      
+      const initials = sess.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+      document.getElementById('sidebarAvatar').textContent = initials;
+
+      setAdminTab(currentTab);
+    });
+
+    function setAdminTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.admin-nav-item').forEach(el => el.classList.remove('active'));
+
+      if (tab === 'staff') document.getElementById('navTabStaff').classList.add('active');
+      else if (tab === 'bidang') document.getElementById('navTabBidang').classList.add('active');
+      else if (tab === 'ketua') document.getElementById('navTabKetua').classList.add('active');
+      else if (tab === 'keuangan') document.getElementById('navTabKeuangan').classList.add('active');
+      else if (tab === 'lpj') document.getElementById('navTabLpj').classList.add('active');
+      else document.getElementById('navTabAll').classList.add('active');
+
+      renderAdminDashboard();
+    }
+
+    function renderAdminDashboard() {
+      const all = getProposals();
+
+      // KPI Counts
+      document.getElementById('kpiTotal').textContent = all.length;
+      document.getElementById('kpiStaff').textContent = all.filter(p => p.status === 'MENUNGGU_VERIFIKASI' || p.status === 'REVISI').length;
+      document.getElementById('kpiBidang').textContent = all.filter(p => p.status === 'REVIEW_BIDANG').length;
+      document.getElementById('kpiKetua').textContent = all.filter(p => p.status === 'KEPUTUSAN_KETUA').length;
+      document.getElementById('kpiKeuangan').textContent = all.filter(p => p.status === 'MENUNGGU_PENCAIRAN' || p.status === 'TELAH_DICAIRKAN' || p.status === 'LPJ_TERVERIFIKASI').length;
+
+      // Filter by Tab
+      let filtered = all;
+      const headingEl = document.getElementById('adminPageHeading');
+
+      if (currentTab === 'staff') {
+        filtered = all.filter(p => p.status === 'MENUNGGU_VERIFIKASI' || p.status === 'REVISI');
+        headingEl.textContent = 'Tahap Level 1: Antrean Verifikasi Kelengkapan Berkas Staf SE';
+      } else if (currentTab === 'bidang') {
+        filtered = all.filter(p => p.status === 'REVIEW_BIDANG');
+        headingEl.textContent = 'Tahap Level 2: Review Pengurus Bidang (Kesesuaian 6 Pilar)';
+      } else if (currentTab === 'ketua') {
+        filtered = all.filter(p => p.status === 'KEPUTUSAN_KETUA');
+        headingEl.textContent = 'Tahap Level 3: Usulan Menunggu Putusan Final Pimpinan (ACC / Tolak)';
+      } else if (currentTab === 'keuangan') {
+        filtered = all.filter(p => p.status === 'MENUNGGU_PENCAIRAN' || p.status === 'TELAH_DICAIRKAN');
+        headingEl.textContent = 'Tahap Keuangan: Penyerahan Bantuan Dana & Tanda Tangan BAST Fisik';
+      } else if (currentTab === 'lpj') {
+        filtered = all.filter(p => p.status === 'TELAH_DICAIRKAN' || p.status === 'LPJ_TERVERIFIKASI');
+        headingEl.textContent = 'Monitoring Tenggat Waktu & Penyerahan LPJ (Maksimal 14 Hari)';
+      } else {
+        headingEl.textContent = 'Rekapitulasi Seluruh Usulan Proposal Masuk (Basis Data Sistem)';
+      }
+
+      // Filter by Pilar
+      const pilarVal = document.getElementById('pilarFilterSelect').value;
+      if (pilarVal !== 'ALL') {
+        filtered = filtered.filter(p => p.pilar === pilarVal);
+      }
+
+      // Filter by Search Keyword
+      const searchVal = document.getElementById('adminSearchInput').value.toLowerCase().trim();
+      if (searchVal) {
+        filtered = filtered.filter(p =>
+          p.id.toLowerCase().includes(searchVal) ||
+          p.namaPemohon.toLowerCase().includes(searchVal) ||
+          p.instansi.toLowerCase().includes(searchVal) ||
+          p.perihal.toLowerCase().includes(searchVal) ||
+          (p.noSurat && p.noSurat.toLowerCase().includes(searchVal))
+        );
+      }
+
+      document.getElementById('tableCountInfo').textContent = `Menampilkan ${filtered.length} dari ${all.length} total proposal`;
+
+      const tbody = document.getElementById('adminTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 32px; color: var(--laz-gray-500);">Tidak ada proposal yang sesuai dengan filter.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(p => {
+        // Tentukan Level Badge
+        let levelBadgeHtml = '';
+        if (p.status === 'MENUNGGU_VERIFIKASI') {
+          levelBadgeHtml = `<span class="badge badge-warning">Staf (Level 1)</span><div style="font-size:10px; color:var(--laz-gray-500); margin-top:2px;">Verifikasi Berkas</div>`;
+        } else if (p.status === 'REVIEW_BIDANG') {
+          levelBadgeHtml = `<span class="badge badge-info">Bidang (Level 2)</span><div style="font-size:10px; color:var(--laz-gray-500); margin-top:2px;">Rekomendasi Nominal</div>`;
+        } else if (p.status === 'KEPUTUSAN_KETUA') {
+          levelBadgeHtml = `<span class="badge badge-purple">Pimpinan (Level 3)</span><div style="font-size:10px; color:var(--laz-gray-500); margin-top:2px;">Putusan Final ACC</div>`;
+        } else if (p.status === 'MENUNGGU_PENCAIRAN') {
+          levelBadgeHtml = `<span class="badge badge-success">Keuangan & BAST</span><div style="font-size:10px; color:var(--laz-green); font-weight:600; margin-top:2px;">Panggilan Hadir Fisik</div>`;
+        } else if (p.status === 'TELAH_DICAIRKAN') {
+          levelBadgeHtml = `<span class="badge badge-cyan">Masa LPJ (Cair)</span><div style="font-size:10px; color:var(--laz-blue); font-weight:600; margin-top:2px;">Tenggat 14 Hari</div>`;
+        } else if (p.status === 'LPJ_TERVERIFIKASI') {
+          levelBadgeHtml = `<span class="badge badge-emerald">Selesai & Arsip</span><div style="font-size:10px; color:var(--laz-green); margin-top:2px;">LPJ Terverifikasi</div>`;
+        } else if (p.status === 'REVISI') {
+          levelBadgeHtml = `<span class="badge badge-danger">Perlu Revisi</span><div style="font-size:10px; color:var(--laz-red); margin-top:2px;">Menunggu Pemohon</div>`;
+        } else {
+          levelBadgeHtml = `<span class="badge badge-neutral">Ditolak</span>`;
+        }
+
+        // Tentukan Tombol Dokumen Otomatis
+        let docButtonsHtml = [];
+        if (p.nominalACC > 0 || p.status === 'MENUNGGU_PENCAIRAN' || p.status === 'TELAH_DICAIRKAN' || p.status === 'LPJ_TERVERIFIKASI') {
+          docButtonsHtml.push(`<a href="proposal-preview.html?id=${p.id}" target="_blank" class="badge badge-neutral" style="text-decoration:none; display:inline-block; margin-bottom:2px;">Proposal ACC</a>`);
+        }
+        if (p.nomorBAST) {
+          docButtonsHtml.push(`<a href="bast-preview.html?id=${p.id}" target="_blank" class="badge badge-success" style="text-decoration:none; display:inline-block; margin-bottom:2px;">BAST Resmi</a>`);
+        }
+        if (p.status === 'LPJ_TERVERIFIKASI') {
+          docButtonsHtml.push(`<a href="lpj-preview.html?id=${p.id}" target="_blank" class="badge badge-emerald" style="text-decoration:none; display:inline-block; margin-bottom:2px;">Dokumen LPJ</a>`);
+        } else if (p.status === 'TELAH_DICAIRKAN') {
+          docButtonsHtml.push(`<a href="lpj-form.html?id=${p.id}" target="_blank" class="badge badge-warning" style="text-decoration:none; display:inline-block; margin-bottom:2px;">Form LPJ</a>`);
+        }
+
+        return `
+          <tr>
+            <td>
+              <strong style="color: var(--laz-navy); font-size: 12px;">${p.id}</strong>
+              <div style="font-size: 11px; color: var(--laz-gray-500);">${(p.tanggalMasuk || '2026-10-12').split(' ')[0]}</div>
+            </td>
+            <td>
+              <div style="font-weight: 600; color: var(--laz-navy); font-size: 12.5px;">${p.namaPemohon}</div>
+              <div style="font-size: 11px; color: var(--laz-gray-500);">${p.instansi}</div>
+              ${p.noSurat ? `<div style="font-size: 10px; color: var(--laz-gray-500);">No: ${p.noSurat}</div>` : ''}
+            </td>
+            <td>
+              <div style="font-weight: 500; color: var(--laz-gray-800); line-height: 1.35; font-size: 12px;">${p.perihal}</div>
+              <div style="font-size: 11px; color: var(--laz-gray-500); margin-top: 3px;">
+                Pelaksanaan: <strong>${p.tanggalKegiatan}</strong>
+              </div>
+            </td>
+            <td>
+              <span class="badge badge-neutral" style="font-size: 10px;">${(p.pilar || 'umum').toUpperCase()}</span>
+              <div style="font-size: 11px; color: var(--laz-gold); font-weight: 600; margin-top: 3px;">Asnaf: ${p.asnaf || '-'}</div>
+            </td>
+            <td>
+              <div style="font-size: 11px; color: var(--laz-gray-500);">Diajukan:</div>
+              <strong style="color: var(--laz-navy); font-size: 12px;">${formatRupiah(p.nominalDiajukan)}</strong>
+              ${p.nominalACC > 0 ? `
+                <div style="color: var(--laz-green); font-weight: 700; font-size: 12px; margin-top: 2px;">ACC: ${formatRupiah(p.nominalACC)}</div>
+              ` : (p.nominalRekomendasi > 0 ? `
+                <div style="color: var(--laz-blue); font-weight: 600; font-size: 11px; margin-top: 2px;">Rek: ${formatRupiah(p.nominalRekomendasi)}</div>
+              ` : '<div style="color: var(--laz-gray-400); font-size: 10px; margin-top: 2px;">Belum Di-ACC</div>')}
+            </td>
+            <td>
+              ${levelBadgeHtml}
+            </td>
+            <td>
+              ${docButtonsHtml.length > 0 ? docButtonsHtml.join(' ') : '<span style="color:var(--laz-gray-400); font-size:10.5px;">- Menunggu ACC -</span>'}
+            </td>
+            <td style="text-align: center;">
+              ${(() => {
+                if (p.status === 'MENUNGGU_VERIFIKASI' || p.status === 'REVISI') {
+                  return `<a href="admin-detail.html?id=${p.id}&view=staff" class="btn btn-warning btn-sm" style="font-size: 11px; padding: 5px 10px; white-space: nowrap; font-weight:700;">Verifikasi Berkas (L1)</a>`;
+                } else if (p.status === 'REVIEW_BIDANG') {
+                  return `<a href="admin-detail.html?id=${p.id}&view=bidang" class="btn btn-primary btn-sm" style="font-size: 11px; padding: 5px 10px; white-space: nowrap; background:#2563EB; border-color:#2563EB; font-weight:700;">Review Bidang (L2)</a>`;
+                } else if (p.status === 'KEPUTUSAN_KETUA') {
+                  return `<a href="admin-detail.html?id=${p.id}&view=ketua" class="btn btn-sm" style="font-size: 11px; padding: 5px 10px; white-space: nowrap; background:#7C3AED; border-color:#7C3AED; color:#fff; font-weight:700;">Putusan Ketua (L3)</a>`;
+                } else if (p.status === 'MENUNGGU_PENCAIRAN') {
+                  return `<a href="admin-detail.html?id=${p.id}&view=keuangan" class="btn btn-success btn-sm" style="font-size: 11px; padding: 5px 10px; white-space: nowrap; font-weight:700;">Kasir & BAST</a>`;
+                } else if (p.status === 'TELAH_DICAIRKAN') {
+                  return `<a href="admin-detail.html?id=${p.id}&view=lpj" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 5px 10px; white-space: nowrap; color:var(--laz-cyan); font-weight:700; border-color:var(--laz-cyan);">Pantau LPJ (14H)</a>`;
+                } else if (p.status === 'LPJ_TERVERIFIKASI') {
+                  return `<a href="admin-detail.html?id=${p.id}" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 5px 10px; white-space: nowrap; color:var(--laz-green); font-weight:600;">Detail Arsip</a>`;
+                } else {
+                  return `<a href="admin-detail.html?id=${p.id}" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 5px 10px; white-space: nowrap; color:var(--laz-red);">Detail Ditolak</a>`;
+                }
+              })()}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function resetDatabase() {
+      if (confirm('Apakah Anda yakin ingin me-reset basis data ke 28 data awal Google Spreadsheet Lazismu UAD?')) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROPOSALS));
+        showToast('Basis data berhasil di-reset ke 28 proposal awal.', 'success');
+        renderAdminDashboard();
+      }
+    }
+
+    function handleAdminFilter() {
+      renderAdminDashboard();
+    }
+
+    function handleAdminSearch() {
+      renderAdminDashboard();
+    }
+
+    function exportToCsv() {
+      const data = getProposals();
+      let csv = 'No,Kode,Tanggal Masuk,Nama Pemohon,Instansi,No Surat,Perihal,Pilar,Asnaf,Nominal Diajukan,Nominal Rekomendasi,Nominal ACC,Status,Nomor BAST,Status LPJ\n';
+
+      data.forEach((p, idx) => {
+        csv += `"${idx+1}","${p.id}","${p.tanggalMasuk}","${p.namaPemohon}","${p.instansi}","${p.noSurat || '-'}","${p.perihal.replace(/"/g, '""')}","${p.pilar}","${p.asnaf || '-'}","${p.nominalDiajukan}","${p.nominalRekomendasi}","${p.nominalACC}","${p.status}","${p.nomorBAST || '-'}","${p.statusLPJ || '-'}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `rekap_proposal_lazismu_uad_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>

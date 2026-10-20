@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Berita Acara Serah Terima (BAST) - Kantor Layanan Lazismu UAD</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 30px;
+      color: #000000;
+    }
+    .sheet {
+      background: #ffffff;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 50px 60px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .header-kop {
+      text-align: center;
+      border-bottom: 3px double #000;
+      padding-bottom: 12px;
+      margin-bottom: 22px;
+    }
+    .kop-univ {
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .kop-lazismu {
+      font-size: 20px;
+      font-weight: bold;
+      color: #002D54;
+      margin: 2px 0;
+    }
+    .kop-sub {
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    .doc-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .doc-title h2 {
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: underline;
+      margin: 0 0 4px 0;
+      text-transform: uppercase;
+    }
+    .doc-title .doc-num {
+      font-size: 12.5px;
+      font-family: Arial, sans-serif;
+    }
+    .bismillah {
+      text-align: center;
+      font-style: italic;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #000;
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+    table.data-table th {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+    .nb-box {
+      margin-top: 16px;
+      font-size: 12.5px;
+    }
+    .nb-box ol {
+      margin: 6px 0;
+      padding-left: 20px;
+    }
+    .nb-box li {
+      margin-bottom: 4px;
+    }
+    .signatures {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .sig-col {
+      width: 45%;
+    }
+    .sig-space {
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 11px;
+      font-style: italic;
+    }
+    .top-toolbar {
+      max-width: 800px;
+      margin: 0 auto 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-print {
+      background: #F37021;
+      color: #ffffff;
+    }
+    .btn-back {
+      background: #ffffff;
+      color: #333;
+      border-color: #ccc;
+    }
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .sheet {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .top-toolbar {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-toolbar">
+    <a href="javascript:history.back()" class="btn btn-back">← Kembali</a>
+    <button class="btn btn-print" onclick="window.print()">Cetak Dokumen / Simpan PDF</button>
+  </div>
+
+  <div class="sheet" id="bastDocument">
+    <div class="header-kop">
+      <div class="kop-univ">UNIVERSITAS AHMAD DAHLAN</div>
+      <div class="kop-lazismu">KANTOR LAYANAN LAZISMU UAD</div>
+      <div class="kop-sub">
+        Gedung ITC Kampus 1 UAD, Jl. Kapas No. 9, Semaki, Umbulharjo, Yogyakarta 55166<br>
+        Email: lazismu@uad.ac.id | Website: lazismu.uad.ac.id | Hotline: 0811-2506-6352
+      </div>
+    </div>
+
+    <div class="doc-title">
+      <h2>BERITA ACARA SERAH TERIMA</h2>
+      <div class="doc-num" id="bastNumberDisplay">Nomor: 042/BAST/LAZISMU-UAD/X/2026</div>
+    </div>
+
+    <div class="bismillah">
+      Bismillaahirrahmaanirrahiim
+    </div>
+
+    <p style="text-align: justify;" id="bastOpeningText">
+      Pada hari ini, bertempat di Kantor Layanan LAZISMU UAD telah dilakukan penyaluran dana oleh Lazismu UAD kepada <strong id="bastPenerimaNama">BEM FAST UAD</strong> terkait <strong id="bastPerihal">Permohonan Bantuan Dana Workshop Robotika</strong> sebesar <strong id="bastNominalTeks">Rp 4.500.000,-</strong>. Berikut kami sertakan rinciannya sebagai berikut:
+    </p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width: 50px;">No</th>
+          <th>Kegiatan / Peruntukan Dana</th>
+          <th style="width: 180px;">Nominal (Rp)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center;">1</td>
+          <td id="bastTablePeruntukan">Permohonan Bantuan Dana Kegiatan</td>
+          <td style="text-align: right; font-weight: bold;" id="bastTableNominal">Rp 4.500.000,-</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: right; font-weight: bold;">Total Bantuan:</td>
+          <td style="text-align: right; font-weight: bold; background: #fafafa;" id="bastTableTotal">Rp 4.500.000,-</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="nb-box">
+      <strong>NB: Adanya persyaratan yang harus dipenuhi (bersifat WAJIB) adalah sebagai berikut:</strong>
+      <ol>
+        <li id="bastNb1">Bantuan tersebut terkait permohonan sesuai dengan yang tertera pada proposal pengajuan.</li>
+        <li id="bastNb2">Dana disalurkan oleh LAZISMU UAD ke rekening <strong>BSI - 7188291024</strong> dengan biaya transfer ditanggung penerima.</li>
+        <li><strong>WAJIB mencantumkan logo Lazismu UAD</strong> pada setiap acara kegiatan dan menandai (tag) akun Instagram <strong>@Lazismu_UAD</strong>.</li>
+        <li><strong>Laporan Pertanggungjawaban Dana / LPJ maximal 2 minggu (14 hari)</strong> setelah acara dilaksanakan. Jika tidak dilaporkan, maka proposal selanjutnya akan dipending atau ditolak.</li>
+        <li>LPJ cukup penggunaan dana yang diberikan LAZISMU UAD (didukung dengan nota atau kwitansi asli).</li>
+      </ol>
+    </div>
+
+    <div style="margin-top: 24px; text-align: right;" id="bastTglTempat">
+      Yogyakarta, 12 Oktober 2026
+    </div>
+
+    <div class="signatures">
+      <div class="sig-col">
+        <p>Penerima Dana,</p>
+        <div class="sig-space">
+          (Tanda Tangan & Stempel Lembaga)
+        </div>
+        <p style="margin-top: 10px;">
+          <strong id="bastSigPenerimaNama">( Muhammad Zaki Pratama )</strong><br>
+          <span style="font-size: 12px;" id="bastSigIdentitas">NIK/NIM: 2200018042</span>
+        </p>
+      </div>
+
+      <div class="sig-col">
+        <p>Petugas Kasir / Keuangan Lazismu UAD,</p>
+        <div class="sig-space">
+          (Tanda Tangan Petugas)
+        </div>
+        <p style="margin-top: 10px;">
+          <strong>( Siti Nurhaliza, S.E )</strong><br>
+          <span style="font-size: 12px;">Divisi Keuangan Lazismu UAD</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isTemplate = urlParams.get('mode') === 'template' || urlParams.get('id') === 'template';
+      const idParam = urlParams.get('id') || (isTemplate ? 'template' : 'PRP-2026-0006');
+
+      const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('bastTglTempat').textContent = `Yogyakarta, ${today}`;
+
+      if (isTemplate) {
+        document.getElementById('bastNumberDisplay').textContent = 'Nomor: 042/BAST/LAZISMU-UAD/X/2026 (FORMAT RESMI)';
+        document.getElementById('bastPenerimaNama').textContent = '[Nama Lengkap Ketua / Penanggung Jawab] ([Nama Lembaga / Ormawa])';
+        document.getElementById('bastPerihal').textContent = '"[Perihal / Nama Kegiatan Sesuai Proposal ACC]"';
+        document.getElementById('bastNominalTeks').textContent = 'Rp 3.000.000,- (Tiga Juta Rupiah)';
+
+        document.getElementById('bastTablePeruntukan').textContent = 'Penyaluran Bantuan Dana Kebajikan Sesuai Proposal ACC (Pilar Program Terkait)';
+        document.getElementById('bastTableNominal').textContent = 'Rp 3.000.000,-';
+        document.getElementById('bastTableTotal').textContent = 'Rp 3.000.000,-';
+
+        document.getElementById('bastNb1').innerHTML = 'Bantuan tersebut terkait permohonan <em>"[Perihal Kegiatan]"</em> sesuai dengan yang tertera pada proposal pengajuan yang disetujui.';
+        document.getElementById('bastNb2').innerHTML = 'Dana disalurkan oleh LAZISMU UAD ke rekening <strong>[Rekening Bank Resmi Lembaga]</strong> dengan biaya transfer ditanggung penerima.';
+
+        document.getElementById('bastSigPenerimaNama').textContent = '( [Nama Lengkap Penanggung Jawab] )';
+        document.getElementById('bastSigIdentitas').textContent = '[NIM / NIK / Cap Stempel Asli Lembaga]';
+        return;
+      }
+
+      const p = getProposalById(idParam);
+      if (p) {
+        const nominal = p.nominalACC > 0 ? p.nominalACC : p.nominalDiajukan;
+        const noBast = p.nomorBAST || '042/BAST/LAZISMU-UAD/X/2026';
+
+        document.getElementById('bastNumberDisplay').textContent = `Nomor: ${noBast}`;
+        document.getElementById('bastPenerimaNama').textContent = `${p.namaPemohon} (${p.instansi})`;
+        document.getElementById('bastPerihal').textContent = `"${p.perihal}"`;
+        document.getElementById('bastNominalTeks').textContent = formatRupiah(nominal);
+
+        document.getElementById('bastTablePeruntukan').textContent = `${p.perihal} (${p.pilar.toUpperCase()})`;
+        document.getElementById('bastTableNominal').textContent = formatRupiah(nominal);
+        document.getElementById('bastTableTotal').textContent = formatRupiah(nominal);
+
+        document.getElementById('bastNb1').innerHTML = `Bantuan tersebut terkait permohonan <em>"${p.perihal}"</em> sesuai dengan yang tertera pada proposal pengajuan.`;
+        document.getElementById('bastNb2').innerHTML = `Dana disalurkan oleh LAZISMU UAD ke rekening <strong>${p.rekeningPenerima}</strong> dengan biaya transfer ditanggung penerima.`;
+
+        document.getElementById('bastSigPenerimaNama').textContent = `( ${p.penanggungJawab || p.namaPemohon} )`;
+        document.getElementById('bastSigIdentitas').textContent = p.identitasId ? p.identitasId : p.instansi;
+      }
+    });
+  </script>
+</body>
+</html>

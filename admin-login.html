@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pintu Masuk Login & Registrasi - Lazismu UAD</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background-color: var(--laz-navy-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .login-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .login-box {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      max-width: 480px;
+      width: 100%;
+      padding: 32px 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--laz-gray-300);
+    }
+    .tab-login-btn {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--laz-gray-300);
+      background: var(--laz-gray-100);
+      font-weight: 600;
+      font-size: 12.5px;
+      color: var(--laz-gray-600);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .tab-login-btn.active {
+      background: var(--laz-navy);
+      color: #ffffff;
+      border-color: var(--laz-navy);
+    }
+    .tab-login-btn:first-child {
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    }
+    .tab-login-btn:last-child {
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      border-left: none;
+    }
+    .sub-toggle-box {
+      display: flex;
+      background: var(--laz-gray-100);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      margin-bottom: 16px;
+      border: 1px solid var(--laz-gray-200);
+    }
+    .sub-toggle-btn {
+      flex: 1;
+      padding: 6px;
+      border: none;
+      background: transparent;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--laz-gray-600);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .sub-toggle-btn.active {
+      background: #ffffff;
+      color: var(--laz-orange);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-box">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div class="brand-emblem" style="margin: 0 auto 10px; width: 44px; height: 44px; font-size: 22px;">L</div>
+        <h2 style="font-size: 19px; color: var(--laz-navy); margin-bottom: 2px;">Sistem Informasi Lazismu UAD</h2>
+        <p style="font-size: 12px; color: var(--laz-gray-500); margin: 0;">
+          Portal Masuk Layanan Usulan Proposal Bantuan Dana
+        </p>
+      </div>
+
+      <!-- TAB UTAMA: PEMOHON VS INTERNAL LAZISMU -->
+      <div style="display: flex; margin-bottom: 18px;">
+        <button type="button" class="tab-login-btn active" id="btnTabPemohon" onclick="switchMainTab('pemohon')">
+          Pemohon Proposal
+        </button>
+        <button type="button" class="tab-login-btn" id="btnTabInternal" onclick="switchMainTab('internal')">
+          Petugas / Internal
+        </button>
+      </div>
+
+      <!-- SECTION 1: PEMOHON (LOGIN & REGISTRASI) -->
+      <div id="sectionPemohon">
+        <!-- SUB TOGGLE: MASUK ATAU REGISTRASI BARU -->
+        <div class="sub-toggle-box">
+          <button type="button" class="sub-toggle-btn active" id="subBtnLogin" onclick="switchPemohonMode('login')">
+            Punya Akun (Masuk)
+          </button>
+          <button type="button" class="sub-toggle-btn" id="subBtnRegister" onclick="switchPemohonMode('register')">
+            Belum Punya Akun (Registrasi)
+          </button>
+        </div>
+
+        <!-- FORM LOGIN PEMOHON -->
+        <div id="pemohonLoginForm">
+          <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 14px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-gray-600); margin-bottom: 4px; text-transform: uppercase;">
+              Akun Simulasi Terdaftar:
+            </div>
+            <select class="form-control" id="presetPemohonSelect" onchange="applyPemohonPreset(this.value)" style="font-size: 12px;">
+              <option value="BEM FAST UAD">BEM FAST UAD (Muhammad Zaki Pratama)</option>
+              <option value="Takmir Masjid Umar Bin Khattab">Takmir Masjid Umar Bin Khattab Nitikan (Ust. Ridwan)</option>
+              <option value="IMM PBII (Muh Salman Alfarisi)">IMM PBII (Muh Salman Alfarisi)</option>
+              <option value="PRM Umbulharjo & Takmir Masjid Al-Ikhlas">Takmir Masjid Al-Ikhlas (Drs. H. Bambang Sujarwo)</option>
+              <option value="Pusat Studi Lingkungan Hidup Mahasiswa UAD">Relawan Hijau Sang Surya (Dinda Larasati)</option>
+            </select>
+          </div>
+
+          <form onsubmit="handleLoginPemohon(event)">
+            <div class="form-group">
+              <label class="form-label">Email Pemohon / Akun UAD</label>
+              <input type="email" id="emailPemohon" class="form-control" value="zaki.pratama@webmail.uad.ac.id" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Kata Sandi</label>
+              <input type="password" class="form-control" value="pemohon123" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; margin-top: 6px;">
+              Masuk ke Portal Pemohon →
+            </button>
+          </form>
+        </div>
+
+        <!-- FORM REGISTRASI PEMOHON BARU -->
+        <div id="pemohonRegisterForm" style="display: none;">
+          <form onsubmit="handleRegisterPemohon(event)">
+            <div class="form-group">
+              <label class="form-label">Nama Lengkap Penanggung Jawab <span class="req">*</span></label>
+              <input type="text" id="regNama" class="form-control" placeholder="Contoh: Muhammad Fauzan" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nama Lembaga / Ortom / Takmir / Komunitas <span class="req">*</span></label>
+              <input type="text" id="regInstansi" class="form-control" placeholder="Contoh: Takmir Masjid Al-Falah Semaki" required>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">NIK / NIM UAD <span class="req">*</span></label>
+                <input type="text" id="regIdentitas" class="form-control" placeholder="NIK atau NIM" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">No. WhatsApp Aktif <span class="req">*</span></label>
+                <input type="tel" id="regNoHp" class="form-control" placeholder="08xxxxxxxxxx" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Alamat Email <span class="req">*</span></label>
+              <input type="email" id="regEmail" class="form-control" placeholder="nama@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Kata Sandi <span class="req">*</span></label>
+              <input type="password" class="form-control" value="password123" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; margin-top: 6px;">
+              Daftarkan Akun & Buka Dashboard Pemohon
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- SECTION 2: INTERNAL LAZISMU -->
+      <div id="sectionInternal" style="display: none;">
+        <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 14px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--laz-gray-600); margin-bottom: 4px; text-transform: uppercase;">
+            Pilih Peran Pejabat Internal:
+          </div>
+          <select class="form-control" id="presetInternalSelect" onchange="applyInternalPreset(this.value)" style="font-size: 12px;">
+            <option value="staff">Staf SE (Level 1: Verifikasi Berkas) - Ust. Hendra Kurniawan</option>
+            <option value="bidang">Pengurus Bidang (Level 2: Rekomendasi) - Drs. H. Miftahul Huda</option>
+            <option value="ketua">Ketua Lazismu UAD (Level 3: Putusan ACC) - Drs. Farid Ma’ruf</option>
+            <option value="keuangan">Keuangan & Kasir (BAST & Pencairan) - Siti Nurhaliza, S.E</option>
+          </select>
+        </div>
+
+        <form onsubmit="handleLoginInternal(event)">
+          <div class="form-group">
+            <label class="form-label">Email Staf / Pejabat</label>
+            <input type="email" id="emailInternal" class="form-control" value="hendra.se@lazismu.uad.ac.id" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Kata Sandi</label>
+            <input type="password" class="form-control" value="password123" required>
+          </div>
+
+          <button type="submit" class="btn btn-navy" style="width: 100%; padding: 10px; margin-top: 6px;">
+            Masuk ke Portal Internal →
+          </button>
+        </form>
+      </div>
+
+      <!-- FOOTER LINKS -->
+      <div style="text-align: center; margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--laz-gray-200); display: flex; justify-content: space-between; font-size: 12px;">
+        <a href="index.html" style="color: var(--laz-gray-500); text-decoration: none;">
+          ← Kembali ke Beranda
+        </a>
+        <a href="ajukan.html" style="color: var(--laz-orange); font-weight: 600; text-decoration: none;">
+          Formulir Pengajuan Proposal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalFlowBar('login');
+    });
+
+    function switchMainTab(target) {
+      const btnPemohon = document.getElementById('btnTabPemohon');
+      const btnInternal = document.getElementById('btnTabInternal');
+      const secPemohon = document.getElementById('sectionPemohon');
+      const secInternal = document.getElementById('sectionInternal');
+
+      if (target === 'pemohon') {
+        btnPemohon.classList.add('active');
+        btnInternal.classList.remove('active');
+        secPemohon.style.display = 'block';
+        secInternal.style.display = 'none';
+      } else {
+        btnInternal.classList.add('active');
+        btnPemohon.classList.remove('active');
+        secInternal.style.display = 'block';
+        secPemohon.style.display = 'none';
+      }
+    }
+
+    function switchPemohonMode(mode) {
+      const btnLogin = document.getElementById('subBtnLogin');
+      const btnRegister = document.getElementById('subBtnRegister');
+      const formLogin = document.getElementById('pemohonLoginForm');
+      const formRegister = document.getElementById('pemohonRegisterForm');
+
+      if (mode === 'login') {
+        btnLogin.classList.add('active');
+        btnRegister.classList.remove('active');
+        formLogin.style.display = 'block';
+        formRegister.style.display = 'none';
+      } else {
+        btnRegister.classList.add('active');
+        btnLogin.classList.remove('active');
+        formRegister.style.display = 'block';
+        formLogin.style.display = 'none';
+      }
+    }
+
+    function applyPemohonPreset(val) {
+      const email = document.getElementById('emailPemohon');
+      if (val === 'BEM FAST UAD') email.value = 'zaki.pratama@webmail.uad.ac.id';
+      else if (val === 'Takmir Masjid Umar Bin Khattab') email.value = 'takmir.ubk@gmail.com';
+      else if (val === 'IMM PBII (Muh Salman Alfarisi)') email.value = 'salman.imm@webmail.uad.ac.id';
+      else if (val === 'PRM Umbulharjo & Takmir Masjid Al-Ikhlas') email.value = 'prm.umbulharjo@muhammadiyah.or.id';
+      else if (val === 'Pusat Studi Lingkungan Hidup Mahasiswa UAD') email.value = 'dinda.lingkungan@webmail.uad.ac.id';
+    }
+
+    function applyInternalPreset(role) {
+      const email = document.getElementById('emailInternal');
+      if (role === 'staff') email.value = 'hendra.se@lazismu.uad.ac.id';
+      else if (role === 'bidang') email.value = 'miftahul.huda@lazismu.uad.ac.id';
+      else if (role === 'ketua') email.value = 'farid.maruf@lazismu.uad.ac.id';
+      else if (role === 'keuangan') email.value = 'siti.keuangan@lazismu.uad.ac.id';
+    }
+
+    function handleLoginPemohon(e) {
+      e.preventDefault();
+      const org = document.getElementById('presetPemohonSelect').value;
+      const email = document.getElementById('emailPemohon').value;
+      
+      const sessionData = {
+        nama: org.includes('(') ? org.split('(')[1].replace(')', '') : org,
+        instansi: org,
+        email: email,
+        noHp: '081234567890',
+        identitasId: 'NIM: 2200018042'
+      };
+      setPemohonSession(sessionData);
+      window.location.href = `pemohon-dashboard.html?org=${encodeURIComponent(org)}`;
+    }
+
+    function handleRegisterPemohon(e) {
+      e.preventDefault();
+      const nama = document.getElementById('regNama').value.trim();
+      const instansi = document.getElementById('regInstansi').value.trim();
+      const identitas = document.getElementById('regIdentitas').value.trim();
+      const noHp = document.getElementById('regNoHp').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+
+      const newSession = {
+        nama: nama,
+        instansi: instansi,
+        identitasId: identitas,
+        noHp: noHp,
+        email: email
+      };
+      setPemohonSession(newSession);
+      showToast(`Pendaftaran akun ${nama} (${instansi}) berhasil!`, 'success');
+      setTimeout(() => {
+        window.location.href = `pemohon-dashboard.html?org=${encodeURIComponent(instansi)}`;
+      }, 500);
+    }
+
+    function handleLoginInternal(e) {
+      e.preventDefault();
+      const role = document.getElementById('presetInternalSelect').value;
+      setAdminSession(role);
+      showToast(`Login berhasil sebagai ${INTERNAL_ROLES[role].title}`, 'success');
+      setTimeout(() => {
+        if (role === 'keuangan') {
+          window.location.href = 'admin-keuangan.html';
+        } else {
+          window.location.href = `admin-dashboard.html?tab=${role}`;
+        }
+      }, 400);
+    }
+  </script>
+</body>
+</html>

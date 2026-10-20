@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pelacakan Status Proposal - Lazismu UAD</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <aside class="laz-topbar">
+    <div class="topbar-container">
+      <div class="topbar-contacts">
+        <div class="topbar-item"><span>Email:</span> <a href="mailto:lazismu@uad.ac.id">lazismu@uad.ac.id</a></div>
+        <div class="topbar-item"><span>Hotline:</span> <span>0811-2506-6352</span></div>
+        <div class="topbar-item"><span>Lokasi:</span> <span>Gedung ITC Kampus 1 UAD</span></div>
+      </div>
+      <div class="topbar-actions">
+        <a href="pemohon-dashboard.html" class="topbar-link">Portal Pemohon</a>
+        <a href="admin-login.html" class="topbar-link"><span class="badge-internal">Login Petugas</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVBAR -->
+  <header class="laz-navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-box">
+        <div class="brand-emblem">L</div>
+        <div class="brand-text">
+          <div class="brand-title">LAZISMU <span>UAD</span></div>
+          <div class="brand-sub">Kantor Layanan Universitas Ahmad Dahlan</div>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <li class="nav-item"><a href="index.html">Beranda</a></li>
+        <li class="nav-item"><a href="panduan.html">Panduan & Syarat</a></li>
+        <li class="nav-item"><a href="tracking.html" class="active">Cek Status Proposal</a></li>
+        <li class="nav-item"><a href="pemohon-dashboard.html">Portal Pemohon</a></li>
+        <li class="nav-item"><a href="ajukan.html" class="btn-ajukan-nav">Ajukan Proposal</a></li>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content-container">
+    
+    <!-- BREADCRUMB -->
+    <div class="portal-breadcrumb">
+      <a href="index.html">Beranda</a>
+      <span class="portal-breadcrumb-sep">/</span>
+      <span style="color: var(--laz-gray-700); font-weight: 600;">Pelacakan Status Proposal</span>
+    </div>
+
+    <div style="text-align: center; max-width: 680px; margin: 0 auto 24px;">
+      <h1 style="font-size: 22px; color: var(--laz-navy); margin-bottom: 4px;">
+        Pelacakan Status Usulan Proposal
+      </h1>
+      <p style="color: var(--laz-gray-600); font-size: 13px;">
+        Masukkan nomor registrasi proposal untuk melihat status verifikasi administrasi dan keputusan pimpinan secara real-time.
+      </p>
+
+      <!-- SEARCH BOX -->
+      <form style="display: flex; gap: 8px; margin-top: 18px;" onsubmit="handleSearch(event)">
+        <input type="text" id="trackInput" class="input-track-lg" placeholder="Masukkan Nomor Proposal (misal: PRP-2026-0001)" style="text-align: center;" required>
+        <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">
+          Periksa Status
+        </button>
+      </form>
+
+      <!-- QUICK TEST CHIPS -->
+      <div style="margin-top: 16px;">
+        <div style="font-size: 11px; font-weight: 600; color: var(--laz-gray-500); text-transform: uppercase; margin-bottom: 6px;">
+          Contoh Pengujian Berdasarkan Status:
+        </div>
+        <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickSelect('PRP-2026-0003')" style="font-size: 11px; padding: 4px 10px;">
+            Verifikasi Staf: PRP-0003
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickSelect('PRP-2026-0004')" style="font-size: 11px; padding: 4px 10px;">
+            Review Bidang: PRP-0004
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickSelect('PRP-2026-0005')" style="font-size: 11px; padding: 4px 10px;">
+            Putusan Pimpinan: PRP-0005
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickSelect('PRP-2026-0006')" style="font-size: 11px; padding: 4px 10px;">
+            ACC / Hadir Fisik: PRP-0006
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickSelect('PRP-2026-0007')" style="font-size: 11px; padding: 4px 10px;">
+            Cair / LPJ: PRP-0007
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickSelect('PRP-2026-0010')" style="font-size: 11px; padding: 4px 10px;">
+            Perlu Revisi: PRP-0010
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="quickSelect('PRP-2026-0011')" style="font-size: 11px; padding: 4px 10px;">
+            Ditolak: PRP-0011
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HASIL PELACAKAN (RENDERED BY JS) -->
+    <div id="trackingResultArea" style="scroll-margin-top: 80px;">
+      <!-- Default state: petunjuk atau hasil pencarian -->
+    </div>
+  </main>
+
+  <!-- MODAL MELAKUKAN REVISI PROPOSAL -->
+  <div id="modalRevisiTracking" class="figjam-modal-overlay">
+    <div class="figjam-modal-box" style="max-width: 580px;">
+      <div class="figjam-modal-header">
+        <div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--laz-gold); text-transform: uppercase;">Perbaikan Berkas</div>
+          <h3 style="font-size: 16px; color: var(--laz-navy); margin-top: 2px;">Formulir Revisi Berkas Usulan</h3>
+        </div>
+        <button type="button" class="figjam-modal-close" onclick="closeRevisiTrackingModal()">&times;</button>
+      </div>
+
+      <form onsubmit="handleRevisiTrackingSubmit(event)" style="padding: 18px 22px; overflow-y: auto;">
+        <input type="hidden" id="revTrackTargetId">
+
+        <div class="revision-alert-box" style="margin-bottom: 14px;">
+          <div style="font-size: 11px; font-weight: 700; color: #92400E; text-transform: uppercase;">
+            Catatan Perbaikan dari Staf Verifikasi (Level 1):
+          </div>
+          <div style="font-size: 12px; color: #78350F; margin-top: 4px;" id="revTrackStaffNote">-</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nominal Usulan Perbaikan (Rp)</label>
+          <input type="number" class="form-control" id="revTrackNominal" required step="50000">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Unggah File PDF Proposal / RAB Revisi</label>
+          <input type="file" class="form-control" id="revTrackFile" accept=".pdf">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Penjelasan Perbaikan oleh Pemohon <span class="req">*</span></label>
+          <textarea class="form-control" id="revTrackJawaban" rows="3" placeholder="Tuliskan keterangan perbaikan..." required></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; border-top: 1px solid var(--laz-gray-200); padding-top: 12px;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeRevisiTrackingModal()">Batal</button>
+          <button type="submit" class="btn btn-primary btn-sm">Kirimkan Berkas Revisi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="laz-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2026 Kantor Layanan Lazismu Universitas Ahmad Dahlan. Gedung ITC Kampus 1 UAD, Yogyakarta.</div>
+      <div>Sistem Informasi Pengajuan Proposal Bantuan Dana</div>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalFlowBar('pemohon');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const idParam = urlParams.get('id');
+      if (idParam) {
+        document.getElementById('trackInput').value = idParam;
+        showTrackingDetail(idParam);
+      } else {
+        showDefaultHint();
+      }
+    });
+
+    function handleSearch(e) {
+      e.preventDefault();
+      const code = document.getElementById('trackInput').value.trim();
+      if (code) {
+        window.history.replaceState({}, '', `tracking.html?id=${encodeURIComponent(code)}`);
+        showTrackingDetail(code);
+      }
+    }
+
+    function quickSelect(id) {
+      document.getElementById('trackInput').value = id;
+      window.history.replaceState({}, '', `tracking.html?id=${encodeURIComponent(id)}`);
+      showTrackingDetail(id);
+      const el = document.getElementById('trackingResultArea');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showDefaultHint() {
+      const area = document.getElementById('trackingResultArea');
+      area.innerHTML = `
+        <div class="card" style="text-align: center; padding: 36px 20px; max-width: 760px; margin: 0 auto;">
+          <h3 style="font-size: 15px; color: var(--laz-navy); margin-bottom: 4px;">Pilih Salah Satu Contoh di Atas atau Ketik Nomor Proposal</h3>
+          <p style="font-size: 12.5px; color: var(--laz-gray-500); max-width: 520px; margin: 0 auto;">
+            Sistem pelacakan terhubung langsung dengan basis data resmi Lazismu UAD. Klik tombol contoh di atas untuk melihat bagaimana masing-masing tahap bekerja.
+          </p>
+        </div>
+      `;
+    }
+
+    function showTrackingDetail(code) {
+      const p = getProposalById(code);
+      const area = document.getElementById('trackingResultArea');
+
+      if (!p) {
+        area.innerHTML = `
+          <div class="card" style="text-align: center; padding: 36px 20px; max-width: 680px; margin: 0 auto;">
+            <h3 style="color: var(--laz-red); font-size: 16px; margin-bottom: 6px;">Nomor Proposal Tidak Ditemukan</h3>
+            <p style="font-size: 12.5px; color: var(--laz-gray-600); margin-bottom: 16px;">
+              Proposal dengan kode <strong>${code}</strong> tidak terdaftar. Pastikan Anda memasukkan kode dengan benar.
+            </p>
+            <button class="btn btn-navy btn-sm" onclick="showDefaultHint()">Kembali ke Pencarian</button>
+          </div>
+        `;
+        return;
+      }
+
+      const st = STATUS_PROPOSAL[p.status] || STATUS_PROPOSAL.MENUNGGU_VERIFIKASI;
+      const isRevisi = p.status === 'REVISI';
+      const isAcc = p.status === 'MENUNGGU_PENCAIRAN';
+      const isCair = p.status === 'TELAH_DICAIRKAN';
+      const isDone = p.status === 'LPJ_TERVERIFIKASI';
+      const isTolak = p.status === 'DITOLAK';
+
+      // 5 Milestone Stepper
+      let s1 = 'completed', s2 = '', s3 = '', s4 = '', s5 = '';
+      if (p.status === 'MENUNGGU_VERIFIKASI') {
+        s1 = 'completed'; s2 = 'active';
+      } else if (p.status === 'REVISI') {
+        s1 = 'completed'; s2 = 'warning';
+      } else if (p.status === 'REVIEW_BIDANG') {
+        s1 = 'completed'; s2 = 'completed'; s3 = 'active';
+      } else if (p.status === 'KEPUTUSAN_KETUA') {
+        s1 = 'completed'; s2 = 'completed'; s3 = 'completed'; s4 = 'active';
+      } else if (p.status === 'MENUNGGU_PENCAIRAN') {
+        s1 = 'completed'; s2 = 'completed'; s3 = 'completed'; s4 = 'completed'; s5 = 'active';
+      } else if (p.status === 'TELAH_DICAIRKAN' || p.status === 'LPJ_TERVERIFIKASI') {
+        s1 = 'completed'; s2 = 'completed'; s3 = 'completed'; s4 = 'completed'; s5 = 'completed';
+      }
+
+      area.innerHTML = `
+        <div class="card" style="max-width: 900px; margin: 0 auto; padding: 24px; border-top: 4px solid ${st.color};">
+          
+          <!-- HEADER KARTU PROPOSAL -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--laz-gray-200); padding-bottom: 14px; margin-bottom: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;">
+                <span class="badge ${st.badgeClass}">
+                  ${st.publicLabel}
+                </span>
+                <span style="font-size: 12.5px; font-weight: 700; color: var(--laz-navy);">${p.id}</span>
+                <span class="badge badge-neutral">${p.pilar.toUpperCase()}</span>
+                ${p.noSurat ? `<span style="font-size: 11px; color: var(--laz-gray-500);">No. Surat: ${p.noSurat}</span>` : ''}
+              </div>
+              <h2 style="font-size: 17px; color: var(--laz-navy); margin-top: 4px;">
+                ${p.perihal}
+              </h2>
+              <div style="font-size: 12px; color: var(--laz-gray-500); margin-top: 4px;">
+                Pemohon: <strong>${p.namaPemohon}</strong> (${p.instansi}) • Diajukan: ${p.tanggalMasuk} • Acara: <strong>${p.tanggalKegiatan}</strong>
+              </div>
+            </div>
+
+            <div style="text-align: right;">
+              <div style="font-size: 11px; color: var(--laz-gray-500);">Nominal Pengajuan:</div>
+              <div style="font-size: 17px; font-weight: 800; color: var(--laz-navy);">${formatRupiah(p.nominalDiajukan)}</div>
+              ${p.nominalACC > 0 ? `<div style="font-size: 13.5px; font-weight: 700; color: var(--laz-green);">Disetujui: ${formatRupiah(p.nominalACC)}</div>` : ''}
+            </div>
+          </div>
+
+          <!-- KOTAK KHUSUS PERBAIKAN BERKAS JIKA STATUS REVISI -->
+          ${isRevisi ? `
+            <div class="revision-alert-box" style="margin-bottom: 16px;">
+              <div class="revision-alert-header">
+                <div>
+                  <span class="revision-badge">Perlu Perbaikan Berkas</span>
+                  <h4 style="margin: 2px 0 0; color: #92400E; font-size: 13px;">Staf Verifikasi Menemukan Berkas yang Belum Lengkap</h4>
+                </div>
+                <button type="button" class="btn btn-warning btn-sm" onclick="openRevisiTrackingModal('${p.id}')">
+                  Lakukan Revisi Sekarang
+                </button>
+              </div>
+              <div style="font-size: 12px; color: #78350F; line-height: 1.5; margin-top: 4px;">
+                <strong>Catatan Staf (Level 1):</strong> "${p.catatanInternal}"
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- KOTAK PANGGILAN HADIR FISIK JIKA STATUS ACC -->
+          ${isAcc ? `
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-sm); padding: 16px; margin-bottom: 18px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <h4 style="font-size: 14px; color: var(--laz-green-dark); margin:0 0 4px 0;">
+                    Pemberitahuan Hadir Fisik & Tanda Tangan BAST di Kantor
+                  </h4>
+                  <p style="font-size: 12.5px; color: #166534; line-height: 1.55; margin:0;">
+                    Proposal Anda telah <strong>DISETUJUI SEBESAR ${formatRupiah(p.nominalACC)}</strong> dengan <strong>No. BAST: ${p.nomorBAST}</strong>.<br>
+                    Sebagai syarat wajib audit kepatuhan, perwakilan penanggung jawab lembaga <strong>diwajibkan hadir secara fisik</strong> ke kantor kami:
+                  </p>
+                </div>
+                <button type="button" class="btn btn-success btn-sm" onclick="openWhatsAppSimulatorModal('${p.id}', 'acc')">
+                  Lihat Pesan WA
+                </button>
+              </div>
+
+              <div style="background: #ffffff; padding: 10px 14px; border-radius: 4px; border: 1px solid #BBF7D0; margin: 10px 0 0; font-size: 12px; color: var(--laz-navy);">
+                <strong>Kantor Layanan Lazismu UAD</strong>: Gedung ITC Kampus 1 UAD, Jl. Kapas No. 9, Semaki, Umbulharjo, Yogyakarta<br>
+                Jam Layanan Kasir: Senin - Jumat (08.30 - 15.00 WIB) • Syarat: Membawa <strong>Stempel Asli Lembaga</strong> dan kartu identitas penanggung jawab.
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- STATUS PENJELASAN UMUM -->
+          <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 18px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-gray-600); text-transform: uppercase;">Keterangan Status Terkini:</div>
+            <p style="font-size: 13px; color: var(--laz-navy); font-weight: 600; margin-top: 3px;">
+              ${st.desc}
+            </p>
+          </div>
+
+          <!-- VISUAL PROGRESS STEPPER 5 TAHAPAN -->
+          <div style="font-size: 12px; font-weight: 700; color: var(--laz-navy); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.3px;">
+            Tahapan Verifikasi Berjenjang:
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 20px;">
+            <div style="background: ${s1 ? '#F0FDF4' : 'var(--laz-gray-50)'}; border: 1px solid ${s1 ? '#BBF7D0' : 'var(--laz-gray-200)'}; padding: 10px; border-radius: var(--radius-sm);">
+              <div style="font-size: 10px; font-weight: 700; color: var(--laz-green);">TAHAP 1</div>
+              <div style="font-size: 11.5px; font-weight: 600; color: var(--laz-navy); margin-top: 2px;">Diterima Sistem</div>
+              <div style="font-size: 10px; color: var(--laz-gray-500); margin-top: 2px;">Formulir & PDF tercatat.</div>
+            </div>
+
+            <div style="background: ${s2 === 'warning' ? '#FFFBEB' : (s2 === 'active' ? '#EFF6FF' : (s2 === 'completed' ? '#F0FDF4' : 'var(--laz-gray-50)'))}; border: 1px solid ${s2 === 'warning' ? '#FCD34D' : (s2 === 'active' ? '#BFDBFE' : (s2 === 'completed' ? '#BBF7D0' : 'var(--laz-gray-200)'))}; padding: 10px; border-radius: var(--radius-sm);">
+              <div style="font-size: 10px; font-weight: 700; color: ${s2 === 'warning' ? '#B45309' : (s2 === 'active' ? 'var(--laz-blue)' : (s2 === 'completed' ? 'var(--laz-green)' : 'var(--laz-gray-500)'))};">
+                TAHAP 2 ${s2 === 'warning' ? '(REVISI)' : ''}
+              </div>
+              <div style="font-size: 11.5px; font-weight: 600; color: var(--laz-navy); margin-top: 2px;">Verifikasi Staf (L1)</div>
+              <div style="font-size: 10px; color: var(--laz-gray-500); margin-top: 2px;">Kelengkapan & rekam jejak.</div>
+            </div>
+
+            <div style="background: ${s3 === 'active' ? '#EFF6FF' : (s3 === 'completed' ? '#F0FDF4' : 'var(--laz-gray-50)')}; border: 1px solid ${s3 === 'active' ? '#BFDBFE' : (s3 === 'completed' ? '#BBF7D0' : 'var(--laz-gray-200)')}; padding: 10px; border-radius: var(--radius-sm);">
+              <div style="font-size: 10px; font-weight: 700; color: ${s3 === 'active' ? 'var(--laz-blue)' : (s3 === 'completed' ? 'var(--laz-green)' : 'var(--laz-gray-500)')};">TAHAP 3</div>
+              <div style="font-size: 11.5px; font-weight: 600; color: var(--laz-navy); margin-top: 2px;">Review Bidang (L2)</div>
+              <div style="font-size: 10px; color: var(--laz-gray-500); margin-top: 2px;">Kesesuaian 6 pilar & RAB.</div>
+            </div>
+
+            <div style="background: ${s4 === 'active' ? '#FAF5FF' : (s4 === 'completed' ? '#F0FDF4' : 'var(--laz-gray-50)')}; border: 1px solid ${s4 === 'active' ? '#DDD6FE' : (s4 === 'completed' ? '#BBF7D0' : 'var(--laz-gray-200)')}; padding: 10px; border-radius: var(--radius-sm);">
+              <div style="font-size: 10px; font-weight: 700; color: ${s4 === 'active' ? 'var(--laz-purple)' : (s4 === 'completed' ? 'var(--laz-green)' : 'var(--laz-gray-500)')};">TAHAP 4</div>
+              <div style="font-size: 11.5px; font-weight: 600; color: var(--laz-navy); margin-top: 2px;">Putusan Ketua (L3)</div>
+              <div style="font-size: 10px; color: var(--laz-gray-500); margin-top: 2px;">Persetujuan ACC / Tolak.</div>
+            </div>
+
+            <div style="background: ${s5 === 'active' ? '#FEF3C7' : (s5 === 'completed' ? '#F0FDF4' : 'var(--laz-gray-50)')}; border: 1px solid ${s5 === 'active' ? '#FCD34D' : (s5 === 'completed' ? '#BBF7D0' : 'var(--laz-gray-200)')}; padding: 10px; border-radius: var(--radius-sm);">
+              <div style="font-size: 10px; font-weight: 700; color: ${s5 === 'active' ? 'var(--laz-orange)' : (s5 === 'completed' ? 'var(--laz-green)' : 'var(--laz-gray-500)')};">TAHAP 5</div>
+              <div style="font-size: 11.5px; font-weight: 600; color: var(--laz-navy); margin-top: 2px;">Keuangan & BAST</div>
+              <div style="font-size: 10px; color: var(--laz-gray-500); margin-top: 2px;">Audit hadir & pencairan.</div>
+            </div>
+          </div>
+
+          <!-- DOKUMEN & TEMPLATE JIKA ACC / PENCAIRAN -->
+          ${(p.nominalACC > 0 || isAcc || isCair || isDone) ? `
+            <div style="background: #F8FAFC; border: 1px solid var(--laz-gray-300); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 18px;">
+              <div style="font-size: 11.5px; font-weight: 700; color: var(--laz-navy); margin-bottom: 8px;">
+                Dokumen Resmi:
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="proposal-preview.html?id=${p.id}" target="_blank" class="btn btn-navy btn-sm">
+                  Lihat Draf Proposal ACC
+                </a>
+                ${p.nomorBAST ? `
+                  <a href="bast-preview.html?id=${p.id}" target="_blank" class="btn btn-primary btn-sm">
+                    Cetak Dokumen BAST Resmi
+                  </a>
+                ` : ''}
+                ${isCair ? `
+                  <a href="lpj-form.html?id=${p.id}" class="btn btn-secondary btn-sm">
+                    Isi Form LPJ Online
+                  </a>
+                ` : ''}
+                ${isDone ? `
+                  <a href="lpj-preview.html?id=${p.id}" target="_blank" class="btn btn-secondary btn-sm" style="color: var(--laz-green); font-weight: 600;">
+                    Dokumen LPJ Sah
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- RINCIAN DATA PENERIMA & REKENING -->
+          <div style="background: var(--laz-gray-50); padding: 14px 16px; border-radius: var(--radius-sm); font-size: 12px; color: var(--laz-gray-700); border: 1px solid var(--laz-gray-200); margin-bottom: 20px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+              <div>Penanggung Jawab: <strong>${p.penanggungJawab}</strong></div>
+              <div>Tanggal Pelaksanaan: <strong>${p.tanggalKegiatan}</strong></div>
+              <div>Rekening Penyaluran: <strong>${p.rekeningPenerima}</strong></div>
+              <div>Status Laporan LPJ: <strong>${p.statusLPJ}</strong></div>
+            </div>
+          </div>
+
+          <!-- FOOTER ACTIONS -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <a href="https://wa.me/6281125066352?text=Halo%20Admin%20Lazismu%20UAD,%20saya%20ingin%20menanyakan%20status%20proposal%20${p.id}" target="_blank" class="btn btn-navy btn-sm">
+              Hubungi Petugas Lazismu via WA
+            </a>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="window.print()">
+                Cetak Lembar Status
+              </button>
+              <a href="pemohon-dashboard.html" class="btn btn-primary btn-sm">
+                Ke Portal Pemohon →
+              </a>
+            </div>
+          </div>
+
+        </div>
+      `;
+    }
+
+    // MODAL REVISI DARI TRACKING
+    function openRevisiTrackingModal(id) {
+      const p = getProposalById(id);
+      if (!p) return;
+
+      document.getElementById('revTrackTargetId').value = p.id;
+      document.getElementById('revTrackStaffNote').textContent = p.catatanInternal || 'Mohon lengkapi berkas proposal dan rincian RAB.';
+      document.getElementById('revTrackNominal').value = p.nominalDiajukan;
+      document.getElementById('revTrackJawaban').value = '';
+
+      document.getElementById('modalRevisiTracking').style.display = 'flex';
+    }
+
+    function closeRevisiTrackingModal() {
+      document.getElementById('modalRevisiTracking').style.display = 'none';
+    }
+
+    function handleRevisiTrackingSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('revTrackTargetId').value;
+      const nominal = Number(document.getElementById('revTrackNominal').value) || 0;
+      const fileInput = document.getElementById('revTrackFile');
+      const jawaban = document.getElementById('revTrackJawaban').value.trim();
+
+      const p = getProposalById(id);
+      if (p) {
+        p.nominalDiajukan = nominal;
+        if (fileInput.files.length > 0) p.fileProposal = fileInput.files[0].name;
+        p.status = 'MENUNGGU_VERIFIKASI';
+        p.catatanInternal = `[REVISI PEMOHON]: "${jawaban}". Berkas perbaikan terlampir (${p.fileProposal}).`;
+        updateProposal(p);
+
+        showToast(`Berkas revisi proposal ${p.id} berhasil dikirimkan kembali ke staf verifikasi.`, 'success');
+        closeRevisiTrackingModal();
+        showTrackingDetail(p.id);
+      }
+    }
+  </script>
+</body>
+</html>

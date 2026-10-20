@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulir Pengajuan Usulan Proposal - Lazismu UAD</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <aside class="laz-topbar">
+    <div class="topbar-container">
+      <div class="topbar-contacts">
+        <div class="topbar-item"><span>Email:</span> <a href="mailto:lazismu@uad.ac.id">lazismu@uad.ac.id</a></div>
+        <div class="topbar-item"><span>Hotline:</span> <span>0811-2506-6352</span></div>
+        <div class="topbar-item"><span>Lokasi:</span> <span>Gedung ITC Kampus 1 UAD</span></div>
+      </div>
+      <div class="topbar-actions">
+        <a href="tracking.html" class="topbar-link">Lacak Status</a>
+        <a href="pemohon-dashboard.html" class="topbar-link">Portal Pemohon</a>
+        <a href="admin-login.html" class="topbar-link"><span class="badge-internal">Login Petugas</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVBAR -->
+  <header class="laz-navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-box">
+        <div class="brand-emblem">L</div>
+        <div class="brand-text">
+          <div class="brand-title">LAZISMU <span>UAD</span></div>
+          <div class="brand-sub">Kantor Layanan Universitas Ahmad Dahlan</div>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <li class="nav-item"><a href="index.html">Beranda</a></li>
+        <li class="nav-item"><a href="panduan.html">Panduan & Syarat</a></li>
+        <li class="nav-item"><a href="tracking.html">Cek Status Proposal</a></li>
+        <li class="nav-item"><a href="pemohon-dashboard.html">Portal Pemohon</a></li>
+        <li class="nav-item"><a href="ajukan.html" class="btn-ajukan-nav active">Ajukan Proposal</a></li>
+      </nav>
+    </div>
+  </header>
+
+  <!-- KONTEN FORMULIR -->
+  <main class="content-container">
+    
+    <!-- BREADCRUMB -->
+    <div class="portal-breadcrumb">
+      <a href="index.html">Beranda</a>
+      <span class="portal-breadcrumb-sep">/</span>
+      <a href="pemohon-dashboard.html">Portal Pemohon</a>
+      <span class="portal-breadcrumb-sep">/</span>
+      <span style="color: var(--laz-gray-700); font-weight: 600;">Formulir Pengajuan Usulan</span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <h1 style="font-size: 22px; color: var(--laz-navy); margin-bottom: 4px;">
+        Formulir Permohonan Bantuan Dana Kebajikan Lazismu UAD
+      </h1>
+      <p style="color: var(--laz-gray-600); font-size: 13px; max-width: 760px; margin: 0;">
+        Silakan isi data identitas pemohon, nomor rekening penyaluran, rincian kegiatan, dan lampirkan berkas proposal format PDF.
+      </p>
+    </div>
+
+    <!-- QUICK DOWNLOAD BANNER -->
+    <div class="card" style="background: #F8FAFC; border: 1px solid var(--laz-gray-200); padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+      <div style="font-size: 12.5px; color: var(--laz-navy);">
+        <strong>Belum memiliki format baku?</strong> Buka & unduh dokumen standar resmi Lazismu UAD:
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <a href="proposal-preview.html?mode=template" target="_blank" class="btn btn-navy btn-sm" style="display:inline-flex; align-items:center; gap:5px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Format Proposal (PDF)
+        </a>
+        <a href="Format_RAB_Anggaran_Lazismu_UAD.xlsx" download="Format_RAB_Anggaran_Lazismu_UAD.xlsx" class="btn btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:5px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          Format RAB (.xlsx)
+        </a>
+        <a href="Format_Proposal_Kegiatan_Lazismu_UAD.docx" download="Format_Proposal_Kegiatan_Lazismu_UAD.docx" class="btn btn-secondary btn-sm" style="display:inline-flex; align-items:center; gap:5px;">
+          Format Word (.docx)
+        </a>
+      </div>
+    </div>
+
+    <!-- KARTU FORMULIR -->
+    <div class="form-card-wide">
+      <form id="formPengajuanProposal" onsubmit="handlePreSubmit(event)">
+        
+        <!-- BAGIAN 1: IDENTITAS PEMOHON / LEMBAGA -->
+        <div style="border-bottom: 1px solid var(--laz-gray-200); padding-bottom: 10px; margin-bottom: 16px;">
+          <h3 style="font-size: 15px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:22px; height:22px; border-radius:3px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">1</span>
+            Data Identitas Pemohon / Lembaga
+          </h3>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Kategori Pemohon <span class="req">*</span></label>
+            <select class="form-control" name="jenisPemohon" id="jenisPemohon" required>
+              <option value="Lembaga / Organisasi Mahasiswa / Ortom">Lembaga / Ortom / Organisasi Mahasiswa / Masjid</option>
+              <option value="Perorangan (Mahasiswa / Siswa / Mustahiq)">Perorangan (Mahasiswa / Siswa / Individu Dhuafa)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Lembaga / Instansi / Komunitas <span class="req">*</span></label>
+            <input type="text" class="form-control" name="instansi" id="inputInstansi" placeholder="Contoh: BEM FAST UAD / Takmir Masjid Al-Falah" required>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Nama Penanggung Jawab / Ketua Panitia <span class="req">*</span></label>
+            <input type="text" class="form-control" name="namaPemohon" id="inputNama" placeholder="Contoh: Muhammad Zaki Pratama" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nomor Identitas (NIK KTP / NIM UAD) <span class="req">*</span></label>
+            <input type="text" class="form-control" name="identitasId" id="inputIdentitas" placeholder="Contoh: NIM 2200018042 atau NIK KTP" required>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Nomor WhatsApp Aktif <span class="req">*</span></label>
+            <input type="tel" class="form-control" name="noHp" id="inputNoHp" placeholder="Contoh: 081234567890" required>
+            <div class="form-help">Pemberitahuan resmi dan panggilan fisik tanda tangan BAST dikirimkan via WhatsApp.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Alamat Email Aktif <span class="req">*</span></label>
+            <input type="email" class="form-control" name="email" id="inputEmail" placeholder="nama@webmail.uad.ac.id" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Alamat Lengkap / Sekretariat Lembaga <span class="req">*</span></label>
+          <textarea class="form-control" name="alamat" id="inputAlamat" rows="2" placeholder="Tuliskan alamat lengkap sekretariat atau domisili pemohon..." required></textarea>
+        </div>
+
+        <!-- BAGIAN 2: DATA REKENING BANK PENYALURAN -->
+        <div style="border-bottom: 1px solid var(--laz-gray-200); padding-bottom: 10px; margin: 24px 0 16px;">
+          <h3 style="font-size: 15px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:22px; height:22px; border-radius:3px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">2</span>
+            Informasi Rekening Bank Penyaluran Bantuan
+          </h3>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Nama Bank Rekening <span class="req">*</span></label>
+            <select class="form-control" name="namaBank" id="inputNamaBank" required>
+              <option value="Bank Syariah Indonesia (BSI)">Bank Syariah Indonesia (BSI) - Direkomendasikan</option>
+              <option value="Bank BPD DIY Syariah">Bank BPD DIY Syariah</option>
+              <option value="Bank Muamalat">Bank Muamalat</option>
+              <option value="Bank Mandiri / BNI / BRI">Bank Mandiri / BNI / BRI</option>
+              <option value="Bank Lainnya">Bank Lainnya</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nomor Rekening Bank <span class="req">*</span></label>
+            <input type="text" class="form-control" name="noRekening" id="inputNoRekening" placeholder="Contoh: 7188291024" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Atas Nama Pemilik Rekening (Sesuai Buku Tabungan) <span class="req">*</span></label>
+          <input type="text" class="form-control" name="atasNamaRekening" id="inputAtasNama" placeholder="Contoh: BEM FAST UAD atau Muhammad Zaki" required>
+        </div>
+
+        <!-- BAGIAN 3: INFORMASI USULAN KEGIATAN & NOMINAL -->
+        <div style="border-bottom: 1px solid var(--laz-gray-200); padding-bottom: 10px; margin: 24px 0 16px;">
+          <h3 style="font-size: 15px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:22px; height:22px; border-radius:3px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">3</span>
+            Rincian Usulan Kegiatan & Anggaran Biaya
+          </h3>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nomor Surat Pengantar Lembaga (Jika Ada)</label>
+          <input type="text" class="form-control" name="noSurat" id="inputNoSurat" placeholder="Contoh: 042/BEM-FAST/EXT/X/2026">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Perihal / Judul Kegiatan Usulan <span class="req">*</span></label>
+          <input type="text" class="form-control" name="perihal" id="inputPerihal" placeholder="Contoh: Permohonan Bantuan Dana Workshop Robotika & IoT untuk Dhuafa" required>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Pilar Program Lazismu yang Dituju <span class="req">*</span></label>
+            <select class="form-control" name="pilar" id="inputPilar" required>
+              <option value="pendidikan">Pilar Pendidikan (Beasiswa, Riset, Prestasi Mahasiswa)</option>
+              <option value="dakwah">Pilar Sosial Dakwah (Masjid, Bina Da'i, Syiar Islam)</option>
+              <option value="kesehatan">Pilar Kesehatan (Khitanan, Medis Dhuafa, Gizi)</option>
+              <option value="ekonomi">Pilar Ekonomi (Modal UMKM, Pelatihan Kerja)</option>
+              <option value="kemanusiaan">Pilar Kemanusiaan (Pangan Beras, Yatim, Bencana)</option>
+              <option value="lingkungan">Pilar Lingkungan (Konservasi Pesisir, Sampah, Pohon)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tanggal Pelaksanaan Kegiatan <span class="req">*</span></label>
+            <input type="date" class="form-control" name="tanggalKegiatan" id="inputTanggalKegiatan" required>
+            <div class="form-help">Menjadi acuan batas akhir LPJ (maksimal 14 hari pasca tanggal ini).</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nominal Bantuan yang Diajukan (Rupiah) <span class="req">*</span></label>
+          <input type="number" class="form-control" name="nominalDiajukan" id="inputNominal" min="100000" step="50000" placeholder="Contoh: 4500000" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Unggah Berkas Dokumen Proposal Lengkap & RAB (Format PDF) <span class="req">*</span></label>
+          <div class="file-upload-zone">
+            <div style="font-weight: 600; color: var(--laz-navy); font-size: 13px;">Pilih Berkas Dokumen Proposal (Format PDF)</div>
+            <div style="font-size: 11.5px; color: var(--laz-gray-500); margin-top: 4px;">Wajib memuat Latar Belakang, Susunan Panitia, Jadwal, dan Rincian Anggaran Biaya (RAB). Maks 10MB.</div>
+            <input type="file" name="fileProposal" id="inputFileProposal" accept=".pdf" style="margin-top: 10px;" required>
+          </div>
+        </div>
+
+        <!-- 5 BUTIR PERSYARATAN WAJIB -->
+        <div style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: var(--radius-sm); padding: 14px 16px; margin: 20px 0;">
+          <h4 style="font-size: 13px; color: #92400E; margin-bottom: 6px;">
+            Pernyataan Syarat & Komitmen LPJ (Sesuai BAST Resmi Lazismu UAD):
+          </h4>
+          <ol style="font-size: 12px; color: #78350F; padding-left: 18px; line-height: 1.55;">
+            <li>Bantuan diperuntukkan khusus perihal kegiatan yang disetujui sesuai rincian proposal.</li>
+            <li>Dana disalurkan ke nomor rekening bank resmi yang tercantum, biaya transfer ditanggung penerima.</li>
+            <li><strong>Wajib mencantumkan logo resmi Lazismu UAD</strong> pada spanduk/media acara dan menandai akun Instagram <strong>@Lazismu_UAD</strong>.</li>
+            <li><strong>Laporan Pertanggungjawaban (LPJ) wajib diserahkan maksimal 2 minggu (14 hari)</strong> setelah acara dilaksanakan.</li>
+            <li>LPJ didukung dengan nota atau kwitansi asli penggunaan dana yang sah.</li>
+          </ol>
+          <div style="margin-top: 10px;">
+            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer; font-size: 12px; font-weight: 600; color: #92400E;">
+              <input type="checkbox" id="checkSyarat" required style="margin-top: 3px;">
+              <span>Saya menyatakan data yang diisikan adalah benar dan menyanggupi seluruh ketentuan di atas.</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- TOMBOL LANJUT KE KONFIRMASI -->
+        <div style="display: flex; justify-content: flex-end; gap: 10px; align-items: center;">
+          <a href="pemohon-dashboard.html" class="btn btn-secondary">Batal</a>
+          <button type="submit" class="btn btn-primary" id="btnLanjutKonfirmasi">
+            Lanjut ke Konfirmasi Pengajuan →
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- MODAL KONFIRMASI PENGAJUAN -->
+  <div id="modalKonfirmasiPengajuan" class="figjam-modal-overlay">
+    <div class="figjam-modal-box" style="max-width: 580px;">
+      <div class="figjam-modal-header">
+        <div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--laz-orange); text-transform: uppercase;">Konfirmasi Pengajuan</div>
+          <h3 style="font-size: 16px; color: var(--laz-navy); margin-top: 2px;">Periksa Ulang Data Usulan Anda</h3>
+        </div>
+        <button type="button" class="figjam-modal-close" onclick="closeKonfirmasiModal()">&times;</button>
+      </div>
+
+      <div style="padding: 18px 22px; overflow-y: auto;">
+        <p style="font-size: 12px; color: var(--laz-gray-600); margin-bottom: 12px;">
+          Pastikan seluruh informasi di bawah ini telah sesuai sebelum dikirimkan ke antrean verifikasi staf Kantor Layanan Lazismu UAD.
+        </p>
+
+        <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px;">
+          <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500); width: 130px;">Pemohon:</td>
+              <td style="padding: 5px 0; font-weight: 600; color: var(--laz-navy);" id="prevNamaPemohon">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">Lembaga / Instansi:</td>
+              <td style="padding: 5px 0; font-weight: 600;" id="prevInstansi">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">No. WhatsApp:</td>
+              <td style="padding: 5px 0; font-weight: 600; color: var(--laz-green);" id="prevNoHp">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">Perihal Usulan:</td>
+              <td style="padding: 5px 0; font-weight: 600; color: var(--laz-navy);" id="prevPerihal">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">Pilar Program:</td>
+              <td style="padding: 5px 0;" id="prevPilar">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">Tanggal Acara:</td>
+              <td style="padding: 5px 0; font-weight: 600;" id="prevTanggal">-</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">Nominal Dimohon:</td>
+              <td style="padding: 5px 0; font-size: 15px; font-weight: 700; color: var(--laz-orange);" id="prevNominal">Rp 0</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--laz-gray-200);">
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">Rekening Tujuan:</td>
+              <td style="padding: 5px 0; font-weight: 600;" id="prevRekening">-</td>
+            </tr>
+            <tr>
+              <td style="padding: 5px 0; color: var(--laz-gray-500);">Lampiran PDF:</td>
+              <td style="padding: 5px 0; font-weight: 600; color: var(--laz-blue);" id="prevFile">-</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-sm); padding: 9px 12px; font-size: 11.5px; color: #166534;">
+          Berkas akan diteruskan ke antrean verifikasi staf internal (Level 1). Anda dapat memantau status secara berkala melalui menu Lacak Status.
+        </div>
+      </div>
+
+      <div class="figjam-modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeKonfirmasiModal()">Perbaiki Data</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="finalizeSubmission()">
+          Kirimkan Proposal Sekarang
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL SUKSES REGISTRASI PROPOSAL -->
+  <div id="modalSuccessSubmit" class="figjam-modal-overlay">
+    <div class="figjam-modal-box" style="max-width: 480px; text-align: center; padding: 28px 24px;">
+      <h3 style="font-size: 18px; color: var(--laz-navy); margin-bottom: 6px;">Proposal Berhasil Diajukan</h3>
+      <p style="font-size: 12.5px; color: var(--laz-gray-600); margin-bottom: 18px;">
+        Alhamdulillah, usulan permohonan bantuan dana Anda telah masuk ke dalam sistem verifikasi Lazismu UAD.
+      </p>
+
+      <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); padding: 14px; border-radius: var(--radius-sm); margin-bottom: 18px;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--laz-gray-500); text-transform: uppercase;">Kode Registrasi Proposal:</div>
+        <div style="font-size: 22px; font-weight: 800; color: var(--laz-orange); letter-spacing: 0.5px; margin: 4px 0;" id="regCodeDisplay">
+          PRP-2026-0000
+        </div>
+        <div style="font-size: 11px; color: var(--laz-gray-500);">Gunakan kode ini untuk memeriksa progres proposal Anda.</div>
+      </div>
+
+      <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="copyRegCode()">Salin Nomor</button>
+        <a href="tracking.html" id="linkToTracking" class="btn btn-primary btn-sm">Buka Lacak Status →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="laz-footer">
+    <div class="footer-bottom">
+      <div>&copy; 2026 Kantor Layanan Lazismu Universitas Ahmad Dahlan. Gedung ITC Kampus 1 UAD, Yogyakarta.</div>
+      <div>Sistem Informasi Pengajuan Proposal Bantuan Dana</div>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let generatedId = '';
+    let pendingFormData = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalFlowBar('pemohon');
+
+      const sess = getPemohonSession();
+      if (sess) {
+        if (sess.nama) document.getElementById('inputNama').value = sess.nama;
+        if (sess.instansi) document.getElementById('inputInstansi').value = sess.instansi;
+        if (sess.identitasId) document.getElementById('inputIdentitas').value = sess.identitasId;
+        if (sess.email) document.getElementById('inputEmail').value = sess.email;
+        if (sess.noHp) document.getElementById('inputNoHp').value = sess.noHp;
+      }
+    });
+
+    function handlePreSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const fileInput = document.getElementById('inputFileProposal');
+      const fileName = fileInput.files[0] ? fileInput.files[0].name : 'Proposal_Kegiatan.pdf';
+
+      pendingFormData = {
+        jenisPemohon: form.jenisPemohon.value,
+        instansi: form.instansi.value,
+        namaPemohon: form.namaPemohon.value,
+        identitasId: form.identitasId.value,
+        noHp: form.noHp.value,
+        email: form.email.value,
+        alamat: form.alamat.value,
+        namaBank: form.namaBank.value,
+        noRekening: form.noRekening.value,
+        atasNamaRekening: form.atasNamaRekening.value,
+        noSurat: form.noSurat.value,
+        perihal: form.perihal.value,
+        pilar: form.pilar.value,
+        tanggalKegiatan: form.tanggalKegiatan.value,
+        nominalDiajukan: Number(form.nominalDiajukan.value) || 0,
+        fileName: fileName
+      };
+
+      // Populate preview modal
+      document.getElementById('prevNamaPemohon').textContent = `${pendingFormData.namaPemohon} (${pendingFormData.identitasId})`;
+      document.getElementById('prevInstansi').textContent = pendingFormData.instansi;
+      document.getElementById('prevNoHp').textContent = pendingFormData.noHp;
+      document.getElementById('prevPerihal').textContent = pendingFormData.perihal;
+      document.getElementById('prevPilar').textContent = pendingFormData.pilar.toUpperCase();
+      document.getElementById('prevTanggal').textContent = formatDate(pendingFormData.tanggalKegiatan);
+      document.getElementById('prevNominal').textContent = formatRupiah(pendingFormData.nominalDiajukan);
+      document.getElementById('prevRekening').textContent = `${pendingFormData.namaBank} - ${pendingFormData.noRekening} a.n ${pendingFormData.atasNamaRekening}`;
+      document.getElementById('prevFile').textContent = pendingFormData.fileName;
+
+      document.getElementById('modalKonfirmasiPengajuan').style.display = 'flex';
+    }
+
+    function closeKonfirmasiModal() {
+      document.getElementById('modalKonfirmasiPengajuan').style.display = 'none';
+    }
+
+    function finalizeSubmission() {
+      if (!pendingFormData) return;
+      closeKonfirmasiModal();
+
+      const list = getProposals();
+      const nextNum = list.length + 1;
+      generatedId = `PRP-2026-${String(nextNum).padStart(4, '0')}`;
+
+      const newProp = {
+        id: generatedId,
+        noSurat: pendingFormData.noSurat || `${nextNum}/PROPOSAL/UAD/2026`,
+        tanggalMasuk: new Date().toISOString().replace('T', ' ').substring(0, 16),
+        namaPemohon: pendingFormData.namaPemohon,
+        instansi: pendingFormData.instansi,
+        penanggungJawab: pendingFormData.namaPemohon,
+        identitasId: pendingFormData.identitasId,
+        noHp: pendingFormData.noHp,
+        email: pendingFormData.email,
+        tanggalKegiatan: pendingFormData.tanggalKegiatan,
+        perihal: pendingFormData.perihal,
+        pilar: pendingFormData.pilar,
+        subPilar: 'Pengajuan Baru Masuk',
+        asnaf: 'Fisabilillah',
+        sumberDana: 'Dalam Evaluasi Internal',
+        nominalDiajukan: pendingFormData.nominalDiajukan,
+        nominalRekomendasi: 0,
+        nominalACC: 0,
+        catatanInternal: 'Proposal baru masuk sistem digital. Menunggu verifikasi kelengkapan berkas administratif oleh staf (Level 1).',
+        catatanBidang: '',
+        catatanPimpinan: '',
+        rekeningPenerima: `${pendingFormData.namaBank} - ${pendingFormData.noRekening} a.n ${pendingFormData.atasNamaRekening}`,
+        status: 'MENUNGGU_VERIFIKASI',
+        nomorBAST: '',
+        tglTtdBAST: '',
+        tglDanaCair: '',
+        statusLPJ: 'Belum Ada',
+        deadlineLPJ: '',
+        fileProposal: pendingFormData.fileName,
+        trackRecord: 'Pengajuan baru melalui sistem digital Lazismu UAD.'
+      };
+
+      addProposal(newProp);
+
+      document.getElementById('regCodeDisplay').textContent = generatedId;
+      document.getElementById('linkToTracking').href = `tracking.html?id=${generatedId}`;
+      document.getElementById('modalSuccessSubmit').style.display = 'flex';
+    }
+
+    function copyRegCode() {
+      navigator.clipboard.writeText(generatedId);
+      showToast(`Nomor registrasi ${generatedId} berhasil disalin ke clipboard!`, 'success');
+    }
+  </script>
+</body>
+</html>

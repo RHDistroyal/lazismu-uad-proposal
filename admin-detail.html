@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lembar Evaluasi Berjenjang SOP - Lazismu UAD</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* STYLING KHUSUS ALUR EVALUASI BERJENJANG */
+    .stepper-sop-container {
+      background: #ffffff;
+      border: 1px solid var(--laz-gray-200);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .stepper-sop-chain {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      position: relative;
+    }
+    @media (max-width: 900px) {
+      .stepper-sop-chain {
+        grid-template-columns: 1fr;
+      }
+    }
+    .stepper-sop-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--laz-gray-200);
+      background: var(--laz-gray-50);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .stepper-sop-step:hover {
+      border-color: var(--laz-gray-400);
+      background: #ffffff;
+    }
+    .stepper-sop-step.step-completed {
+      background: #F0FDF4;
+      border-color: #86EFAC;
+    }
+    .stepper-sop-step.step-active {
+      background: #FFFFFF;
+      border: 2px solid var(--laz-navy);
+      box-shadow: 0 2px 8px rgba(0, 45, 84, 0.12);
+    }
+    .stepper-sop-step.step-locked {
+      background: #F8FAFC;
+      opacity: 0.65;
+      cursor: not-allowed;
+      border-style: dashed;
+    }
+    .step-num-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-completed .step-num-circle {
+      background: #16A34A;
+      color: #ffffff;
+    }
+    .step-active .step-num-circle {
+      background: var(--laz-navy);
+      color: #ffffff;
+    }
+    .step-locked .step-num-circle {
+      background: var(--laz-gray-300);
+      color: var(--laz-gray-600);
+    }
+    .step-info-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--laz-navy);
+      line-height: 1.25;
+    }
+    .step-info-subtitle {
+      font-size: 10px;
+      color: var(--laz-gray-500);
+      margin-top: 2px;
+    }
+    .step-badge-pill {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ROLE / STAGE TAB NAVIGATION */
+    .stage-tabs-nav {
+      display: flex;
+      background: var(--laz-gray-100);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      gap: 3px;
+      margin-bottom: 16px;
+      border: 1px solid var(--laz-gray-300);
+      overflow-x: auto;
+    }
+    .stage-tab-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--laz-gray-600);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .stage-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--laz-navy);
+    }
+    .stage-tab-btn.active {
+      background: var(--laz-navy);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* DISTINCT LEVEL CARDS */
+    .level-card {
+      background: #ffffff;
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      border: 1px solid var(--laz-gray-200);
+      box-shadow: var(--shadow-sm);
+    }
+    .level-card.l1-active {
+      border-top: 4px solid var(--laz-gold);
+    }
+    .level-card.l2-active {
+      border-top: 4px solid var(--laz-blue);
+    }
+    .level-card.l3-active {
+      border-top: 4px solid var(--laz-purple);
+    }
+    .level-card.keuangan-active {
+      border-top: 4px solid var(--laz-green);
+    }
+    .level-card.lpj-active {
+      border-top: 4px solid var(--laz-cyan);
+    }
+
+    .level-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--laz-gray-200);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .level-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+    .level-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--laz-navy);
+      margin-top: 2px;
+    }
+    .level-desc {
+      font-size: 12px;
+      color: var(--laz-gray-600);
+      line-height: 1.45;
+      margin-top: 3px;
+    }
+
+    /* COMPLETED SUMMARY CARD */
+    .completed-summary-card {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .completed-summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    /* LOCKED STAGE CARD */
+    .locked-stage-card {
+      background: #F8FAFC;
+      border: 1.5px dashed var(--laz-gray-300);
+      border-radius: var(--radius-sm);
+      padding: 24px 20px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    /* CHECKLIST AUDIT */
+    .audit-check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--laz-gray-50);
+      border: 1px solid var(--laz-gray-200);
+      margin-bottom: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .audit-check-item:hover {
+      background: #F1F5F9;
+    }
+    .audit-check-item input[type="checkbox"] {
+      margin-top: 2px;
+      accent-color: var(--laz-green);
+    }
+
+    /* THREE-TIER FINANCIAL COMPARISON */
+    .finance-comparison-box {
+      background: #F8FAFC;
+      border: 1px solid var(--laz-gray-200);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.2fr;
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    @media (max-width: 600px) {
+      .finance-comparison-box {
+        grid-template-columns: 1fr;
+      }
+    }
+    .fin-item-col {
+      padding: 6px 8px;
+      border-radius: 4px;
+      background: #ffffff;
+      border: 1px solid var(--laz-gray-200);
+    }
+  </style>
+</head>
+<body style="background: var(--laz-gray-100);">
+
+  <div class="admin-layout">
+    <!-- SIDEBAR INTERNAL LAZISMU -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <div class="brand-emblem" style="width: 34px; height: 34px; font-size: 16px;">L</div>
+        <div>
+          <div class="admin-sidebar-title">LAZISMU <span>UAD</span></div>
+          <div style="font-size: 10px; color: var(--laz-gray-400);">Evaluasi Berjenjang SOP</div>
+        </div>
+      </div>
+
+      <nav class="admin-sidebar-nav">
+        <a href="admin-dashboard.html" class="admin-nav-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Kembali ke Dashboard
+        </a>
+        <a href="admin-dashboard.html?tab=staff" class="admin-nav-item" id="sideNavStaff" onclick="setAdminSession('staff')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Verifikasi Staf (Level 1)
+        </a>
+        <a href="admin-dashboard.html?tab=bidang" class="admin-nav-item" id="sideNavBidang" onclick="setAdminSession('bidang')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Review Bidang (Level 2)
+        </a>
+        <a href="admin-dashboard.html?tab=ketua" class="admin-nav-item" id="sideNavKetua" onclick="setAdminSession('ketua')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Persetujuan Pimpinan (Level 3)
+        </a>
+        <a href="admin-keuangan.html" class="admin-nav-item" id="sideNavKeuangan" onclick="setAdminSession('keuangan')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Keuangan & BAST Fisik
+        </a>
+        <a href="admin-dashboard.html?tab=lpj" class="admin-nav-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Monitoring LPJ (14 Hari)
+        </a>
+
+        <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+          <a href="index.html" class="admin-nav-item">
+            Kembali ke Web Publik
+          </a>
+        </div>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <div class="admin-user-info">
+          <div class="admin-avatar-initials" id="detailAvatar">HK</div>
+          <div>
+            <div style="font-size: 12px; font-weight: 700; color: #fff;" id="detailSessionName">Ust. Hendra Kurniawan</div>
+            <div style="font-size: 10px; color: var(--laz-orange);" id="detailSessionRole">Staf SE (Level 1)</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- KONTEN UTAMA REVIEW BERJENJANG -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <div style="font-size: 11px; color: var(--laz-gray-500); text-transform: uppercase;">
+            <a href="admin-dashboard.html" style="color:var(--laz-gray-500);">Daftar Usulan</a> / Lembar Review Evaluasi Berjenjang SOP
+          </div>
+          <h2 style="font-size: 17px; color: var(--laz-navy); margin-top: 2px;" id="detailHeaderTitle">
+            Review Proposal: PRP-2026-0000
+          </h2>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="detailActionButtons">
+          <!-- Injected via JavaScript -->
+        </div>
+      </header>
+
+      <div class="admin-content-body">
+        
+        <!-- STEPPER ALUR SOP 5 TAHAPAN KEPUTUSAN -->
+        <div class="stepper-sop-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 800; color: var(--laz-navy); text-transform: uppercase; letter-spacing: 0.5px;">
+              Alur Prosedur SOP Lazismu UAD (5 Tahapan Berjenjang):
+            </div>
+            <div id="stepperCurrentStagePill">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <div class="stepper-sop-chain" id="stepperSopChain">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- DETAIL CONTENT BODY (GRID DOSSIER KIRI & TINDAKAN KANAN) -->
+        <div id="detailContentBody">
+          <!-- Injected by JS -->
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let currentProposal = null;
+    let selectedViewTab = 'active'; // 'active', 'staff', 'bidang', 'ketua', 'keuangan', 'lpj', 'all'
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalFlowBar('detail');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const idParam = urlParams.get('id');
+      const viewParam = urlParams.get('view');
+
+      if (!idParam) {
+        alert('ID Proposal tidak ditemukan!');
+        window.location.href = 'admin-dashboard.html';
+        return;
+      }
+
+      currentProposal = getProposalById(idParam);
+      if (!currentProposal) {
+        alert('Proposal tidak ditemukan dalam basis data!');
+        window.location.href = 'admin-dashboard.html';
+        return;
+      }
+
+      if (viewParam) {
+        selectedViewTab = viewParam;
+      }
+
+      updateSidebarUserInfo();
+      document.getElementById('detailHeaderTitle').textContent = `Review: ${currentProposal.id} - ${currentProposal.perihal}`;
+      renderAll();
+    });
+
+    function getStageOrder(status) {
+      if (status === 'MENUNGGU_VERIFIKASI' || status === 'REVISI') return 1;
+      if (status === 'REVIEW_BIDANG') return 2;
+      if (status === 'KEPUTUSAN_KETUA') return 3;
+      if (status === 'MENUNGGU_PENCAIRAN') return 4;
+      if (status === 'TELAH_DICAIRKAN') return 5;
+      if (status === 'LPJ_TERVERIFIKASI') return 6;
+      if (status === 'DITOLAK') return 99;
+      return 1;
+    }
+
+    function updateSidebarUserInfo() {
+      const sess = getAdminSession();
+      document.getElementById('detailSessionName').textContent = sess.name;
+      document.getElementById('detailSessionRole').textContent = sess.title;
+      const initials = sess.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+      document.getElementById('detailAvatar').textContent = initials;
+    }
+
+    function setViewTab(tab) {
+      selectedViewTab = tab;
+      renderAll();
+    }
+
+    function renderAll() {
+      renderTopButtons();
+      renderStepper();
+      renderDetailContent();
+    }
+
+    function renderTopButtons() {
+      const p = currentProposal;
+      const btnArea = document.getElementById('detailActionButtons');
+      let extraBtns = `
+        <a href="admin-dashboard.html" class="btn btn-secondary btn-sm">Daftar Proposal</a>
+        <button class="btn btn-secondary btn-sm" onclick="window.print()">Cetak Berkas Audit</button>
+      `;
+      if (p.nominalACC > 0 || p.status === 'MENUNGGU_PENCAIRAN' || p.status === 'TELAH_DICAIRKAN' || p.status === 'LPJ_TERVERIFIKASI') {
+        extraBtns += `<a href="proposal-preview.html?id=${p.id}" target="_blank" class="btn btn-navy btn-sm" style="font-size:11px;">Proposal ACC</a>`;
+      }
+      if (p.nomorBAST) {
+        extraBtns += `<a href="bast-preview.html?id=${p.id}" target="_blank" class="btn btn-primary btn-sm" style="font-size:11px;">BAST Resmi</a>`;
+      }
+      if (p.status === 'LPJ_TERVERIFIKASI' || p.status === 'TELAH_DICAIRKAN') {
+        extraBtns += `<a href="lpj-preview.html?id=${p.id}" target="_blank" class="btn btn-secondary btn-sm" style="color:var(--laz-green); font-weight:600; font-size:11px;">Dokumen LPJ</a>`;
+      }
+      btnArea.innerHTML = extraBtns;
+    }
+
+    function renderStepper() {
+      const p = currentProposal;
+      const curOrder = getStageOrder(p.status);
+      const isDitolak = p.status === 'DITOLAK';
+      const isRevisi = p.status === 'REVISI';
+
+      const stepsDef = [
+        { key: 'staff', stepNum: 1, title: 'Verifikasi Staf', subtitle: 'Pemeriksaan Berkas L1', order: 1 },
+        { key: 'bidang', stepNum: 2, title: 'Review Bidang', subtitle: '6 Pilar & Pagu L2', order: 2 },
+        { key: 'ketua', stepNum: 3, title: 'Putusan Ketua', subtitle: 'Ketuk Palu ACC L3', order: 3 },
+        { key: 'keuangan', stepNum: 4, title: 'Keuangan & BAST', subtitle: 'Pencairan Kasir', order: 4 },
+        { key: 'lpj', stepNum: 5, title: 'Monitoring LPJ', subtitle: 'Tenggat 14 Hari', order: 5 }
+      ];
+
+      // Pill current stage
+      const pillContainer = document.getElementById('stepperCurrentStagePill');
+      const st = STATUS_PROPOSAL[p.status] || STATUS_PROPOSAL.MENUNGGU_VERIFIKASI;
+      pillContainer.innerHTML = `<span class="badge ${st.badgeClass}" style="font-size:11px; padding:4px 10px;">Posisi: ${st.label}</span>`;
+
+      const stepperContainer = document.getElementById('stepperSopChain');
+      stepperContainer.innerHTML = stepsDef.map(s => {
+        let stepClass = '';
+        let badgeHtml = '';
+        let numIcon = s.stepNum;
+
+        if (isDitolak) {
+          stepClass = 'step-locked';
+          badgeHtml = '<span class="step-badge-pill" style="background:#FEE2E2; color:#DC2626;">Ditolak</span>';
+        } else if (curOrder > s.order) {
+          stepClass = 'step-completed';
+          numIcon = '✓';
+          badgeHtml = '<span class="step-badge-pill" style="background:#DCFCE7; color:#15803D;">Selesai</span>';
+        } else if (curOrder === s.order) {
+          stepClass = 'step-active';
+          if (isRevisi) {
+            badgeHtml = '<span class="step-badge-pill" style="background:#FEF3C7; color:#B45309;">Perlu Revisi</span>';
+          } else {
+            badgeHtml = '<span class="step-badge-pill" style="background:#DBEAFE; color:#1D4ED8;">Sedang Aktif</span>';
+          }
+        } else {
+          stepClass = 'step-locked';
+          numIcon = '🔒';
+          badgeHtml = '<span class="step-badge-pill" style="background:#F1F5F9; color:#64748B;">Terkunci</span>';
+        }
+
+        return `
+          <div class="stepper-sop-step ${stepClass}" onclick="setViewTab('${s.key}')">
+            <div class="step-num-circle">${numIcon}</div>
+            <div>
+              <div class="step-info-title">${s.title}</div>
+              <div class="step-info-subtitle">${s.subtitle}</div>
+              ${badgeHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderDetailContent() {
+      const p = currentProposal;
+      const st = STATUS_PROPOSAL[p.status] || STATUS_PROPOSAL.MENUNGGU_VERIFIKASI;
+      const curOrder = getStageOrder(p.status);
+      const container = document.getElementById('detailContentBody');
+
+      // Tentukan tab aktif
+      let activeTab = selectedViewTab;
+      if (activeTab === 'active') {
+        if (curOrder === 1) activeTab = 'staff';
+        else if (curOrder === 2) activeTab = 'bidang';
+        else if (curOrder === 3) activeTab = 'ketua';
+        else if (curOrder === 4) activeTab = 'keuangan';
+        else if (curOrder >= 5) activeTab = 'lpj';
+      }
+
+      container.innerHTML = `
+        <div class="detail-grid-layout" style="display: grid; grid-template-columns: 1.25fr 1.35fr; gap: 20px;">
+          
+          <!-- ========================================== -->
+          <!-- KOLOM KIRI: DOSSIER LENGKAP & AUDIT TRAIL -->
+          <!-- ========================================== -->
+          <div>
+            <!-- KARTU DATA USULAN PEMOHON -->
+            <div class="card" style="margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <span class="badge ${st.badgeClass}">${st.label}</span>
+                  <span style="font-weight: 800; color: var(--laz-navy); font-size: 13px; margin-left: 6px;">${p.id}</span>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 11px; color: var(--laz-gray-500);">Nominal Permohonan:</div>
+                  <div style="font-size: 18px; font-weight: 800; color: var(--laz-navy);">${formatRupiah(p.nominalDiajukan)}</div>
+                </div>
+              </div>
+
+              <h3 style="font-size: 15.5px; color: var(--laz-navy); line-height: 1.4; margin-bottom: 4px;">
+                ${p.perihal}
+              </h3>
+              ${p.noSurat ? `<div style="font-size: 11.5px; color: var(--laz-gray-600); margin-bottom: 12px;">No. Surat Pengantar: <strong>${p.noSurat}</strong></div>` : ''}
+
+              <!-- TABEL DETAIL DOSSIER -->
+              <table style="width: 100%; font-size: 12px; border-collapse: collapse; margin-top: 10px;">
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; width: 145px; color: var(--laz-gray-500);">Nama Pemohon:</td>
+                  <td style="padding: 6px 0; font-weight: 700; color: var(--laz-navy);">${p.namaPemohon}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Lembaga / Instansi:</td>
+                  <td style="padding: 6px 0; font-weight: 600;">${p.instansi}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Identitas (NIK/NIM):</td>
+                  <td style="padding: 6px 0;">${p.identitasId || '-'}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Kontak WhatsApp:</td>
+                  <td style="padding: 6px 0;">
+                    <a href="https://wa.me/${p.noHp.replace(/[^0-9]/g, '')}" target="_blank" style="color: var(--laz-green); font-weight: 600;">
+                      ${p.noHp} (Hubungi Langsung)
+                    </a>
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Tanggal Masuk:</td>
+                  <td style="padding: 6px 0;">${p.tanggalMasuk}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Tanggal Kegiatan:</td>
+                  <td style="padding: 6px 0; font-weight: 700; color: var(--laz-orange);">${p.tanggalKegiatan}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Pilar & Sub-Pilar:</td>
+                  <td style="padding: 6px 0;"><span class="badge badge-neutral">${p.pilar.toUpperCase()}</span> (${p.subPilar || '-'})</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--laz-gray-100);">
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Rekening Bank:</td>
+                  <td style="padding: 6px 0; font-weight: 600; color: var(--laz-navy);">${p.rekeningPenerima}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 0; color: var(--laz-gray-500);">Berkas Dokumen PDF:</td>
+                  <td style="padding: 6px 0;">
+                    <a href="javascript:void(0)" onclick="alert('File dokumen proposal: ' + '${p.fileProposal}' + '\\n\\nDokumen siap diperiksa oleh staf Lazismu UAD.')" style="color: var(--laz-blue); font-weight: 600; text-decoration: underline;">
+                      📄 ${p.fileProposal || 'Proposal_Lengkap.pdf'}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- REKAM JEJAK / RIWAYAT PEMOHON (INTERNAL STAF) -->
+            <div class="card" style="border-left: 3px solid var(--laz-gold); background: #FFFDF7; padding: 14px 18px; margin-bottom: 16px;">
+              <h4 style="font-size: 12.5px; color: var(--laz-gold); margin-bottom: 4px; text-transform: uppercase;">
+                Rekam Jejak Pemohon (Audit Track Record Internal):
+              </h4>
+              <p style="font-size: 12px; color: var(--laz-gray-700); line-height: 1.5; margin: 0;">
+                ${p.trackRecord || 'Pemohon baru terdaftar dalam sistem Lazismu UAD, tidak ada catatan tunggakan LPJ.'}
+              </p>
+            </div>
+
+            <!-- AUDIT TRAIL BERJENJANG DARI SELURUH TAHAP -->
+            <div class="card" style="padding: 16px 18px;">
+              <h3 style="font-size: 13.5px; color: var(--laz-navy); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.3px;">
+                Catatan Evaluasi Internal Berjenjang
+              </h3>
+
+              <!-- 1. STAF L1 -->
+              <div style="background: var(--laz-gray-50); border-left: 3px solid var(--laz-gold); padding: 10px 12px; border-radius: 3px; margin-bottom: 10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-size: 10.5px; font-weight: 700; color: var(--laz-gold); text-transform: uppercase;">1. Verifikasi Staf SE (Level 1)</span>
+                  <span style="font-size: 10px; color: var(--laz-gray-500);">${curOrder > 1 ? '✓ Terverifikasi' : 'Tahap Aktif'}</span>
+                </div>
+                <div style="font-size: 12px; color: var(--laz-gray-800); margin-top: 4px;">
+                  ${p.catatanInternal ? `"${p.catatanInternal}"` : '<em style="color: var(--laz-gray-400);">Belum ada catatan verifikasi staf.</em>'}
+                </div>
+              </div>
+
+              <!-- 2. BIDANG L2 -->
+              <div style="background: var(--laz-gray-50); border-left: 3px solid var(--laz-blue); padding: 10px 12px; border-radius: 3px; margin-bottom: 10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-size: 10.5px; font-weight: 700; color: var(--laz-blue); text-transform: uppercase;">2. Rekomendasi Pengurus Bidang (Level 2)</span>
+                  <span style="font-size: 10px; color: var(--laz-gray-500);">${curOrder > 2 ? '✓ Disetujui Bidang' : (curOrder === 2 ? 'Sedang Ditelaah' : 'Menunggu L1')}</span>
+                </div>
+                <div style="font-size: 12px; color: var(--laz-gray-800); margin-top: 4px;">
+                  ${p.catatanBidang ? `"${p.catatanBidang}"` : '<em style="color: var(--laz-gray-400);">Belum ada telaah pengurus bidang.</em>'}
+                </div>
+                ${p.nominalRekomendasi > 0 ? `
+                  <div style="font-size: 11.5px; font-weight: 700; color: var(--laz-navy); margin-top: 4px;">
+                    Usulan Nominal: <span style="color:var(--laz-blue);">${formatRupiah(p.nominalRekomendasi)}</span> (Asnaf: ${p.asnaf || '-'})
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- 3. KETUA L3 -->
+              <div style="background: var(--laz-gray-50); border-left: 3px solid var(--laz-purple); padding: 10px 12px; border-radius: 3px; margin-bottom: 10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-size: 10.5px; font-weight: 700; color: var(--laz-purple); text-transform: uppercase;">3. Putusan Pimpinan Lazismu UAD (Level 3)</span>
+                  <span style="font-size: 10px; color: var(--laz-gray-500);">${curOrder >= 4 ? '✓ Disetujui (ACC)' : (curOrder === 3 ? 'Menunggu Putusan' : 'Menunggu L2')}</span>
+                </div>
+                <div style="font-size: 12px; color: var(--laz-gray-800); margin-top: 4px;">
+                  ${p.catatanPimpinan ? `"${p.catatanPimpinan}"` : '<em style="color: var(--laz-gray-400);">Belum ada putusan ketua.</em>'}
+                </div>
+                ${p.nominalACC > 0 ? `
+                  <div style="font-size: 12px; font-weight: 800; color: var(--laz-green); margin-top: 4px;">
+                    Nominal ACC: ${formatRupiah(p.nominalACC)} | No. BAST: ${p.nomorBAST || '-'}
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- 4. KEUANGAN & LPJ -->
+              <div style="background: var(--laz-gray-50); border-left: 3px solid var(--laz-green); padding: 10px 12px; border-radius: 3px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span style="font-size: 10.5px; font-weight: 700; color: var(--laz-green); text-transform: uppercase;">4. Divisi Keuangan & Monitoring LPJ</span>
+                  <span style="font-size: 10px; color: var(--laz-gray-500);">${curOrder >= 5 ? '✓ Dana Dicairkan' : (curOrder === 4 ? 'Siap Cair' : 'Menunggu ACC')}</span>
+                </div>
+                <div style="font-size: 12px; color: var(--laz-gray-700); margin-top: 4px;">
+                  ${p.tglDanaCair ? `Dana dicairkan pada <strong>${p.tglDanaCair}</strong>. Batas akhir LPJ: <strong>${p.deadlineLPJ || '-'}</strong> (${p.statusLPJ || '-'})` : '<em style="color: var(--laz-gray-400);">Menunggu pencairan & serah terima BAST fisik.</em>'}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- KOLOM KANAN: PANEL TINDAKAN SPESIFIK TAHAP -->
+          <!-- ========================================== -->
+          <div>
+            
+            <!-- STAGE TAB SWITCHER -->
+            <div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--laz-gray-500); text-transform: uppercase; margin-bottom: 6px;">
+                Pilih Tampilan Tahap Evaluasi:
+              </div>
+              <div class="stage-tabs-nav">
+                <button type="button" class="stage-tab-btn ${activeTab === 'staff' ? 'active' : ''}" onclick="setViewTab('staff')">
+                  Staf L1 ${curOrder > 1 ? '✓' : ''}
+                </button>
+                <button type="button" class="stage-tab-btn ${activeTab === 'bidang' ? 'active' : ''}" onclick="setViewTab('bidang')">
+                  Bidang L2 ${curOrder > 2 ? '✓' : (curOrder === 2 ? '●' : '🔒')}
+                </button>
+                <button type="button" class="stage-tab-btn ${activeTab === 'ketua' ? 'active' : ''}" onclick="setViewTab('ketua')">
+                  Pimpinan L3 ${curOrder >= 4 ? '✓' : (curOrder === 3 ? '●' : '🔒')}
+                </button>
+                <button type="button" class="stage-tab-btn ${activeTab === 'keuangan' ? 'active' : ''}" onclick="setViewTab('keuangan')">
+                  Keuangan ${curOrder >= 5 ? '✓' : (curOrder === 4 ? '●' : '🔒')}
+                </button>
+                <button type="button" class="stage-tab-btn ${activeTab === 'lpj' ? 'active' : ''}" onclick="setViewTab('lpj')">
+                  LPJ ${curOrder === 6 ? '✓' : (curOrder === 5 ? '●' : '🔒')}
+                </button>
+              </div>
+            </div>
+
+            <!-- RENDER KONTEN TAB SPESIFIK -->
+            ${renderActiveStagePanel(activeTab, p, curOrder)}
+
+          </div>
+        </div>
+      `;
+    }
+
+    // FUNCTION UNTUK MERENDER PANEL TAHAP YANG DIPILIH
+    function renderActiveStagePanel(tab, p, curOrder) {
+      if (tab === 'staff') {
+        return renderPanelLevel1Staff(p, curOrder);
+      } else if (tab === 'bidang') {
+        return renderPanelLevel2Bidang(p, curOrder);
+      } else if (tab === 'ketua') {
+        return renderPanelLevel3Ketua(p, curOrder);
+      } else if (tab === 'keuangan') {
+        return renderPanelKeuangan(p, curOrder);
+      } else if (tab === 'lpj') {
+        return renderPanelLPJ(p, curOrder);
+      }
+      return renderPanelLevel1Staff(p, curOrder);
+    }
+
+    // =========================================================================
+    // 1. PANEL LEVEL 1: STAF SE (VERIFIKASI BERKAS)
+    // =========================================================================
+    function renderPanelLevel1Staff(p, curOrder) {
+      const isL1Active = p.status === 'MENUNGGU_VERIFIKASI' || p.status === 'REVISI';
+      const isL1Done = curOrder > 1;
+
+      return `
+        <div class="level-card l1-active">
+          <div class="level-header">
+            <div>
+              <span class="level-tag" style="color: var(--laz-gold);">TAHAP 1: VERIFIKASI ADMINISTRASI</span>
+              <div class="level-title">Staf Lazismu (Level 1: Pemeriksaan Berkas)</div>
+              <div class="level-desc">Petugas verifikator: <strong>Ust. Hendra Kurniawan (Staf SE)</strong></div>
+            </div>
+            <span class="badge ${isL1Done ? 'badge-success' : 'badge-warning'}">
+              ${isL1Done ? '✓ Berkas Selesai Diverifikasi' : 'Menunggu Pemeriksaan'}
+            </span>
+          </div>
+
+          <!-- JIKA SUDAH SELESAI DIVERIFIKASI OLEH STAF -->
+          ${isL1Done ? `
+            <div class="completed-summary-card">
+              <div class="completed-summary-header">
+                <div style="font-size: 12px; font-weight: 700; color: #166534;">
+                  ✓ Hasil Verifikasi Berkas Dinyatakan Lengkap & Sah
+                </div>
+                <span style="font-size: 11px; color: #166534;">Level 1 Lolos</span>
+              </div>
+              <div style="font-size: 12px; color: #14532D; line-height: 1.5;">
+                <strong>Catatan Verifikator Staf:</strong><br>
+                "${p.catatanInternal || 'Seluruh persyaratan administratif, rincian anggaran biaya (RAB), dan rekam jejak pemohon telah diperiksa dan dinyatakan memenuhi kriteria Lazismu UAD.'}"
+              </div>
+              <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
+                <span class="badge badge-neutral" style="font-size:10px;">Surat Rekomendasi Valid</span>
+                <span class="badge badge-neutral" style="font-size:10px;">RAB Rinci Terlampir</span>
+                <span class="badge badge-neutral" style="font-size:10px;">Identitas NIM/NIK Sesuai</span>
+                <span class="badge badge-neutral" style="font-size:10px;">H-14 Terpenuhi</span>
+              </div>
+            </div>
+
+            <div style="background: #F8FAFC; border: 1px solid var(--laz-gray-200); padding: 12px; border-radius: var(--radius-sm); font-size: 12px; color: var(--laz-gray-600);">
+              Proposal telah dilimpahkan ke <strong>Pengurus Bidang (Level 2)</strong>. Tombol aksi verifikasi berkas dinonaktifkan untuk menjaga integritas data berjenjang.
+              <div style="margin-top: 10px;">
+                <button type="button" class="btn btn-navy btn-sm" onclick="setViewTab('bidang')">
+                  Lihat / Buka Tahap Pengurus Bidang (Level 2) ➔
+                </button>
+              </div>
+            </div>
+          ` : `
+            <!-- FORM AKTIF VERIFIKASI STAF (HANYA MUNCUL SAAT DRAFT / REVISI) -->
+            <p style="font-size: 12px; color: var(--laz-gray-600); margin-bottom: 12px;">
+              Periksa 4 butir kelengkapan administrasi sebelum melimpahkan berkas ke Pengurus Bidang:
+            </p>
+
+            <!-- CHECKLIST FORMAL VERIFIKASI -->
+            <div style="margin-bottom: 14px;">
+              <label class="audit-check-item">
+                <input type="checkbox" id="chkSurat" checked>
+                <span><strong>1. Surat Pengantar / Mandat Resmi</strong> terlampir asli dari lembaga/ortom/takmir.</span>
+              </label>
+
+              <label class="audit-check-item">
+                <input type="checkbox" id="chkRab" checked>
+                <span><strong>2. Rincian Anggaran Biaya (RAB)</strong> memiliki rincian satuan harga dan realistis.</span>
+              </label>
+
+              <label class="audit-check-item">
+                <input type="checkbox" id="chkIdentitas" checked>
+                <span><strong>3. Identitas Penanggung Jawab</strong> (KTP/NIM UAD) valid dan nomor WhatsApp aktif.</span>
+              </label>
+
+              <label class="audit-check-item">
+                <input type="checkbox" id="chkTanggal" checked>
+                <span><strong>4. Tanggal Pelaksanaan</strong> diajukan wajar (minimal H-14 sebelum kegiatan).</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Catatan Hasil Pemeriksaan Staf <span class="req">*</span></label>
+              <textarea class="form-control" id="inputStaffNote" rows="3" placeholder="Contoh: Berkas dan RAB telah diperiksa lengkap, pemohon memiliki rekam jejak kegiatan yang baik...">${p.catatanInternal || ''}</textarea>
+            </div>
+
+            <div style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: var(--radius-sm); padding: 10px 12px; font-size: 11.5px; color: #92400E; margin-bottom: 14px;">
+              <strong>Peringatan Alur SOP:</strong> Menyetujui verifikasi ini akan <strong>menaikkan status ke Level 2</strong> untuk ditelaah oleh Pengurus Bidang.
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button type="button" class="btn btn-success btn-sm" style="font-weight: 700; padding: 10px 16px;" onclick="handleStaffAction('LENGKAP')">
+                ✓ Loloskan: Teruskan ke Pengurus Bidang (Level 2)
+              </button>
+              <button type="button" class="btn btn-warning btn-sm" onclick="handleStaffAction('TIDAK_LENGKAP')">
+                ⚠️ Berkas Kurang: Kembalikan ke Pemohon (Revisi)
+              </button>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 2. PANEL LEVEL 2: PENGURUS BIDANG (TELAAH 6 PILAR & REKOMENDASI NOMINAL)
+    // =========================================================================
+    function renderPanelLevel2Bidang(p, curOrder) {
+      const isL1Done = curOrder > 1;
+      const isL2Active = p.status === 'REVIEW_BIDANG';
+      const isL2Done = curOrder > 2;
+
+      // JIKA TAHAP 1 BELUM SELESAI -> TAMPILKAN KUNCI
+      if (!isL1Done) {
+        return `
+          <div class="locked-stage-card">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔒</div>
+            <h4 style="font-size: 15px; color: var(--laz-navy); margin-bottom: 6px;">Tahap Level 2 Terkunci</h4>
+            <p style="font-size: 12.5px; color: var(--laz-gray-600); max-width: 440px; margin: 0 auto 16px;">
+              Proposal ini masih berada di <strong>Tahap Verifikasi Staf (Level 1)</strong>. Pengurus Bidang hanya dapat memberikan rekomendasi setelah berkas dinyatakan lengkap oleh Staf SE.
+            </p>
+            <button type="button" class="btn btn-warning btn-sm" onclick="setViewTab('staff')">
+              ← Buka Tahap Verifikasi Staf (Level 1)
+            </button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="level-card l2-active">
+          <div class="level-header">
+            <div>
+              <span class="level-tag" style="color: var(--laz-blue);">TAHAP 2: REVIEW SUBSTANSI PROGRAM & ASNAF</span>
+              <div class="level-title">Pengurus Bidang (Level 2: Rekomendasi Pagu)</div>
+              <div class="level-desc">Penelaah: <strong>Drs. H. Miftahul Huda (Pengurus Bidang Pendistribusian)</strong></div>
+            </div>
+            <span class="badge ${isL2Done ? 'badge-success' : 'badge-info'}">
+              ${isL2Done ? '✓ Rekomendasi Selesai' : 'Sedang Ditelaah Bidang'}
+            </span>
+          </div>
+
+          <!-- JIKA LEVEL 2 SUDAH SELESAI DIAJUKAN KE PIMPINAN -->
+          ${isL2Done ? `
+            <div class="completed-summary-card" style="background: #EFF6FF; border-color: #BFDBFE;">
+              <div class="completed-summary-header">
+                <div style="font-size: 12px; font-weight: 700; color: #1E40AF;">
+                  ✓ Rekomendasi Pengurus Bidang Telah Diteruskan ke Pimpinan
+                </div>
+                <span class="badge badge-navy" style="font-size:10px;">Level 2 Lolos</span>
+              </div>
+              <div style="font-size: 12px; color: #1E3A8A; line-height: 1.5;">
+                <strong>Golongan Asnaf:</strong> ${p.asnaf || 'Fisabilillah'}<br>
+                <strong>Kesesuaian Pilar:</strong> ${p.pilar.toUpperCase()}<br>
+                <strong>Usulan Alokasi Dana:</strong> <span style="font-size:14px; font-weight:800; color:#1D4ED8;">${formatRupiah(p.nominalRekomendasi)}</span> (dari usulan ${formatRupiah(p.nominalDiajukan)})<br>
+                <strong>Catatan Pertimbangan Bidang:</strong> "${p.catatanBidang || '-'}"
+              </div>
+            </div>
+
+            <div style="background: #F8FAFC; border: 1px solid var(--laz-gray-200); padding: 12px; border-radius: var(--radius-sm); font-size: 12px; color: var(--laz-gray-600);">
+              Rekomendasi kini telah berada di meja <strong>Pimpinan / Ketua Lazismu UAD (Level 3)</strong> untuk penetapan putusan akhir ACC.
+              <div style="margin-top: 10px;">
+                <button type="button" class="btn btn-navy btn-sm" onclick="setViewTab('ketua')">
+                  Buka Tahap Putusan Pimpinan (Level 3) ➔
+                </button>
+              </div>
+            </div>
+          ` : `
+            <!-- FORM AKTIF PENGURUS BIDANG (LEVEL 2) -->
+            <p style="font-size: 12px; color: var(--laz-gray-600); margin-bottom: 12px;">
+              Tentukan kesesuaian 6 pilar, asnaf mustahiq, skala urgensi, dan masukkan rekomendasi nominal bantuan:
+            </p>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">Tentukan Golongan Asnaf <span class="req">*</span></label>
+                <select class="form-control" id="inputBidangAsnaf">
+                  <option value="Fisabilillah" ${p.asnaf === 'Fisabilillah' ? 'selected' : ''}>Fisabilillah (Dakwah / Pendidikan Islam)</option>
+                  <option value="Miskin" ${p.asnaf === 'Miskin' ? 'selected' : ''}>Miskin (Keluarga Dhuafa & Jamaah)</option>
+                  <option value="Fakir" ${p.asnaf === 'Fakir' ? 'selected' : ''}>Fakir (Kebutuhan Sangat Mendesak)</option>
+                  <option value="Ibnu Sabil" ${p.asnaf === 'Ibnu Sabil' ? 'selected' : ''}>Ibnu Sabil (Mahasiswa Rantau Kehabisan Bekal)</option>
+                  <option value="Gharimin" ${p.asnaf === 'Gharimin' ? 'selected' : ''}>Gharimin (Beban Medis / Hutang Darurat)</option>
+                  <option value="Muallaf" ${p.asnaf === 'Muallaf' ? 'selected' : ''}>Muallaf (Pembinaan Tauhid)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Kesesuaian 6 Pilar Lazismu <span class="req">*</span></label>
+                <select class="form-control" id="inputBidangPilar">
+                  <option value="pendidikan" ${p.pilar === 'pendidikan' ? 'selected' : ''}>Pilar Pendidikan (Beasiswa / Riset)</option>
+                  <option value="dakwah" ${p.pilar === 'dakwah' ? 'selected' : ''}>Pilar Sosial Dakwah (Masjid & Pengajian)</option>
+                  <option value="kesehatan" ${p.pilar === 'kesehatan' ? 'selected' : ''}>Pilar Kesehatan (Medis & Khitan)</option>
+                  <option value="ekonomi" ${p.pilar === 'ekonomi' ? 'selected' : ''}>Pilar Ekonomi (Modal UMKM Produktif)</option>
+                  <option value="kemanusiaan" ${p.pilar === 'kemanusiaan' ? 'selected' : ''}>Pilar Kemanusiaan (Bencana / Sembako)</option>
+                  <option value="lingkungan" ${p.pilar === 'lingkungan' ? 'selected' : ''}>Pilar Lingkungan (Air Bersih / Sampah)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- RASIONALISASI NOMINAL BANTUAN -->
+            <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin: 0;">Rekomendasi Nominal Bantuan (Rp) <span class="req">*</span></label>
+                <span style="font-size: 11px; color: var(--laz-gray-500);">Permohonan: <strong>${formatRupiah(p.nominalDiajukan)}</strong></span>
+              </div>
+              <input type="number" class="form-control" id="inputBidangNominal" value="${p.nominalRekomendasi || p.nominalDiajukan}" step="50000" style="font-size: 15px; font-weight: 700; color: var(--laz-blue);" oninput="updateBidangPercent()">
+              
+              <!-- QUICK BUTTONS RASIONALISASI -->
+              <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary btn-sm" style="font-size:10.5px; padding:3px 8px;" onclick="applyBidangPreset(1)">100% Penuh</button>
+                <button type="button" class="btn btn-secondary btn-sm" style="font-size:10.5px; padding:3px 8px;" onclick="applyBidangPreset(0.75)">75% Usulan</button>
+                <button type="button" class="btn btn-secondary btn-sm" style="font-size:10.5px; padding:3px 8px;" onclick="applyBidangPreset(0.5)">50% Stimulan</button>
+                <span style="font-size: 11px; color: var(--laz-navy); font-weight: 600; align-self: center; margin-left: auto;" id="bidangPercentLabel">100% dari usulan</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Catatan Pertimbangan & Urgensi Program <span class="req">*</span></label>
+              <textarea class="form-control" id="inputBidangNote" rows="3" placeholder="Tuliskan alasan rekomendasi nominal, urgensi kegiatan, dan sasaran kemanfaatannya...">${p.catatanBidang || ''}</textarea>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button type="button" class="btn btn-primary btn-sm" style="font-weight: 700; padding: 10px 16px; background: var(--laz-blue); border-color: var(--laz-blue);" onclick="handleBidangAction()">
+                ➔ Terbitkan Rekomendasi: Naikkan ke Pimpinan (Level 3)
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="handleBidangKembaliStaf()">
+                ↺ Kembalikan ke Staf L1 (Perlu Klarifikasi Lapangan)
+              </button>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 3. PANEL LEVEL 3: PIMPINAN / KETUA (PUTUSAN FINAL ACC)
+    // =========================================================================
+    function renderPanelLevel3Ketua(p, curOrder) {
+      const isL2Done = curOrder > 2;
+      const isL3Active = p.status === 'KEPUTUSAN_KETUA';
+      const isL3Done = curOrder >= 4;
+
+      // JIKA TAHAP 2 BELUM SELESAI -> TAMPILKAN KUNCI
+      if (!isL2Done) {
+        return `
+          <div class="locked-stage-card">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔒</div>
+            <h4 style="font-size: 15px; color: var(--laz-navy); margin-bottom: 6px;">Tahap Level 3 Terkunci</h4>
+            <p style="font-size: 12.5px; color: var(--laz-gray-600); max-width: 440px; margin: 0 auto 16px;">
+              Pimpinan / Ketua Lazismu UAD membutuhkan rekomendasi resmi dari <strong>Pengurus Bidang (Level 2)</strong> sebelum dapat memutuskan persetujuan (ACC) atau penolakan.
+            </p>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="setViewTab('bidang')">
+              ← Buka Tahap Pengurus Bidang (Level 2)
+            </button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="level-card l3-active">
+          <div class="level-header">
+            <div>
+              <span class="level-tag" style="color: var(--laz-purple);">TAHAP 3: PUTUSAN EKSEKUTIF FINAL</span>
+              <div class="level-title">Pimpinan / Ketua (Level 3: Ketuk Palu ACC)</div>
+              <div class="level-desc">Pengambil Keputusan: <strong>Drs. Farid Ma’ruf (Ketua Lazismu UAD)</strong></div>
+            </div>
+            <span class="badge ${isL3Done ? 'badge-success' : 'badge-purple'}">
+              ${isL3Done ? '✓ ACC Telah Ditetapkan' : 'Menunggu Putusan Ketua'}
+            </span>
+          </div>
+
+          <!-- JIKA SUDAH ACC -->
+          ${isL3Done ? `
+            <div class="completed-summary-card" style="background: #FDF4FF; border-color: #F0ABFC;">
+              <div class="completed-summary-header">
+                <div style="font-size: 12px; font-weight: 700; color: #86198F;">
+                  ✓ Proposal Telah Resmi Disetujui (ACC Final)
+                </div>
+                <span class="badge badge-purple" style="font-size:10px;">ACC Resmi</span>
+              </div>
+              <div style="font-size: 12px; color: #701A75; line-height: 1.55;">
+                Nomor BAST Resmi: <strong style="font-size:13px;">${p.nomorBAST}</strong><br>
+                Nominal Final Disetujui: <strong style="font-size:15px; color:var(--laz-green);">${formatRupiah(p.nominalACC)}</strong><br>
+                Pos Anggaran: <strong>${p.sumberDana || 'Kas Umum Lazismu UAD'}</strong><br>
+                Mandat Pimpinan: "${p.catatanPimpinan || 'Disetujui sesuai ketentuan BAST Lazismu UAD.'}"
+              </div>
+            </div>
+
+            <div style="background: #F8FAFC; border: 1px solid var(--laz-gray-200); padding: 12px; border-radius: var(--radius-sm); font-size: 12px; color: var(--laz-gray-600);">
+              Proposal telah masuk antrean <strong>Divisi Keuangan & Kasir</strong> untuk penyerahan dana dan penandatanganan berkas BAST basah di kantor.
+              <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-success btn-sm" onclick="setViewTab('keuangan')">
+                  Buka Kasir Keuangan & BAST ➔
+                </button>
+                <a href="bast-preview.html?id=${p.id}" target="_blank" class="btn btn-navy btn-sm">
+                  Cetak Dokumen BAST
+                </a>
+              </div>
+            </div>
+          ` : `
+            <!-- FORM AKTIF PIMPINAN (LEVEL 3) -->
+            <p style="font-size: 12px; color: var(--laz-gray-600); margin-bottom: 12px;">
+              Telaah hasil rekomendasi staf dan bidang, tentukan nominal final ACC, dan alokasikan pos anggaran dana:
+            </p>
+
+            <!-- TIGA TAHAP PERBANDINGAN NOMINAL -->
+            <div class="finance-comparison-box">
+              <div class="fin-item-col">
+                <div style="font-size: 10px; color: var(--laz-gray-500); text-transform: uppercase;">1. Diajukan Pemohon</div>
+                <div style="font-size: 13px; font-weight: 800; color: var(--laz-navy); margin-top: 2px;">
+                  ${formatRupiah(p.nominalDiajukan)}
+                </div>
+              </div>
+              <div class="fin-item-col">
+                <div style="font-size: 10px; color: var(--laz-gray-500); text-transform: uppercase;">2. Rekomendasi Bidang</div>
+                <div style="font-size: 13px; font-weight: 800; color: var(--laz-blue); margin-top: 2px;">
+                  ${formatRupiah(p.nominalRekomendasi || p.nominalDiajukan)}
+                </div>
+              </div>
+              <div class="fin-item-col" style="border: 2px solid var(--laz-purple); background: #FAF5FF;">
+                <div style="font-size: 10px; font-weight: 700; color: var(--laz-purple); text-transform: uppercase;">3. Nominal Final ACC (Rp)</div>
+                <input type="number" class="form-control" id="inputKetuaNominal" value="${p.nominalACC || p.nominalRekomendasi || p.nominalDiajukan}" step="50000" style="font-size: 14.5px; font-weight: 800; color: var(--laz-purple); padding: 4px 8px; margin-top: 3px;">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Pilih Pos Sumber Anggaran Dana Lazismu <span class="req">*</span></label>
+              <select class="form-control" id="inputKetuaPosDana">
+                <option value="Kas Zakat Pendidikan UAD (Beasiswa & Riset Mahasiswa)">Kas Zakat Pendidikan UAD (Beasiswa & Riset Mahasiswa)</option>
+                <option value="Kas Infaq Dakwah & Kemakmuran Masjid">Kas Infaq Dakwah & Kemakmuran Masjid</option>
+                <option value="Kas Pendayagunaan Zakat Produktif & UMKM">Kas Pendayagunaan Zakat Produktif & UMKM</option>
+                <option value="Kas Bantuan Medis & Kesehatan Dhuafa">Kas Bantuan Medis & Kesehatan Dhuafa</option>
+                <option value="Kas Kemanusiaan & Tanggap Bencana">Kas Kemanusiaan & Tanggap Bencana</option>
+                <option value="Kas Dana Cadangan Kebajikan Lazismu UAD">Kas Dana Cadangan Kebajikan Lazismu UAD</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Catatan Putusan / Mandat Pimpinan Lazismu UAD <span class="req">*</span></label>
+              <textarea class="form-control" id="inputKetuaNote" rows="2" placeholder="Catatan persetujuan, instruksi publikasi logo Lazismu, atau syarat khusus...">${p.catatanPimpinan || ''}</textarea>
+            </div>
+
+            <div style="margin-top: 14px;">
+              <div style="display: flex; gap: 8px;">
+                <button type="button" class="btn btn-success btn-sm" style="flex: 2; font-weight: 700; padding: 10px 16px;" onclick="handleKetuaAction('ACC')">
+                  ✓ SETUJUI (ACC FINAL) & TERBITKAN DOKUMEN BAST
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" style="flex: 1;" onclick="handleKetuaAction('TOLAK')">
+                  Tolak Usulan
+                </button>
+              </div>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 4. PANEL KEUANGAN: PENCAIRAN DANA & BAST FISIK
+    // =========================================================================
+    function renderPanelKeuangan(p, curOrder) {
+      const isL3Done = curOrder >= 4;
+      const isCair = curOrder >= 5;
+
+      if (!isL3Done) {
+        return `
+          <div class="locked-stage-card">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔒</div>
+            <h4 style="font-size: 15px; color: var(--laz-navy); margin-bottom: 6px;">Tahap Keuangan Terkunci</h4>
+            <p style="font-size: 12.5px; color: var(--laz-gray-600); max-width: 440px; margin: 0 auto 16px;">
+              Divisi Keuangan hanya dapat mencairkan dana dan menerbitkan BAST setelah proposal disetujui (ACC) oleh Pimpinan Lazismu UAD (Level 3).
+            </p>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="setViewTab('ketua')">
+              ← Buka Tahap Putusan Pimpinan (Level 3)
+            </button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="level-card keuangan-active">
+          <div class="level-header">
+            <div>
+              <span class="level-tag" style="color: var(--laz-green);">TAHAP 4: KEUANGAN & KASIR</span>
+              <div class="level-title">Divisi Keuangan (Pencairan Dana & BAST Fisik)</div>
+              <div class="level-desc">Petugas: <strong>Siti Nurhaliza, S.E (Bendahara Lazismu UAD)</strong></div>
+            </div>
+            <span class="badge ${isCair ? 'badge-success' : 'badge-warning'}">
+              ${isCair ? '✓ Dana Telah Diserahkan' : 'Siap Dicairkan (Menunggu Hadir Fisik)'}
+            </span>
+          </div>
+
+          <!-- RINGKASAN BAST -->
+          <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <div style="font-size: 11px; color: var(--laz-gray-500); text-transform: uppercase;">Nomor BAST Resmi:</div>
+                <div style="font-size: 14px; font-weight: 800; color: var(--laz-navy);">${p.nomorBAST}</div>
+                <div style="font-size: 11px; color: var(--laz-gray-500); margin-top: 4px;">Penerima: <strong>${p.namaPemohon}</strong> (${p.instansi})</div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 11px; color: var(--laz-gray-500);">Nominal Final ACC:</div>
+                <div style="font-size: 19px; font-weight: 800; color: var(--laz-green);">${formatRupiah(p.nominalACC)}</div>
+              </div>
+            </div>
+            <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="bast-preview.html?id=${p.id}" target="_blank" class="btn btn-navy btn-sm">
+                🖨 Cetak Lembar BAST Resmi (2 Rangkap)
+              </a>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="openWhatsAppSimulatorModal('${p.id}', 'acc')">
+                📱 Lihat Notifikasi Panggilan WA
+              </button>
+            </div>
+          </div>
+
+          ${isCair ? `
+            <div class="completed-summary-card">
+              <div class="completed-summary-header">
+                <div style="font-size: 12px; font-weight: 700; color: #166534;">
+                  ✓ Dana Telah Berhasil Diserahkan Kepada Penerima
+                </div>
+                <span class="badge badge-success" style="font-size:10px;">Cair</span>
+              </div>
+              <div style="font-size: 12px; color: #14532D; line-height: 1.5;">
+                Tanggal Pencairan: <strong>${p.tglDanaCair}</strong><br>
+                Tanda Tangan Basah & Cap Stempel Lembaga: <strong>Lengkap Terverifikasi</strong><br>
+                Batas Akhir Pelaporan LPJ: <strong style="color:var(--laz-orange);">${p.deadlineLPJ}</strong> (14 Hari Pasca Kegiatan)
+              </div>
+            </div>
+
+            <div style="margin-top: 10px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="setViewTab('lpj')">
+                Buka Pemantauan Masa LPJ ➔
+              </button>
+            </div>
+          ` : `
+            <!-- FORM KONFIRMASI KASIR PENCAIRAN -->
+            <div style="background: #FFFBEB; border: 1px solid #FCD34D; padding: 12px; border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 11.5px; color: #92400E;">
+              <strong>Verifikasi Fisik Meja Kasir (Audit Wajib):</strong>
+              <div style="margin-top: 6px;">
+                <label style="display:flex; align-items:center; gap:6px; margin-bottom:4px; cursor:pointer;">
+                  <input type="checkbox" id="chkKasirHadir" checked>
+                  <span>1. Perwakilan pemohon telah hadir secara fisik di kantor ITC Kampus 1 UAD.</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; margin-bottom:4px; cursor:pointer;">
+                  <input type="checkbox" id="chkKasirTtd" checked>
+                  <span>2. Tanda tangan basah pemohon dibubuhkan di atas 2 rangkap lembar BAST cetak.</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                  <input type="checkbox" id="chkKasirCap" checked>
+                  <span>3. Stempel resmi ormawa / takmir / instansi telah dibubuhkan.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Metode Penyaluran Dana <span class="req">*</span></label>
+              <select class="form-control" id="inputKeuanganMetode">
+                <option value="Transfer BSI Resmi">Transfer Rekening Bank BSI Resmi (Sesuai Dossier)</option>
+                <option value="Tunai Meja Kasir">Uang Tunai Langsung di Meja Kasir Lazismu</option>
+                <option value="Transfer BPD DIY Syariah">Transfer Bank BPD DIY Syariah</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-success btn-sm" style="width: 100%; font-weight: 700; padding: 10px 16px;" onclick="handleKeuanganDisburse()">
+              ✓ Konfirmasi Penyerahan Dana & Aktifkan Masa LPJ (14 Hari)
+            </button>
+          `}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 5. PANEL LPJ: MONITORING LAPORAN PERTANGGUNGJAWABAN
+    // =========================================================================
+    function renderPanelLPJ(p, curOrder) {
+      const isCair = curOrder >= 5;
+      const isLpjDone = p.status === 'LPJ_TERVERIFIKASI';
+
+      if (!isCair) {
+        return `
+          <div class="locked-stage-card">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔒</div>
+            <h4 style="font-size: 15px; color: var(--laz-navy); margin-bottom: 6px;">Tahap LPJ Belum Aktif</h4>
+            <p style="font-size: 12.5px; color: var(--laz-gray-600); max-width: 440px; margin: 0 auto 16px;">
+              Masa pelaporan LPJ (14 hari) baru aktif setelah dana bantuan resmi diserahkan oleh divisi keuangan.
+            </p>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="setViewTab('keuangan')">
+              ← Buka Tahap Keuangan
+            </button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="level-card lpj-active">
+          <div class="level-header">
+            <div>
+              <span class="level-tag" style="color: var(--laz-cyan);">TAHAP 5: MONITORING & AUDIT LPJ</span>
+              <div class="level-title">Monitoring Pelaporan LPJ (Maksimal 14 Hari)</div>
+              <div class="level-desc">Ketentuan: Wajib melampirkan nota asli kwitansi & dokumentasi berlogo Lazismu</div>
+            </div>
+            <span class="badge ${isLpjDone ? 'badge-emerald' : 'badge-warning'}">
+              ${isLpjDone ? '✓ LPJ Lengkap & Arsip' : 'Menunggu Pelaporan LPJ'}
+            </span>
+          </div>
+
+          <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size: 11px; color: var(--laz-gray-500); text-transform: uppercase;">Batas Akhir Penyerahan LPJ:</div>
+                <div style="font-size: 15px; font-weight: 800; color: var(--laz-navy);">${p.deadlineLPJ || '14 Hari Pasca Kegiatan'}</div>
+              </div>
+              <span class="badge badge-orange" style="font-size:11px;">Tenggat H+14</span>
+            </div>
+            <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="lpj-preview.html?id=${p.id}" target="_blank" class="btn btn-navy btn-sm">
+                Lihat Format / Dokumen LPJ
+              </a>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="openWhatsAppSimulatorModal('${p.id}', 'lpj')">
+                Kirim Pengingat WA LPJ
+              </button>
+            </div>
+          </div>
+
+          ${isLpjDone ? `
+            <div class="completed-summary-card" style="background:#ECFDF5; border-color:#6EE7B7;">
+              <div style="font-size: 12px; font-weight: 700; color: #065F46;">
+                ✓ LPJ Fisik & Digital Telah Terverifikasi Lengkap
+              </div>
+              <p style="font-size: 12px; color: #047857; margin-top: 4px; line-height: 1.5;">
+                Nota asli dan kwitansi telah diaudit oleh tim Lazismu UAD. Rekam jejak pemohon tercatat bersih dan bebas dari sanksi tunggakan.
+              </p>
+            </div>
+          ` : `
+            <div class="form-group">
+              <label class="form-label">Catatan Verifikasi Audit LPJ</label>
+              <textarea class="form-control" id="inputLpjAuditNote" rows="2" placeholder="Contoh: Nota kwitansi dan dokumentasi spanduk logo Lazismu telah diperiksa lengkap...">Seluruh nota pengeluaran telah diperiksa valid dan didukung bukti kwitansi sah.</textarea>
+            </div>
+
+            <button type="button" class="btn btn-success btn-sm" style="width: 100%; font-weight: 700; padding: 10px 16px;" onclick="handleVerifyLPJDone()">
+              ✓ Verifikasi LPJ Sah & Tutup Berkas (Selesai)
+            </button>
+          `}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // EVENT HANDLERS TINDAKAN BERJENJANG (STEP-BY-STEP PROGRESSION)
+    // =========================================================================
+
+    // 1. HANDLER AKSI STAF L1
+    function handleStaffAction(decision) {
+      const p = currentProposal;
+      const noteInput = document.getElementById('inputStaffNote');
+      const note = noteInput ? noteInput.value.trim() : '';
+
+      if (decision === 'LENGKAP') {
+        p.catatanInternal = note || 'Kelengkapan berkas, RAB, dan rekam jejak pemohon terverifikasi lengkap dan sah.';
+        p.status = 'REVIEW_BIDANG'; // NAIK KE LEVEL 2
+        updateProposal(p);
+
+        showToast(`Proposal ${p.id} diverifikasi LENGKAP dan resmi diteruskan ke Pengurus Bidang (Level 2).`, 'success');
+        selectedViewTab = 'bidang'; // Otomatis aktifkan view Level 2
+        setAdminSession('bidang');
+        updateSidebarUserInfo();
+        renderAll();
+      } else {
+        const reason = prompt('Masukkan alasan kekurangan berkas yang wajib diperbaiki pemohon:', 'Lampiran Rincian Anggaran Biaya (RAB) belum ada rincian harga satuan dan belum ada tanda tangan pengesahan.');
+        if (reason) {
+          p.catatanInternal = reason;
+          p.status = 'REVISI';
+          updateProposal(p);
+          showToast(`Proposal ${p.id} dikembalikan ke pemohon untuk revisi kelengkapan berkas.`, 'warning');
+          renderAll();
+        }
+      }
+    }
+
+    // 2. HANDLER AKSI BIDANG L2
+    function handleBidangAction() {
+      const p = currentProposal;
+      const asnaf = document.getElementById('inputBidangAsnaf').value;
+      const pilar = document.getElementById('inputBidangPilar').value;
+      const nominal = Number(document.getElementById('inputBidangNominal').value) || 0;
+      const note = document.getElementById('inputBidangNote').value.trim();
+
+      p.asnaf = asnaf;
+      p.pilar = pilar;
+      p.nominalRekomendasi = nominal;
+      p.catatanBidang = note || `Program sesuai pilar ${pilar.toUpperCase()} Lazismu UAD. Rekomendasi alokasi dana sebesar ${formatRupiah(nominal)}.`;
+      p.status = 'KEPUTUSAN_KETUA'; // NAIK KE LEVEL 3
+
+      updateProposal(p);
+      showToast(`Rekomendasi sebesar ${formatRupiah(nominal)} berhasil diajukan ke Pimpinan Lazismu UAD (Level 3).`, 'success');
+      selectedViewTab = 'ketua'; // Otomatis aktifkan view Level 3
+      setAdminSession('ketua');
+      updateSidebarUserInfo();
+      renderAll();
+    }
+
+    function handleBidangKembaliStaf() {
+      if (confirm('Apakah Anda ingin mengembalikan berkas ini ke Staf L1 untuk verifikasi ulang lapangan?')) {
+        const p = currentProposal;
+        p.status = 'MENUNGGU_VERIFIKASI';
+        updateProposal(p);
+        showToast('Berkas dikembalikan ke antrean Verifikasi Staf (Level 1).', 'info');
+        selectedViewTab = 'staff';
+        renderAll();
+      }
+    }
+
+    function applyBidangPreset(factor) {
+      const p = currentProposal;
+      const input = document.getElementById('inputBidangNominal');
+      const val = Math.round(p.nominalDiajukan * factor);
+      input.value = val;
+      updateBidangPercent();
+    }
+
+    function updateBidangPercent() {
+      const p = currentProposal;
+      const input = document.getElementById('inputBidangNominal');
+      const val = Number(input.value) || 0;
+      const pct = Math.round((val / p.nominalDiajukan) * 100);
+      const label = document.getElementById('bidangPercentLabel');
+      if (label) {
+        label.textContent = `${pct}% dari usulan`;
+      }
+    }
+
+    // 3. HANDLER AKSI KETUA L3
+    function handleKetuaAction(decision) {
+      const p = currentProposal;
+      const finalNominal = Number(document.getElementById('inputKetuaNominal').value) || 0;
+      const note = document.getElementById('inputKetuaNote').value.trim();
+      const posDanaEl = document.getElementById('inputKetuaPosDana');
+      const posDana = posDanaEl ? posDanaEl.value : 'Kas Umum Lazismu UAD';
+
+      if (decision === 'ACC') {
+        p.nominalACC = finalNominal;
+        p.sumberDana = posDana;
+        p.catatanPimpinan = note || `Disetujui bantuan dana sebesar ${formatRupiah(finalNominal)} dari ${posDana}. Dokumen BAST resmi segera diterbitkan.`;
+        if (!p.nomorBAST) {
+          const randNum = Math.floor(Math.random() * 50) + 10;
+          p.nomorBAST = `0${randNum}/BAST/LAZISMU-UAD/X/2026`;
+        }
+        p.status = 'MENUNGGU_PENCAIRAN'; // NAIK KE KEUANGAN & BAST
+
+        updateProposal(p);
+        showToast(`Alhamdulillah! Proposal ${p.id} resmi DISETUJUI (ACC). Nomor BAST: ${p.nomorBAST}.`, 'success');
+        selectedViewTab = 'keuangan'; // Otomatis aktifkan view Keuangan
+        setAdminSession('keuangan');
+        updateSidebarUserInfo();
+        renderAll();
+
+        setTimeout(() => {
+          openWhatsAppSimulatorModal(p.id, 'acc');
+        }, 600);
+      } else {
+        const tolakNote = prompt('Masukkan alasan penolakan proposal:', note || 'Tidak memenuhi kriteria alokasi dana dan ketersediaan pagu mustahiq Lazismu.');
+        if (tolakNote) {
+          p.status = 'DITOLAK';
+          p.catatanPimpinan = tolakNote;
+          updateProposal(p);
+          showToast(`Proposal ${p.id} ditolak pimpinan.`, 'danger');
+          renderAll();
+        }
+      }
+    }
+
+    // 4. HANDLER AKSI KEUANGAN
+    function handleKeuanganDisburse() {
+      const c1 = document.getElementById('chkKasirHadir').checked;
+      const c2 = document.getElementById('chkKasirTtd').checked;
+      const c3 = document.getElementById('chkKasirCap').checked;
+
+      if (!c1 || !c2 || !c3) {
+        alert('Harap centang ketiga butir konfirmasi verifikasi audit fisik kasir: Kehadiran fisik, tanda tangan basah BAST, dan cap stempel lembaga!');
+        return;
+      }
+
+      const p = currentProposal;
+      const metode = document.getElementById('inputKeuanganMetode').value;
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      // Hitung deadline LPJ (H+14)
+      const d = new Date();
+      d.setDate(d.getDate() + 14);
+      const deadlineStr = d.toISOString().split('T')[0];
+
+      p.status = 'TELAH_DICAIRKAN'; // NAIK KE MASA LPJ
+      p.tglTtdBAST = todayStr;
+      p.tglDanaCair = todayStr;
+      p.deadlineLPJ = deadlineStr;
+      p.statusLPJ = 'Menunggu Penyerahan LPJ (Maksimal 14 Hari)';
+      updateProposal(p);
+
+      showToast(`Alhamdulillah! Dana bantuan ${p.id} sebesar ${formatRupiah(p.nominalACC)} telah diserahkan via ${metode}. Masa LPJ 14 hari aktif.`, 'success');
+      selectedViewTab = 'lpj';
+      renderAll();
+    }
+
+    // 5. HANDLER VERIFIKASI SELESAI LPJ
+    function handleVerifyLPJDone() {
+      const p = currentProposal;
+      p.status = 'LPJ_TERVERIFIKASI'; // SELESAI SEMPURNA
+      p.statusLPJ = 'Sudah Diterima Fisik & Digital (Sah)';
+      updateProposal(p);
+
+      showToast(`Alhamdulillah! Berkas LPJ ${p.id} telah diverifikasi lengkap dan resmi diarsipkan.`, 'success');
+      renderAll();
+    }
+  </script>
+</body>
+</html>

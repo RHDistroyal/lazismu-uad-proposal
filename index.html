@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kantor Layanan Lazismu UAD - Sistem Informasi Pengajuan Proposal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- TOPBAR RESMI LAZISMU UAD -->
+  <aside class="laz-topbar" aria-label="Informasi Kontak Resmi">
+    <div class="topbar-container">
+      <div class="topbar-contacts">
+        <div class="topbar-item">
+          <span>Email:</span> <a href="mailto:lazismu@uad.ac.id">lazismu@uad.ac.id</a>
+        </div>
+        <div class="topbar-item">
+          <span>Hotline:</span> <span>0811-2506-6352</span>
+        </div>
+        <div class="topbar-item">
+          <span>Jam Layanan:</span> <span>Senin - Jumat (08.00 - 15.00 WIB)</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a href="pemohon-dashboard.html" class="topbar-link">Portal Pemohon</a>
+        <span style="color: rgba(255,255,255,0.2);">|</span>
+        <a href="admin-login.html" class="topbar-link">
+          <span class="badge-internal">Login Petugas</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVBAR RESMI LAZISMU UAD -->
+  <header class="laz-navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-box">
+        <div class="brand-emblem">L</div>
+        <div class="brand-text">
+          <div class="brand-title">LAZISMU <span>UAD</span></div>
+          <div class="brand-sub">Kantor Layanan Universitas Ahmad Dahlan</div>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Menu Utama">
+        <li class="nav-item"><a href="index.html" class="active">Beranda</a></li>
+        <li class="nav-item"><a href="panduan.html">Panduan & Syarat</a></li>
+        <li class="nav-item"><a href="#pilar-section">6 Pilar Program</a></li>
+        <li class="nav-item"><a href="tracking.html">Cek Status Proposal</a></li>
+        <li class="nav-item"><a href="lpj-form.html">Form LPJ Online</a></li>
+        <li class="nav-item">
+          <a href="ajukan.html" class="btn-ajukan-nav">
+            Ajukan Proposal
+          </a>
+        </li>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="hero-wrapper">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-tagline">
+          SISTEM INFORMASI PENGAJUAN PROPOSAL BANTUAN DANA
+        </div>
+        <h1 class="hero-h1">
+          Penyaluran Dana Kebajikan <span>Transparan, Amanah & Terstruktur</span>.
+        </h1>
+        <p class="hero-sub">
+          Layanan resmi Kantor Layanan Lazismu Universitas Ahmad Dahlan untuk civitas akademika, organisasi kemahasiswaan, ortom Muhammadiyah, dan masyarakat umum dalam pengajuan bantuan dana kebajikan.
+        </p>
+        <div class="hero-cta-buttons">
+          <a href="ajukan.html" class="btn btn-primary btn-lg">
+            Formulir Pengajuan Proposal
+          </a>
+          <a href="panduan.html" class="btn btn-secondary btn-lg" style="background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.25);">
+            Panduan & Syarat
+          </a>
+          <a href="pemohon-dashboard.html" class="btn btn-secondary btn-lg" style="background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.25);">
+            Portal Pemohon
+          </a>
+        </div>
+      </div>
+
+      <!-- KARTU LACAK STATUS CEPAT (PUBLIK) -->
+      <div class="hero-card-tracker">
+        <div class="hero-card-title">
+          Lacak Status Proposal Anda
+        </div>
+        <p class="hero-card-desc">
+          Masukkan nomor registrasi proposal untuk memeriksa progres verifikasi administrasi dan keputusan pimpinan:
+        </p>
+        <form class="track-form-box" onsubmit="event.preventDefault(); const code = document.getElementById('heroTrackInput').value.trim(); if(code) window.location.href = 'tracking.html?id=' + encodeURIComponent(code);">
+          <input type="text" id="heroTrackInput" class="input-track-lg" placeholder="Contoh: PRP-2026-0001 atau PRP-2026-0006" required>
+          <button type="submit" class="btn btn-navy" style="width: 100%; padding: 10px;">
+            Periksa Status Sekarang
+          </button>
+        </form>
+        <div style="margin-top: 10px; font-size: 11.5px; color: var(--laz-gray-500); text-align: center;">
+          Contoh nomor uji: <a href="tracking.html?id=PRP-2026-0001" style="font-weight: 600;">PRP-2026-0001</a>, <a href="tracking.html?id=PRP-2026-0002" style="font-weight: 600;">PRP-2026-0002</a>, <a href="tracking.html?id=PRP-2026-0006" style="font-weight: 600;">PRP-2026-0006</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALUR 4 LANGKAH BAGI PEMOHON -->
+  <main class="content-container">
+    <div class="section-head" style="text-align: center; max-width: 650px; margin: 0 auto 30px;">
+      <h2>Tahapan Pengajuan hingga Laporan LPJ</h2>
+      <p>Prosedur resmi pengajuan permohonan bantuan dana di Kantor Layanan Lazismu UAD.</p>
+    </div>
+
+    <div class="steps-public-grid">
+      <div class="step-public-item" onclick="openStepModal(1)">
+        <div class="step-num-clean">Tahap 01</div>
+        <div class="step-public-title">Pengajuan Online</div>
+        <div class="step-public-desc">Pemohon mengisi formulir digital lengkap data diri, instansi, rincian kegiatan, rekening bank, serta melampirkan berkas proposal PDF dan RAB.</div>
+        <div class="step-click-hint">Lihat Syarat & Ketentuan →</div>
+      </div>
+
+      <div class="step-public-item" onclick="openStepModal(2)">
+        <div class="step-num-clean">Tahap 02</div>
+        <div class="step-public-title">Verifikasi 3 Tingkat</div>
+        <div class="step-public-desc">Proposal diverifikasi berjenjang oleh Staf (L1), dinilai kesesuaian pilar oleh Pengurus Bidang (L2), dan diputuskan persetujuan oleh Ketua (L3).</div>
+        <div class="step-click-hint">Lihat Kriteria Penilaian →</div>
+      </div>
+
+      <div class="step-public-item" onclick="openStepModal(3)">
+        <div class="step-num-clean">Tahap 03</div>
+        <div class="step-public-title">Panggilan Fisik & BAST</div>
+        <div class="step-public-desc">Sistem menerbitkan Berita Acara Serah Terima (BAST). Pemohon wajib hadir fisik di kantor ITC Kampus 1 UAD membawa stempel lembaga.</div>
+        <div class="step-click-hint">Lihat Prosedur Hadir Fisik →</div>
+      </div>
+
+      <div class="step-public-item" onclick="openStepModal(4)">
+        <div class="step-num-clean">Tahap 04</div>
+        <div class="step-public-title">Pencairan & LPJ 14 Hari</div>
+        <div class="step-public-desc">Dana dicairkan melalui transfer atau kasir. Pemohon wajib menyetorkan berkas fisik dan scan LPJ dalam tenggat 14 hari pasca kegiatan.</div>
+        <div class="step-click-hint">Lihat Format Baku LPJ →</div>
+      </div>
+    </div>
+
+    <!-- 6 PILAR PROGRAM LAZISMU -->
+    <section id="pilar-section" style="margin-top: 24px;">
+      <div class="section-head">
+        <h2>6 Pilar Program Penyaluran Lazismu UAD</h2>
+        <p>Penyaluran dana zakat, infak, dan shadaqah difokuskan pada 6 pilar strategis kemaslahatan:</p>
+      </div>
+
+      <div class="pilar-grid-6">
+        <div class="pilar-box" onclick="openPilarModal('pendidikan')">
+          <div class="pilar-tag-clean">Pilar 1</div>
+          <div class="pilar-title">Pendidikan</div>
+          <div class="pilar-text">Beasiswa Sang Surya (kader & riset), Beasiswa Mentari (siswa dhuafa), stimulus perlombaan mahasiswa, dan pelatihan teknologi kemahasiswaan.</div>
+          <div class="pilar-badge-examples">Lihat Contoh Usulan →</div>
+        </div>
+
+        <div class="pilar-box" onclick="openPilarModal('kesehatan')">
+          <div class="pilar-tag-clean">Pilar 2</div>
+          <div class="pilar-title">Kesehatan</div>
+          <div class="pilar-text">Bantuan biaya pengobatan mustahiq dhuafa, khitanan massal pra-sejahtera sekitar kampus, intervensi stunting, dan pemeriksaan kesehatan gratis.</div>
+          <div class="pilar-badge-examples">Lihat Contoh Usulan →</div>
+        </div>
+
+        <div class="pilar-box" onclick="openPilarModal('ekonomi')">
+          <div class="pilar-tag-clean">Pilar 3</div>
+          <div class="pilar-title">Ekonomi</div>
+          <div class="pilar-text">Pemberdayaan UMKM binaan, modal usaha produktif kantin kampus, pelatihan wirausaha pemuda masjid, dan kemandirian ekonomi mustahiq.</div>
+          <div class="pilar-badge-examples">Lihat Contoh Usulan →</div>
+        </div>
+
+        <div class="pilar-box" onclick="openPilarModal('dakwah')">
+          <div class="pilar-tag-clean">Pilar 4</div>
+          <div class="pilar-title">Sosial Dakwah</div>
+          <div class="pilar-text">Bina Da'i pedalaman, pengadaan sarana TPQ & mushola binaan, santunan beras dhuafa jamaah masjid, dan syiar dakwah persyarikatan.</div>
+          <div class="pilar-badge-examples">Lihat Contoh Usulan →</div>
+        </div>
+
+        <div class="pilar-box" onclick="openPilarModal('kemanusiaan')">
+          <div class="pilar-tag-clean">Pilar 5</div>
+          <div class="pilar-title">Kemanusiaan</div>
+          <div class="pilar-text">Bantuan pangan beras panti asuhan dhuafa, santunan lansia dhuafa ring 1 Kampus 1 UAD, dan tanggap kebencanaan bersama MDMC UAD.</div>
+          <div class="pilar-badge-examples">Lihat Contoh Usulan →</div>
+        </div>
+
+        <div class="pilar-box" onclick="openPilarModal('lingkungan')">
+          <div class="pilar-tag-clean">Pilar 6</div>
+          <div class="pilar-title">Lingkungan</div>
+          <div class="pilar-text">Konservasi mangrove pesisir, penyediaan dropbox bank sampah terpilah kampus, dan edukasi gaya hidup ramah lingkungan berkelanjutan.</div>
+          <div class="pilar-badge-examples">Lihat Contoh Usulan →</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BANNER AJAKAN PENGAJUAN -->
+    <div class="card" style="background: #ffffff; border: 1px solid var(--laz-gray-300); padding: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; border-left: 4px solid var(--laz-orange); margin-top: 20px;">
+      <div>
+        <h3 style="font-size: 17px; color: var(--laz-navy); margin-bottom: 4px;">Siap Mengajukan Permohonan Bantuan Dana?</h3>
+        <p style="color: var(--laz-gray-600); font-size: 12.5px; max-width: 620px; margin: 0;">
+          Pastikan berkas proposal kegiatan Anda telah ditandatangani penanggung jawab lembaga dan melampirkan Rincian Anggaran Biaya (RAB) yang transparan.
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="ajukan.html" class="btn btn-primary">Form Pengajuan Usulan</a>
+        <a href="panduan.html" class="btn btn-secondary">Panduan & Syarat</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL INTERAKTIF 4 TAHAP -->
+  <div class="figjam-modal-overlay" id="modalStepDetail">
+    <div class="figjam-modal-box" style="max-width: 620px;">
+      <div class="figjam-modal-header">
+        <h3 style="font-size: 16px; color: var(--laz-navy); margin: 0;" id="modalStepTitle">Rincian Tahapan</h3>
+        <button type="button" class="figjam-modal-close" onclick="closeModal('modalStepDetail')">&times;</button>
+      </div>
+      <div id="modalStepBody" style="padding: 20px; font-size: 13px; color: var(--laz-gray-700); line-height: 1.6; overflow-y: auto;">
+        <!-- Injected by JS -->
+      </div>
+      <div class="figjam-modal-footer" id="modalStepFooter">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modalStepDetail')">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL INTERAKTIF 6 PILAR PROGRAM -->
+  <div class="figjam-modal-overlay" id="modalPilarDetail">
+    <div class="figjam-modal-box" style="max-width: 680px;">
+      <div class="figjam-modal-header">
+        <h3 style="font-size: 16px; color: var(--laz-navy); margin: 0;" id="modalPilarTitle">Pilar Program</h3>
+        <button type="button" class="figjam-modal-close" onclick="closeModal('modalPilarDetail')">&times;</button>
+      </div>
+      <div id="modalPilarBody" style="padding: 20px; font-size: 13px; color: var(--laz-gray-700); line-height: 1.6; overflow-y: auto;">
+        <!-- Injected by JS -->
+      </div>
+      <div class="figjam-modal-footer" id="modalPilarFooter">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modalPilarDetail')">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER RESMI LAZISMU UAD -->
+  <footer class="laz-footer">
+    <div class="content-container" style="padding: 32px 20px 20px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; margin-bottom: 24px;">
+        <div>
+          <h4 style="color:#fff; font-size:14px; margin-bottom: 10px;">KANTOR LAYANAN LAZISMU UAD</h4>
+          <p style="font-size: 12px; line-height: 1.6; color: #CBD5E1; margin-bottom: 10px;">
+            Lembaga Amil Zakat, Infak, dan Shadaqah (LAZISMU) Kantor Layanan Universitas Ahmad Dahlan bertugas menghimpun dan mendistribusikan dana kebajikan secara amanah dan profesional.
+          </p>
+          <p style="font-size: 11.5px; color: #94A3B8;">
+            Gedung ITC Kampus 1 UAD, Jl. Kapas No. 9, Semaki, Umbulharjo, Yogyakarta 55166
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color:#fff; font-size:14px; margin-bottom: 10px;">Layanan Proposal</h4>
+          <ul style="list-style: none; padding: 0; font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
+            <li><a href="ajukan.html" style="color: #CBD5E1;">Formulir Pengajuan Baru</a></li>
+            <li><a href="tracking.html" style="color: #CBD5E1;">Cek Status Proposal</a></li>
+            <li><a href="lpj-form.html" style="color: #CBD5E1;">Formulir LPJ Online</a></li>
+            <li><a href="pemohon-dashboard.html" style="color: #CBD5E1;">Portal Akun Pemohon</a></li>
+            <li><a href="panduan.html" style="color: #CBD5E1;">Persyaratan & Ketentuan LPJ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color:#fff; font-size:14px; margin-bottom: 10px;">Rekening Resmi</h4>
+          <div style="font-size: 12px; line-height: 1.6; color: #CBD5E1;">
+            <p><strong>Bank Syariah Indonesia (BSI)</strong><br>Rekening Zakat: <strong>7111 223 344</strong></p>
+            <p style="margin-top: 6px;"><strong>Bank BPD DIY Syariah</strong><br>Rekening Infaq: <strong>511 002 3419</strong></p>
+            <p style="margin-top: 4px; font-size: 11px; color: #94A3B8;">a.n Lazismu UAD</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color:#fff; font-size:14px; margin-bottom: 10px;">Akses Internal</h4>
+          <p style="font-size: 12px; color: #94A3B8; margin-bottom: 10px;">Khusus staf, pengurus bidang pendistribusian, pimpinan, dan bendahara Lazismu UAD.</p>
+          <a href="admin-login.html" class="btn btn-outline-navy" style="color: #FFA366; border-color: rgba(243,112,33,0.4); font-size: 12px; width: 100%;">
+            Login Portal Internal
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom" style="padding: 14px 0 0; border-top: 1px solid rgba(255,255,255,0.08);">
+        <div>&copy; 2026 Kantor Layanan Lazismu Universitas Ahmad Dahlan.</div>
+        <div>Sistem Informasi Pengajuan Proposal Bantuan Dana</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalFlowBar('public');
+    });
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    }
+
+    // MODAL UNTUK 4 TAHAP
+    function openStepModal(stepNum) {
+      const title = document.getElementById('modalStepTitle');
+      const body = document.getElementById('modalStepBody');
+      const footer = document.getElementById('modalStepFooter');
+
+      if (stepNum === 1) {
+        title.textContent = 'Tahap 1: Pengajuan Usulan Proposal Online';
+        body.innerHTML = `
+          <p>Pemohon (mahasiswa, civitas akademika, ormawa, atau takmir masjid) mengisi formulir digital resmi.</p>
+          <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); padding: 12px 14px; border-radius: 4px; margin: 12px 0;">
+            <strong>Berkas Wajib yang Diunggah:</strong>
+            <ul style="padding-left: 18px; margin-top: 6px; font-size: 12.5px;">
+              <li>Surat Permohonan Resmi bertanda tangan ketua & stempel lembaga.</li>
+              <li>Proposal Kegiatan lengkap dengan latar belakang & jadwal.</li>
+              <li>Rincian Anggaran Biaya (RAB) yang rasional dan transparan.</li>
+              <li>Nomor Rekening Bank resmi (BSI / Bank lainnya).</li>
+            </ul>
+          </div>
+          <p>Setelah usulan terkirim, sistem otomatis menerbitkan <strong>Nomor Registrasi (misal: PRP-2026-0003)</strong> untuk pelacakan live.</p>
+        `;
+        footer.innerHTML = `
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modalStepDetail')">Tutup</button>
+          <a href="proposal-preview.html?mode=template" target="_blank" class="btn btn-navy btn-sm">Format Proposal (PDF)</a>
+          <a href="ajukan.html" class="btn btn-primary btn-sm">Buka Formulir Usulan</a>
+        `;
+      } else if (stepNum === 2) {
+        title.textContent = 'Tahap 2: Verifikasi Berjenjang 3 Tingkat';
+        body.innerHTML = `
+          <p>Untuk menjaga akuntabilitas syariah dan ketertiban administrasi, proposal ditelaah melalui 3 tingkat internal:</p>
+          <div style="margin: 12px 0;">
+            <div style="border-left: 3px solid var(--laz-gold); background: #FFFDF5; padding: 10px 14px; margin-bottom: 8px; border-radius: 4px;">
+              <strong>1. Tingkat Staf (Level 1):</strong> Memeriksa keabsahan berkas administratif, mengecek riwayat pemohon, dan memberikan catatan evaluasi internal.
+            </div>
+            <div style="border-left: 3px solid var(--laz-blue); background: #F0F7FF; padding: 10px 14px; margin-bottom: 8px; border-radius: 4px;">
+              <strong>2. Tingkat Pengurus Bidang (Level 2):</strong> Menilai kesesuaian 6 Pilar Lazismu & Asnaf, serta merekomendasikan nominal bantuan.
+            </div>
+            <div style="border-left: 3px solid var(--laz-green); background: #F0FDF4; padding: 10px 14px; border-radius: 4px;">
+              <strong>3. Tingkat Ketua / Pimpinan (Level 3):</strong> Mengunci nominal final persetujuan (ACC) dan menerbitkan Berita Acara Serah Terima (BAST).
+            </div>
+          </div>
+        `;
+        footer.innerHTML = `
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modalStepDetail')">Tutup</button>
+          <a href="panduan.html" class="btn btn-navy btn-sm">Pelajari Pedoman Lengkap</a>
+        `;
+      } else if (stepNum === 3) {
+        title.textContent = 'Tahap 3: Panggilan Fisik & Dokumen BAST';
+        body.innerHTML = `
+          <p>Setelah proposal disetujui (ACC) oleh Pimpinan, sistem menerbitkan dokumen <strong>Berita Acara Serah Terima (BAST)</strong> resmi dan mengirim notifikasi WhatsApp kepada nomor kontak pemohon.</p>
+          <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 12px 14px; border-radius: 4px; margin: 12px 0;">
+            <strong>Instruksi Kehadiran Fisik (Syarat Wajib Audit):</strong>
+            <p style="margin: 6px 0 0; font-size: 12px;">
+              Pemohon diwajibkan hadir langsung ke Kantor Layanan Lazismu UAD Gedung ITC Kampus 1 UAD membawa <strong>STEMPEL ASLI LEMBAGA</strong> untuk tanda tangan basah dokumen BAST bersama bagian keuangan sebelum dana dicairkan.
+            </p>
+          </div>
+        `;
+        footer.innerHTML = `
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modalStepDetail')">Tutup</button>
+          <a href="bast-preview.html?mode=template" target="_blank" class="btn btn-navy btn-sm">Format Dokumen BAST (PDF)</a>
+        `;
+      } else if (stepNum === 4) {
+        title.textContent = 'Tahap 4: Penyerahan Dana & Kewajiban LPJ (14 Hari)';
+        body.innerHTML = `
+          <p>Setelah BAST ditandatangani basah dan berstempel resmi, dana disalurkan secara transfer bank / tunai di kasir kantor.</p>
+          <div style="background: var(--laz-orange-light); border: 1px solid #FED7AA; padding: 12px 14px; border-radius: 4px; margin: 12px 0;">
+            <strong>Ketentuan Wajib Laporan Pertanggungjawaban (LPJ):</strong>
+            <ul style="padding-left: 18px; margin-top: 6px; font-size: 12px;">
+              <li>Batas waktu penyerahan LPJ maksimal <strong>14 hari kerja</strong> pasca kegiatan terlaksana.</li>
+              <li>Menyertakan foto dokumentasi spanduk/banner berlogo Lazismu UAD.</li>
+              <li>Melampirkan nota dan kwitansi asli penggunaan dana.</li>
+            </ul>
+          </div>
+        `;
+        footer.innerHTML = `
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modalStepDetail')">Tutup</button>
+          <a href="lpj-preview.html?mode=template" target="_blank" class="btn btn-secondary btn-sm" style="color:var(--laz-green); font-weight:700;">Format Baku LPJ (PDF)</a>
+          <a href="lpj-form.html" class="btn btn-primary btn-sm">Buka Form LPJ Online</a>
+        `;
+      }
+
+      document.getElementById('modalStepDetail').style.display = 'flex';
+    }
+
+    // MODAL UNTUK 6 PILAR PROGRAM
+    function openPilarModal(pilarId) {
+      const all = getProposals();
+      const pilarProps = all.filter(p => p.pilar === pilarId);
+      const title = document.getElementById('modalPilarTitle');
+      const body = document.getElementById('modalPilarBody');
+      const footer = document.getElementById('modalPilarFooter');
+
+      const pilarInfo = PILAR_LAZISMU.find(p => p.id === pilarId) || { name: pilarId, desc: '' };
+
+      title.textContent = `Pilar ${pilarInfo.name} - Lazismu UAD`;
+      body.innerHTML = `
+        <p style="font-size: 13px; color: var(--laz-navy); font-weight: 600; margin-bottom: 10px;">
+          ${pilarInfo.desc}
+        </p>
+
+        <div style="background: var(--laz-gray-50); border: 1px solid var(--laz-gray-200); padding: 12px 14px; border-radius: 4px; margin-bottom: 14px;">
+          <strong>Kriteria Program & Penerima Manfaat:</strong>
+          <ul style="padding-left: 18px; margin-top: 6px; font-size: 12px;">
+            <li>Sesuai dengan ketentuan asnaf zakat (Fisabilillah, Fakir, Miskin, Ibnu Sabil, Gharimin).</li>
+            <li>Berorientasi pada kemanfaatan jangka panjang persyarikatan dan umat.</li>
+            <li>Memenuhi kelengkapan RAB transparan tanpa markup anggaran.</li>
+          </ul>
+        </div>
+
+        <h4 style="font-size: 13px; color: var(--laz-navy); margin-bottom: 8px;">Contoh Usulan yang Lolos di Pilar Ini:</h4>
+        <div style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto;">
+          ${pilarProps.slice(0, 4).map(p => `
+            <div style="background: #ffffff; border: 1px solid var(--laz-gray-200); padding: 9px 12px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: var(--laz-navy); font-size: 12px;">${p.perihal}</strong>
+                <div style="font-size: 11px; color: var(--laz-gray-500);">${p.namaPemohon} (${p.instansi})</div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-weight: 700; color: var(--laz-green); font-size: 12px;">${formatRupiah(p.nominalACC || p.nominalDiajukan)}</div>
+                <a href="proposal-preview.html?id=${p.id}" target="_blank" style="font-size: 10.5px; color: var(--laz-blue);">Lihat Dokumen Proposal</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      footer.innerHTML = `
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeModal('modalPilarDetail')">Tutup</button>
+        <a href="ajukan.html" class="btn btn-primary btn-sm">Ajukan Usulan di Pilar ${pilarInfo.name}</a>
+      `;
+
+      document.getElementById('modalPilarDetail').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>

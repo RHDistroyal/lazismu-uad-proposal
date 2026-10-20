@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divisi Keuangan & Pencairan BAST - Lazismu UAD</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: var(--laz-gray-100);">
+
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <div class="brand-emblem" style="width: 36px; height: 36px; font-size: 18px;">L</div>
+        <div>
+          <div class="admin-sidebar-title">LAZISMU <span>UAD</span></div>
+          <div style="font-size: 10px; color: var(--laz-gray-400);">Divisi Keuangan & BAST</div>
+        </div>
+      </div>
+
+      <nav class="admin-sidebar-nav">
+        <a href="admin-dashboard.html?tab=all" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Semua Proposal
+        </a>
+        <a href="admin-dashboard.html?tab=staff" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Level 1: Verifikasi Staf
+        </a>
+        <a href="admin-dashboard.html?tab=bidang" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Level 2: Review Bidang
+        </a>
+        <a href="admin-dashboard.html?tab=ketua" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Level 3: Putusan Pimpinan
+        </a>
+        <a href="admin-keuangan.html" class="admin-nav-item active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Keuangan & BAST
+        </a>
+        <a href="admin-dashboard.html?tab=lpj" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Monitoring LPJ
+        </a>
+        <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+          <a href="index.html" class="admin-nav-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Halaman Publik
+          </a>
+        </div>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <div class="admin-user-info">
+          <div class="admin-avatar" style="background: var(--laz-orange); color: #fff; font-weight: 700; font-size: 13px;">SN</div>
+          <div>
+            <div style="font-size: 12px; font-weight: 700; color: #fff;">Siti Nurhaliza, S.E</div>
+            <div style="font-size: 10px; color: var(--laz-orange);">Bendahara Lazismu UAD</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN KEUANGAN -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <div style="font-size: 11px; color: var(--laz-gray-500); font-weight: 600; text-transform: uppercase;">Divisi Keuangan & Bendahara</div>
+          <h2 style="font-size: 18px; color: var(--laz-navy); margin-top: 2px;">
+            Pencairan Dana Bantuan & Penandatanganan BAST Fisik
+          </h2>
+        </div>
+
+        <div style="font-size: 12px; color: #92400E; background: #FEF3C7; padding: 6px 14px; border-radius: 4px; border: 1px solid #FCD34D;">
+          <strong>Ketentuan Audit:</strong> Wajib kehadiran fisik pemohon & pembubuhan stempel basah pada lembar BAST.
+        </div>
+      </header>
+
+      <div class="admin-content-body">
+        
+        <!-- ALUR PROSEDUR KEUANGAN -->
+        <div class="card" style="padding: 16px 20px; margin-bottom: 22px; background: #ffffff;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--laz-navy); text-transform: uppercase; margin-bottom: 8px;">
+            Alur Prosedur Pencairan & Monitoring BAST
+          </div>
+          <div class="flow-step-chain">
+            <div class="chain-step highlight">1. Daftar Proposal ACC</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-step highlight">2. Cetak Lembar BAST</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-step highlight">3. Verifikasi Kehadiran Fisik</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-step highlight">4. TTD Basah & Stempel</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-step highlight">5. Penyerahan Dana</div>
+            <div class="chain-arrow">→</div>
+            <div class="chain-step submit">6. Masa Pelaporan LPJ (14 Hari)</div>
+          </div>
+        </div>
+
+        <!-- STATS KEUANGAN -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <div class="card" style="padding: 18px; margin-bottom: 0; border-left: 4px solid var(--laz-orange);">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-orange);">SIAP DICAIRKAN (MENUNGGU HADIR FISIK)</div>
+            <div style="font-size: 24px; font-weight: 800; color: var(--laz-navy); margin-top: 4px;" id="countWaitingCash">0</div>
+            <div style="font-size: 11px; color: var(--laz-gray-500); margin-top: 4px;">BAST sudah diterbitkan otomatis oleh sistem</div>
+          </div>
+
+          <div class="card" style="padding: 18px; margin-bottom: 0; border-left: 4px solid var(--laz-green);">
+            <div style="font-size: 11px; font-weight: 700; color: var(--laz-green);">TELAH DICAIRKAN (DALAM MASA LPJ 14 HARI)</div>
+            <div style="font-size: 24px; font-weight: 800; color: var(--laz-navy); margin-top: 4px;" id="countDisbursed">0</div>
+            <div style="font-size: 11px; color: var(--laz-gray-500); margin-top: 4px;">BAST sah ditandatangani basah & distempel</div>
+          </div>
+        </div>
+
+        <!-- TABEL PROPOSAL SIAP DICAIRKAN -->
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div style="padding: 16px 20px; border-bottom: 1px solid var(--laz-gray-200); background: #ffffff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <h3 style="font-size: 15px; color: var(--laz-navy); margin: 0;">Daftar Usulan yang Telah di-ACC Pimpinan (Siap Cetak BAST & Cairkan)</h3>
+            <span style="font-size: 12px; color: var(--laz-gray-500);">Klik "Cairkan" saat pemohon hadir di meja</span>
+          </div>
+
+          <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>No. BAST & Kode</th>
+                  <th>Nama Penerima & Lembaga</th>
+                  <th>Perihal Bantuan</th>
+                  <th>Nominal Final (ACC)</th>
+                  <th>Rekening Penyaluran</th>
+                  <th>Status Kehadiran Fisik</th>
+                  <th style="text-align: center;">Tindakan Keuangan</th>
+                </tr>
+              </thead>
+              <tbody id="keuanganTableBody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL KONFIRMASI PENCAIRAN KASIR -->
+  <div id="modalConfirmCash" class="figjam-modal-overlay">
+    <div class="figjam-modal-box" style="max-width: 550px;">
+      <div class="figjam-modal-header">
+        <h3 style="font-size: 17px; color: var(--laz-navy); margin: 0;">
+          Konfirmasi Penyerahan Dana & Tanda Tangan Basah
+        </h3>
+        <button type="button" class="figjam-modal-close" onclick="closeCashModal()">&times;</button>
+      </div>
+
+      <div style="padding: 20px 24px; overflow-y: auto;">
+        <div style="background: var(--laz-navy-50); padding: 14px 16px; border-radius: var(--radius-md); margin-bottom: 16px; border: 1px solid var(--laz-gray-300);">
+          <div style="font-size: 11px; color: var(--laz-gray-500); text-transform: uppercase;">PENERIMA MANFAAT:</div>
+          <div style="font-size: 15px; font-weight: 800; color: var(--laz-navy);" id="cashModalNama">-</div>
+          <div style="font-size: 12px; color: var(--laz-gray-600);" id="cashModalInstansi">-</div>
+          <div style="font-size: 18px; font-weight: 800; color: var(--laz-green); margin-top: 6px;" id="cashModalNominal">Rp 0</div>
+          <div style="font-size: 11px; color: var(--laz-gray-500); margin-top: 4px;">Nomor BAST: <strong id="cashModalBast">-</strong></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Metode Penyaluran Dana <span class="req">*</span></label>
+          <select class="form-control" id="cashMetodeSelect">
+            <option value="Transfer Bank BSI Resmi (No. Ref BSI Mobile)">Transfer Bank BSI Resmi (Bukti Transfer & BAST)</option>
+            <option value="Tunai Langsung di Kasir Kantor Lazismu">Tunai Langsung di Meja Kasir Lazismu UAD</option>
+            <option value="Transfer Bank BPD DIY Syariah">Transfer Bank BPD DIY Syariah</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nomor Referensi Transaksi / Bukti Kasir</label>
+          <input type="text" class="form-control" id="cashNoRef" placeholder="Contoh: BSI-TRX-20261019-092">
+        </div>
+
+        <!-- 3 VERIFIKASI FISIK AUDIT -->
+        <div style="background: #FFFBEB; border: 1px solid #FCD34D; padding: 14px; border-radius: var(--radius-md); margin-bottom: 18px; font-size: 12px; color: #92400E;">
+          <div style="font-weight: 800; margin-bottom: 8px;">VERIFIKASI FISIK WAJIB (AUDIT KEUANGAN):</div>
+          
+          <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer; margin-bottom: 8px; font-weight: 600;">
+            <input type="checkbox" id="checkHadirFisik" required style="margin-top: 3px;">
+            <span>1. Pemohon hadir fisik langsung di kantor Lazismu UAD (Gedung ITC Kampus 1).</span>
+          </label>
+
+          <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer; margin-bottom: 8px; font-weight: 600;">
+            <input type="checkbox" id="checkTtdBasahFisik" required style="margin-top: 3px;">
+            <span>2. Pemohon telah membubuhkan tanda tangan basah di lembar cetak Berita Acara (BAST).</span>
+          </label>
+
+          <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer; font-weight: 600;">
+            <input type="checkbox" id="checkStempelLembaga" required style="margin-top: 3px;">
+            <span>3. Stempel asli lembaga / ortom telah dibubuhkan di atas tanda tangan basah.</span>
+          </label>
+        </div>
+
+        <input type="hidden" id="cashTargetId">
+      </div>
+
+      <div class="figjam-modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeCashModal()">Batal</button>
+        <button type="button" class="btn btn-success btn-sm" onclick="executeCashDisbursement()">
+          Konfirmasi Penyerahan Dana & Selesai
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalFlowBar('keuangan');
+      setAdminSession('keuangan');
+      renderKeuanganTable();
+    });
+
+    function renderKeuanganTable() {
+      const all = getProposals();
+      // Filter proposal yang sudah di-ACC atau telah dicairkan
+      const relevant = all.filter(p => p.status === 'MENUNGGU_PENCAIRAN' || p.status === 'TELAH_DICAIRKAN' || p.status === 'LPJ_TERVERIFIKASI');
+
+      document.getElementById('countWaitingCash').textContent = all.filter(p => p.status === 'MENUNGGU_PENCAIRAN').length;
+      document.getElementById('countDisbursed').textContent = all.filter(p => p.status === 'TELAH_DICAIRKAN' || p.status === 'LPJ_TERVERIFIKASI').length;
+
+      const tbody = document.getElementById('keuanganTableBody');
+      if (relevant.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 30px; color: var(--laz-gray-500);">Belum ada proposal yang berstatus ACC.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = relevant.map(p => {
+        const isReady = p.status === 'MENUNGGU_PENCAIRAN';
+        const st = STATUS_PROPOSAL[p.status];
+
+        return `
+          <tr>
+            <td>
+              <strong style="color: var(--laz-navy); font-size: 12px;">${p.nomorBAST || 'Belum Terbit BAST'}</strong>
+              <div style="font-size: 11px; color: var(--laz-gray-500);">${p.id}</div>
+            </td>
+            <td>
+              <div style="font-weight: 700; color: var(--laz-navy);">${p.namaPemohon}</div>
+              <div style="font-size: 11.5px; color: var(--laz-gray-500);">${p.instansi}</div>
+            </td>
+            <td>
+              <div style="font-weight: 600; color: var(--laz-gray-800);">${p.perihal}</div>
+            </td>
+            <td>
+              <div style="font-size: 14.5px; font-weight: 800; color: var(--laz-green);">${formatRupiah(p.nominalACC)}</div>
+            </td>
+            <td>
+              <div style="font-size: 11.5px; color: var(--laz-navy); font-weight: 600;">${p.rekeningPenerima}</div>
+            </td>
+            <td>
+              ${isReady ? `
+                <span class="badge badge-warning">Menunggu Hadir Fisik</span>
+                <div style="margin-top:4px;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="openWhatsAppSimulatorModal('${p.id}', 'acc')" style="font-size:10px; padding:2px 8px;">
+                    Notifikasi Panggilan
+                  </button>
+                </div>
+              ` : `
+                <span class="badge badge-success">BAST Selesai & Dicairkan</span>
+                <div style="font-size: 10px; color: var(--laz-gray-500); margin-top: 2px;">Cair: ${p.tglDanaCair || '-'}</div>
+              `}
+            </td>
+            <td style="text-align: center;">
+              <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
+                <a href="admin-detail.html?id=${p.id}&view=keuangan" class="btn btn-secondary btn-sm" style="font-size: 11px;">
+                  Dossier Usulan
+                </a>
+                <a href="proposal-preview.html?id=${p.id}" class="btn btn-secondary btn-sm" target="_blank" style="font-size: 11px;">
+                  Proposal ACC
+                </a>
+                <a href="bast-preview.html?id=${p.id}" class="btn btn-navy btn-sm" target="_blank" style="font-size: 11px;">
+                  Cetak BAST
+                </a>
+                ${isReady ? `
+                  <button type="button" class="btn btn-success btn-sm" style="font-size: 11px; font-weight:700;" onclick="openCashModal('${p.id}')">
+                    Cairkan Dana
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openCashModal(id) {
+      const p = getProposalById(id);
+      if (!p) return;
+
+      document.getElementById('cashTargetId').value = p.id;
+      document.getElementById('cashModalNama').textContent = `${p.namaPemohon} (${p.identitasId || '-'})`;
+      document.getElementById('cashModalInstansi').textContent = p.instansi;
+      document.getElementById('cashModalNominal').textContent = formatRupiah(p.nominalACC);
+      document.getElementById('cashModalBast').textContent = p.nomorBAST;
+      document.getElementById('cashNoRef').value = `BSI-TRX-${new Date().toISOString().replace(/[^0-9]/g, '').substring(0, 12)}`;
+      
+      document.getElementById('checkHadirFisik').checked = false;
+      document.getElementById('checkTtdBasahFisik').checked = false;
+      document.getElementById('checkStempelLembaga').checked = false;
+
+      document.getElementById('modalConfirmCash').style.display = 'flex';
+    }
+
+    function closeCashModal() {
+      document.getElementById('modalConfirmCash').style.display = 'none';
+    }
+
+    function executeCashDisbursement() {
+      const c1 = document.getElementById('checkHadirFisik').checked;
+      const c2 = document.getElementById('checkTtdBasahFisik').checked;
+      const c3 = document.getElementById('checkStempelLembaga').checked;
+
+      if (!c1 || !c2 || !c3) {
+        alert('Harap centang ketiga butir konfirmasi verifikasi audit fisik: Kehadiran fisik, tanda tangan basah BAST, dan stempel lembaga!');
+        return;
+      }
+
+      const id = document.getElementById('cashTargetId').value;
+      const metode = document.getElementById('cashMetodeSelect').value;
+      const ref = document.getElementById('cashNoRef').value.trim();
+      const p = getProposalById(id);
+
+      if (p) {
+        const todayStr = new Date().toISOString().split('T')[0];
+        
+        // Hitung deadline LPJ (H+14)
+        const d = new Date();
+        d.setDate(d.getDate() + 14);
+        const deadlineStr = d.toISOString().split('T')[0];
+
+        p.status = 'TELAH_DICAIRKAN';
+        p.tglTtdBAST = todayStr;
+        p.tglDanaCair = todayStr;
+        p.deadlineLPJ = deadlineStr;
+        p.statusLPJ = 'Menunggu Penyerahan LPJ (Maksimal 14 Hari)';
+        updateProposal(p);
+
+        showToast(`Alhamdulillah! Dana bantuan ${p.id} sebesar ${formatRupiah(p.nominalACC)} telah dicairkan via ${metode}.`, 'success');
+        closeCashModal();
+        renderKeuanganTable();
+
+        // Tampilkan notifikasi WhatsApp simulator untuk reminder LPJ
+        setTimeout(() => {
+          openWhatsAppSimulatorModal(p.id, 'lpj');
+        }, 800);
+      }
+    }
+  </script>
+</body>
+</html>

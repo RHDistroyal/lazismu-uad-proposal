@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulir LPJ Online - Kantor Layanan Lazismu UAD</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <aside class="laz-topbar">
+    <div class="topbar-container">
+      <div class="topbar-contacts">
+        <div class="topbar-item"><a href="mailto:lazismu@uad.ac.id">lazismu@uad.ac.id</a></div>
+        <div class="topbar-item"><span>Hotline: 0811-2506-6352</span></div>
+      </div>
+      <div class="topbar-actions">
+        <a href="tracking.html" class="topbar-link">Lacak Proposal</a>
+        <a href="pemohon-dashboard.html" class="topbar-link">Portal Pemohon</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVBAR -->
+  <header class="laz-navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-box">
+        <div class="brand-emblem">L</div>
+        <div class="brand-text">
+          <div class="brand-title">LAZISMU <span>UAD</span></div>
+          <div class="brand-sub">Layanan Pelaporan Pertanggungjawaban (LPJ)</div>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <li class="nav-item"><a href="index.html">Beranda</a></li>
+        <li class="nav-item"><a href="panduan.html">Panduan & Syarat</a></li>
+        <li class="nav-item"><a href="tracking.html">Cek Status Proposal</a></li>
+        <li class="nav-item"><a href="pemohon-dashboard.html">Portal Pemohon</a></li>
+        <li class="nav-item"><a href="lpj-form.html" class="active">Form LPJ Online</a></li>
+        <li class="nav-item"><a href="ajukan.html" class="btn-ajukan-nav">Ajukan Usulan Baru</a></li>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="content-container">
+    <div style="text-align: center; max-width: 700px; margin: 0 auto 30px;">
+      <span class="badge badge-orange" style="font-size: 11px; padding: 5px 12px; margin-bottom: 8px;">
+        PELAPORAN DIGITAL RESMI
+      </span>
+      <h1 style="font-size: 26px; color: var(--laz-navy); margin-top: 6px;">
+        Formulir Laporan Pertanggungjawaban (LPJ)
+      </h1>
+      <p style="color: var(--laz-gray-600); font-size: 13.5px; margin-top: 6px;">
+        Isi data realisasi penggunaan dana bantuan yang telah Anda terima. Setelah dikirim, sistem otomatis mengonversinya menjadi <strong>Dokumen LPJ Resmi Lazismu UAD</strong> yang siap dicetak.
+      </p>
+
+      <div style="display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
+        <a href="lpj-preview.html?mode=template" target="_blank" class="btn btn-secondary btn-sm" style="color: var(--laz-green); font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          Lihat Format Baku Dokumen LPJ (PDF)
+        </a>
+        <a href="Format_Rekap_Nota_LPJ_Lazismu_UAD.xlsx" download="Format_Rekap_Nota_LPJ_Lazismu_UAD.xlsx" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          Unduh Template Rekap Nota (.xlsx)
+        </a>
+      </div>
+    </div>
+
+    <div class="form-card-wide">
+      <form id="formLpjOnline" onsubmit="handleLpjOnlineSubmit(event)">
+        
+        <!-- BAGIAN 1: PILIH PROPOSAL YANG TELAH DICAIRKAN -->
+        <div style="border-bottom: 2px solid var(--laz-gray-200); padding-bottom: 14px; margin-bottom: 20px;">
+          <h3 style="font-size: 16px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:12px;">1</span>
+            Pilih Proposal yang Dipertanggungjawabkan
+          </h3>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Pilih Proposal yang Telah Dicairkan <span class="req">*</span></label>
+          <select class="form-control" id="selectProposalForLpj" onchange="loadProposalToLpj(this.value)" required>
+            <option value="">-- Pilih Proposal yang Siap LPJ --</option>
+          </select>
+          <div class="form-help">Pilih proposal Anda yang dananya telah dicairkan oleh bendahara Lazismu UAD.</div>
+        </div>
+
+        <!-- INFO PROPOSAL TERPILIH -->
+        <div id="selectedPropCard" style="display: none; background: var(--laz-navy-50); border: 1px solid #CBD5E1; border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12.5px;">
+            <div>Nama Pemohon: <strong id="lpjViewNama">-</strong></div>
+            <div>Lembaga: <strong id="lpjViewInstansi">-</strong></div>
+            <div>Nomor BAST: <strong id="lpjViewBast" style="color: var(--laz-navy);">-</strong></div>
+            <div>Nominal Diterima: <strong id="lpjViewNominal" style="color: var(--laz-green);">-</strong></div>
+            <div style="grid-column: span 2;">Perihal Kegiatan: <strong id="lpjViewPerihal">-</strong></div>
+          </div>
+        </div>
+
+        <!-- BAGIAN 2: REALISASI ANGGARAN & CAPAIAN KEGIATAN -->
+        <div style="border-bottom: 2px solid var(--laz-gray-200); padding-bottom: 14px; margin: 30px 0 20px;">
+          <h3 style="font-size: 16px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:12px;">2</span>
+            Realisasi Penggunaan Dana & Capaian Output
+          </h3>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Total Realisasi Pengeluaran Dana Lazismu (Rp) <span class="req">*</span></label>
+            <input type="number" class="form-control" id="lpjRealisasiNominal" placeholder="Contoh: 4500000" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Jumlah Penerima Manfaat / Peserta <span class="req">*</span></label>
+            <input type="text" class="form-control" id="lpjJumlahPeserta" placeholder="Contoh: 40 anak panti asuhan atau 25 pemuda" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Rincian Pengeluaran Utama (Nota / Kuitansi) <span class="req">*</span></label>
+          <textarea class="form-control" id="lpjRincianPengeluaran" rows="3" placeholder="Contoh:&#10;1. Komponen Kit Robotika 40 unit: Rp 3.000.000 (Nota Toko Hardware)&#10;2. Modul Pelatihan & Sertifikat: Rp 800.000 (Kwitansi Percetakan)&#10;3. Konsumsi & Transport Pemateri: Rp 700.000 (Kwitansi Panitia)" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ringkasan Laporan Hasil & Capaian Acara <span class="req">*</span></label>
+          <textarea class="form-control" id="lpjHasilKegiatan" rows="3" placeholder="Jelaskan secara singkat bagaimana kegiatan berlangsung, respon peserta, dan dampak positif bagi masyarakat..." required></textarea>
+        </div>
+
+        <!-- BAGIAN 3: BUKTI DOKUMENTASI & MEDIA -->
+        <div style="border-bottom: 2px solid var(--laz-gray-200); padding-bottom: 14px; margin: 30px 0 20px;">
+          <h3 style="font-size: 16px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:12px;">3</span>
+            Bukti Dokumentasi & Publikasi Lazismu UAD
+          </h3>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Link Bukti Tag Instagram @Lazismu_UAD / Media Publikasi <span class="req">*</span></label>
+          <input type="text" class="form-control" id="lpjLinkIg" placeholder="Contoh: https://www.instagram.com/p/DB12345/ atau akun IG panitia" required>
+          <div class="form-help">Wajib mencantumkan logo Lazismu UAD pada spanduk/media dan tag @Lazismu_UAD.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Unggah File Scan Nota Kuitansi Asli Lengkap (PDF) <span class="req">*</span></label>
+          <div class="file-upload-zone">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--laz-orange)" stroke-width="2" style="margin-bottom: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <div style="font-weight: 700; color: var(--laz-navy);">Pilih Berkas Scan Nota Kuitansi Asli (PDF)</div>
+            <div style="font-size: 11.5px; color: var(--laz-gray-500); margin-top: 4px;">Gabungan nota, kuitansi berstempel toko, dan foto dokumentasi kegiatan berlogo Lazismu. Maks 15MB.</div>
+            <input type="file" id="lpjFileScan" accept=".pdf" style="margin-top: 10px;" required>
+          </div>
+        </div>
+
+        <div style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: var(--radius-md); padding: 16px; margin: 24px 0;">
+          <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer; font-size: 12px; color: #92400E; font-weight: 600;">
+            <input type="checkbox" required style="margin-top: 3px;">
+            <span>Saya menyatakan bahwa laporan pertanggungjawaban ini disusun dengan sebenar-benarnya sesuai penggunaan riil di lapangan dan bersedia menyetorkan 1 (satu) rangkap berkas fisik bermaterai ke Kantor Layanan Lazismu UAD.</span>
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <a href="pemohon-dashboard.html" class="btn btn-secondary">Batal</a>
+          <button type="submit" class="btn btn-primary btn-lg">
+            Kirim Laporan Pertanggungjawaban (LPJ)
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="laz-footer">
+    <div class="footer-bottom">
+      &copy; 2026 Kantor Layanan Lazismu Universitas Ahmad Dahlan.
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let activeProposalForLpj = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalFlowBar('pemohon');
+      const all = getProposals();
+      // Filter proposal yang sudah dicairkan atau siap LPJ
+      const disbursed = all.filter(p => p.status === 'TELAH_DICAIRKAN' || p.status === 'MENUNGGU_PENCAIRAN' || p.status === 'LPJ_TERVERIFIKASI');
+
+      const select = document.getElementById('selectProposalForLpj');
+      select.innerHTML = '<option value="">-- Pilih Proposal yang Telah Dicairkan --</option>' +
+        disbursed.map(p => `
+          <option value="${p.id}">
+            ${p.id} - ${p.namaPemohon} (${p.perihal.substring(0, 45)}...)
+          </option>
+        `).join('');
+
+      // Auto-select jika ada query param
+      const urlParams = new URLSearchParams(window.location.search);
+      const idParam = urlParams.get('id');
+      if (idParam) {
+        select.value = idParam;
+        loadProposalToLpj(idParam);
+      }
+    });
+
+    function loadProposalToLpj(id) {
+      if (!id) {
+        document.getElementById('selectedPropCard').style.display = 'none';
+        activeProposalForLpj = null;
+        return;
+      }
+
+      const p = getProposalById(id);
+      if (p) {
+        activeProposalForLpj = p;
+        document.getElementById('lpjViewNama').textContent = p.namaPemohon;
+        document.getElementById('lpjViewInstansi').textContent = p.instansi;
+        document.getElementById('lpjViewBast').textContent = p.nomorBAST || '042/BAST/LAZISMU/2026';
+        document.getElementById('lpjViewNominal').textContent = formatRupiah(p.nominalACC || p.nominalDiajukan);
+        document.getElementById('lpjViewPerihal').textContent = p.perihal;
+
+        document.getElementById('lpjRealisasiNominal').value = p.nominalACC || p.nominalDiajukan;
+        document.getElementById('selectedPropCard').style.display = 'block';
+      }
+    }
+
+    function handleLpjOnlineSubmit(e) {
+      e.preventDefault();
+      if (!activeProposalForLpj) {
+        alert('Harap pilih proposal terlebih dahulu!');
+        return;
+      }
+
+      const p = activeProposalForLpj;
+      p.status = 'LPJ_TERVERIFIKASI';
+      p.statusLPJ = 'Laporan Realisasi & Kuitansi Terverifikasi';
+      p.lpjData = {
+        realisasiNominal: Number(document.getElementById('lpjRealisasiNominal').value) || p.nominalACC,
+        jumlahPeserta: document.getElementById('lpjJumlahPeserta').value,
+        rincianPengeluaran: document.getElementById('lpjRincianPengeluaran').value,
+        hasilKegiatan: document.getElementById('lpjHasilKegiatan').value,
+        linkIg: document.getElementById('lpjLinkIg').value,
+        tglSubmitLpj: new Date().toISOString().split('T')[0]
+      };
+
+      updateProposal(p);
+
+      alert(`Alhamdulillah! Laporan Pertanggungjawaban untuk proposal ${p.id} berhasil disubmit.\n\nSistem sekarang mengonversi data Anda ke Dokumen Resmi LPJ Lazismu UAD.`);
+      window.location.href = `lpj-preview.html?id=${p.id}`;
+    }
+  </script>
+</body>
+</html>
