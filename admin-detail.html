@@ -331,9 +331,14 @@
           <div style="font-size: 11px; color: var(--laz-gray-500); text-transform: uppercase;">
             <a href="admin-dashboard.html" style="color:var(--laz-gray-500);">Daftar Usulan</a> / Lembar Review Evaluasi Berjenjang SOP
           </div>
-          <h2 style="font-size: 17px; color: var(--laz-navy); margin-top: 2px;" id="detailHeaderTitle">
-            Review Proposal: PRP-2026-0000
-          </h2>
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 2px; flex-wrap: wrap;">
+            <h2 style="font-size: 17px; color: var(--laz-navy); margin: 0;" id="detailHeaderTitle">
+              Review Proposal: PRP-2026-0000
+            </h2>
+            <div id="proposalSwitcherArea" style="display: inline-flex; align-items: center; gap: 6px;">
+              <!-- Proposal quick switcher dropdown -->
+            </div>
+          </div>
         </div>
 
         <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="detailActionButtons">
@@ -381,17 +386,26 @@
       const idParam = urlParams.get('id');
       const viewParam = urlParams.get('view');
 
-      if (!idParam) {
-        alert('ID Proposal tidak ditemukan!');
-        window.location.href = 'admin-dashboard.html';
-        return;
+      const allList = getProposals();
+      if (!allList || allList.length === 0) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROPOSALS));
       }
 
-      currentProposal = getProposalById(idParam);
+      if (idParam) {
+        currentProposal = getProposalById(idParam);
+      }
+
+      // Fallback cerdas & ramah pengguna jika dibuka tanpa ?id=... (misal akses langsung /admin-detail)
       if (!currentProposal) {
-        alert('Proposal tidak ditemukan dalam basis data!');
-        window.location.href = 'admin-dashboard.html';
-        return;
+        // Cari proposal yang butuh tindakan (Level 1, Level 2, atau Level 3)
+        const pendingProp = getProposals().find(p => p.status === 'MENUNGGU_VERIFIKASI' || p.status === 'REVIEW_BIDANG' || p.status === 'KEPUTUSAN_KETUA');
+        currentProposal = pendingProp || getProposals()[0];
+
+        // Update URL tanpa reload halaman
+        if (currentProposal && window.history.replaceState) {
+          const newUrl = `${window.location.pathname}?id=${currentProposal.id}`;
+          window.history.replaceState({ path: newUrl }, '', newUrl);
+        }
       }
 
       if (viewParam) {
@@ -399,9 +413,43 @@
       }
 
       updateSidebarUserInfo();
+      renderProposalSwitcherSelect();
       document.getElementById('detailHeaderTitle').textContent = `Review: ${currentProposal.id} - ${currentProposal.perihal}`;
       renderAll();
     });
+
+    function renderProposalSwitcherSelect() {
+      const switcherArea = document.getElementById('proposalSwitcherArea');
+      if (!switcherArea) return;
+      const all = getProposals();
+
+      switcherArea.innerHTML = `
+        <select class="form-control" style="font-size: 11.5px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--laz-gray-300); background: #ffffff; color: var(--laz-navy); font-weight: 600; max-width: 280px;" onchange="switchProposal(this.value)">
+          ${all.map(p => {
+            const isSelected = p.id === currentProposal.id ? 'selected' : '';
+            const shortTitle = p.perihal.length > 25 ? p.perihal.substring(0, 25) + '...' : p.perihal;
+            return `<option value="${p.id}" ${isSelected}>${p.id} - ${shortTitle}</option>`;
+          }).join('')}
+        </select>
+      `;
+    }
+
+    function switchProposal(newId) {
+      if (!newId) return;
+      const p = getProposalById(newId);
+      if (p) {
+        currentProposal = p;
+        if (window.history.replaceState) {
+          const newUrl = `${window.location.pathname}?id=${p.id}`;
+          window.history.replaceState({ path: newUrl }, '', newUrl);
+        }
+        selectedViewTab = 'active';
+        document.getElementById('detailHeaderTitle').textContent = `Review: ${currentProposal.id} - ${currentProposal.perihal}`;
+        renderProposalSwitcherSelect();
+        renderAll();
+        showToast(`Beralih ke usulan ${p.id}: ${p.namaPemohon}`, 'info');
+      }
+    }
 
     function getStageOrder(status) {
       if (status === 'MENUNGGU_VERIFIKASI' || status === 'REVISI') return 1;
