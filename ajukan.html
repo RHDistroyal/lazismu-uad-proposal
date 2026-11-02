@@ -13,8 +13,8 @@
     <div class="topbar-container">
       <div class="topbar-contacts">
         <div class="topbar-item"><span>Email:</span> <a href="mailto:lazismu@uad.ac.id">lazismu@uad.ac.id</a></div>
-        <div class="topbar-item"><span>Hotline:</span> <span>0811-2506-6352</span></div>
-        <div class="topbar-item"><span>Lokasi:</span> <span>Gedung ITC Kampus 1 UAD</span></div>
+        <div class="topbar-item"><span>Hotline:</span> <span>+62 823-5088-8845</span></div>
+        <div class="topbar-item"><span>Lokasi:</span> <span>Kampus 4 UAD – Jl. Ringroad Selatan, Tamanan, Banguntapan, Bantul, DIY</span></div>
       </div>
       <div class="topbar-actions">
         <a href="tracking.html" class="topbar-link">Lacak Status</a>
@@ -155,8 +155,8 @@
           <div class="form-group">
             <label class="form-label">Nama Bank Rekening <span class="req">*</span></label>
             <select class="form-control" name="namaBank" id="inputNamaBank" required>
-              <option value="Bank Syariah Indonesia (BSI)">Bank Syariah Indonesia (BSI) - Direkomendasikan</option>
-              <option value="Bank BPD DIY Syariah">Bank BPD DIY Syariah</option>
+              <option value="Bank BPD DIY / BPD DIY Syariah">BPD DIY / BPD DIY Syariah (Direkomendasikan)</option>
+              <option value="Bank Syariah Indonesia (BSI)">Bank Syariah Indonesia (BSI)</option>
               <option value="Bank Muamalat">Bank Muamalat</option>
               <option value="Bank Mandiri / BNI / BRI">Bank Mandiri / BNI / BRI</option>
               <option value="Bank Lainnya">Bank Lainnya</option>
@@ -174,11 +174,56 @@
           <input type="text" class="form-control" name="atasNamaRekening" id="inputAtasNama" placeholder="Contoh: BEM FAST UAD atau Muhammad Zaki" required>
         </div>
 
-        <!-- BAGIAN 3: INFORMASI USULAN KEGIATAN & NOMINAL -->
+        <div style="margin-top: 8px; margin-bottom: 16px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12px; color: #92400E; line-height: 1.6;">
+          <strong>Catatan Biaya Transfer Bank:</strong> Direkomendasikan menggunakan rekening <strong>BPD DIY atau BPD DIY Syariah</strong> (bebas biaya transfer). Penggunaan rekening bank di luar itu diperbolehkan, namun biaya administrasi transfer antarbank ditanggung oleh penerima (dipotong dari nilai bantuan).
+        </div>
+
+        <!-- BAGIAN 3: KATEGORI PILAR & SASARAN ASHNAF -->
         <div style="border-bottom: 1px solid var(--laz-gray-200); padding-bottom: 10px; margin: 24px 0 16px;">
           <h3 style="font-size: 15px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
             <span style="background: var(--laz-navy); color:#fff; width:22px; height:22px; border-radius:3px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">3</span>
-            Rincian Usulan Kegiatan & Anggaran Biaya
+            Kategori Pilar &amp; Sasaran Ashnaf
+          </h3>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Pilar Program LAZISMU UAD <span class="req">*</span></label>
+            <select class="form-control" name="pilar" id="inputPilar" required>
+              <option value="pendidikan">Pilar Pendidikan (Beasiswa Mentari/Sang Surya, Guru, Sekolah)</option>
+              <option value="dakwah">Pilar Sosial Dakwah (Masjid, Disabilitas, Muallaf, Lansia)</option>
+              <option value="kemanusiaan">Pilar Sosial Kemanusiaan (Siaga Bencana, AID, Darurat)</option>
+              <option value="ekonomi">Pilar Ekonomi (Pemberdayaan UMKM, Modal Usaha, LUNASMU)</option>
+              <option value="kesehatan">Pilar Kesehatan (Medis Dhuafa, Khitan, Mobile Clinic)</option>
+              <option value="lingkungan">Pilar Lingkungan (Save Our Earth, Air Bersih, Bank Sampah)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Sasaran Ashnaf Penerima Zakat <span class="req">*</span></label>
+            <select class="form-control" name="asnaf" id="inputAsnaf" required>
+              <option value="Fakir">Ashnaf Fakir (Tidak berpenghasilan/kebutuhan dasar)</option>
+              <option value="Miskin">Ashnaf Miskin (Berpenghasilan di bawah standar pokok)</option>
+              <option value="Muallaf">Ashnaf Muallaf (Penguatan aqidah &amp; pembinaan Islam)</option>
+              <option value="Riqab">Ashnaf Riqab (Korban perbudakan modern/eksploitasi)</option>
+              <option value="Gharim">Ashnaf Gharim (Terlilit hutang darurat non-pinjol)</option>
+              <option value="Fisabilillah" selected>Ashnaf Fisabilillah (Dakwah, ormawa, kaderisasi, riset)</option>
+              <option value="Ibnu Sabil">Ashnaf Ibnu Sabil (Musafir / mahasiswa perantau dhuafa)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Subpilar Program</label>
+          <input type="text" class="form-control" disabled value="Ditentukan oleh Admin/Staff LAZISMU UAD" style="background: var(--laz-gray-100); color: var(--laz-gray-500); cursor: not-allowed;">
+          <div class="form-help">*Subpilar diselaraskan oleh verifikator internal Lazismu UAD.</div>
+        </div>
+
+        <!-- BAGIAN 4: RINCIAN USULAN KEGIATAN & ANGGARAN BIAYA -->
+        <div style="border-bottom: 1px solid var(--laz-gray-200); padding-bottom: 10px; margin: 24px 0 16px;">
+          <h3 style="font-size: 15px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:22px; height:22px; border-radius:3px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">4</span>
+            Rincian Usulan Kegiatan &amp; Anggaran Biaya
           </h3>
         </div>
 
@@ -189,36 +234,37 @@
 
         <div class="form-group">
           <label class="form-label">Perihal / Judul Kegiatan Usulan <span class="req">*</span></label>
-          <input type="text" class="form-control" name="perihal" id="inputPerihal" placeholder="Contoh: Permohonan Bantuan Dana Workshop Robotika & IoT untuk Dhuafa" required>
+          <input type="text" class="form-control" name="perihal" id="inputPerihal" placeholder="Contoh: Permohonan Bantuan Dana Beasiswa Pendidikan Kader Dhuafa" required>
         </div>
 
         <div class="form-row-2">
           <div class="form-group">
-            <label class="form-label">Pilar Program Lazismu yang Dituju <span class="req">*</span></label>
-            <select class="form-control" name="pilar" id="inputPilar" required>
-              <option value="pendidikan">Pilar Pendidikan (Beasiswa, Riset, Prestasi Mahasiswa)</option>
-              <option value="dakwah">Pilar Sosial Dakwah (Masjid, Bina Da'i, Syiar Islam)</option>
-              <option value="kesehatan">Pilar Kesehatan (Khitanan, Medis Dhuafa, Gizi)</option>
-              <option value="ekonomi">Pilar Ekonomi (Modal UMKM, Pelatihan Kerja)</option>
-              <option value="kemanusiaan">Pilar Kemanusiaan (Pangan Beras, Yatim, Bencana)</option>
-              <option value="lingkungan">Pilar Lingkungan (Konservasi Pesisir, Sampah, Pohon)</option>
-            </select>
+            <label class="form-label">Tanggal Pelaksanaan Kegiatan <span class="req">*</span></label>
+            <input type="date" class="form-control" name="tanggalKegiatan" id="inputTanggalKegiatan" required>
+            <div class="form-help">Menjadi acuan batas akhir LPJ (maksimal 14 hari kalender pasca tanggal ini).</div>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Tanggal Pelaksanaan Kegiatan <span class="req">*</span></label>
-            <input type="date" class="form-control" name="tanggalKegiatan" id="inputTanggalKegiatan" required>
-            <div class="form-help">Menjadi acuan batas akhir LPJ (maksimal 14 hari pasca tanggal ini).</div>
+            <label class="form-label">Nominal Bantuan yang Diajukan (Rupiah) <span class="req">*</span></label>
+            <input type="number" class="form-control" name="nominalDiajukan" id="inputNominal" min="100000" step="50000" placeholder="Contoh: 4500000" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Nominal Bantuan yang Diajukan (Rupiah) <span class="req">*</span></label>
-          <input type="number" class="form-control" name="nominalDiajukan" id="inputNominal" min="100000" step="50000" placeholder="Contoh: 4500000" required>
+          <label class="form-label">Deskripsi Singkat / Ringkasan Kebutuhan Kegiatan <span class="req">*</span></label>
+          <textarea class="form-control" name="deskripsi" id="inputDeskripsi" rows="3" placeholder="Jelaskan secara ringkas urgensi kebutuhan bantuan dan target manfaat program..." required></textarea>
+        </div>
+
+        <!-- BAGIAN 5: UNGGAH BERKAS PROPOSAL PDF -->
+        <div style="border-bottom: 1px solid var(--laz-gray-200); padding-bottom: 10px; margin: 24px 0 16px;">
+          <h3 style="font-size: 15px; color: var(--laz-navy); display: flex; align-items: center; gap: 8px;">
+            <span style="background: var(--laz-navy); color:#fff; width:22px; height:22px; border-radius:3px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">5</span>
+            Unggah Berkas Proposal / Surat Permohonan (Format PDF)
+          </h3>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Unggah Berkas Dokumen Proposal Lengkap & RAB (Format PDF) <span class="req">*</span></label>
+          <label class="form-label">Pilih Dokumen PDF Lengkap &amp; Berstempel Sah (Maks 10 MB) <span class="req">*</span></label>
           <div class="file-upload-zone">
             <div style="font-weight: 600; color: var(--laz-navy); font-size: 13px;">Pilih Berkas Dokumen Proposal (Format PDF)</div>
             <div style="font-size: 11.5px; color: var(--laz-gray-500); margin-top: 4px;">Wajib memuat Latar Belakang, Susunan Panitia, Jadwal, dan Rincian Anggaran Biaya (RAB). Maks 10MB.</div>
@@ -354,7 +400,7 @@
   <!-- FOOTER -->
   <footer class="laz-footer">
     <div class="footer-bottom">
-      <div>&copy; 2026 Kantor Layanan Lazismu Universitas Ahmad Dahlan. Gedung ITC Kampus 1 UAD, Yogyakarta.</div>
+      <div>&copy; 2026 Kantor Layanan Lazismu Universitas Ahmad Dahlan. Kampus 4 UAD – Jl. Ringroad Selatan, Tamanan, Banguntapan, Bantul, DIY, Yogyakarta.</div>
       <div>Sistem Informasi Pengajuan Proposal Bantuan Dana</div>
     </div>
   </footer>

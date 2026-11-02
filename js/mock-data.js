@@ -13,12 +13,12 @@
  */
 
 const PILAR_LAZISMU = [
-  { id: 'pendidikan', name: 'Pendidikan', icon: '🎓', color: '#2563EB', desc: 'Beasiswa Mentari, Sang Surya, Riset & Delegasi Mahasiswa' },
-  { id: 'dakwah', name: 'Sosial Dakwah', icon: '🕌', color: '#059669', desc: 'Bina Da’i, Pembinaan Muallaf, Kemakmuran Masjid & Syiar Muktamar' },
-  { id: 'kesehatan', name: 'Kesehatan', icon: '🏥', color: '#DC2626', desc: 'Peduli Sehat Dhuafa, Bantuan Rawat Inap & Khitanan Massal' },
-  { id: 'ekonomi', name: 'Ekonomi', icon: '💼', color: '#D97706', desc: 'Pemberdayaan UMKM, Modal Usaha Produktif & Ketrampilan Pemuda' },
-  { id: 'kemanusiaan', name: 'Kemanusiaan', icon: '🤝', color: '#7C3AED', desc: 'Bantuan Pangan Beras, Santunan Yatim & Tanggap Darurat Bencana' },
-  { id: 'lingkungan', name: 'Lingkungan', icon: '🌱', color: '#0D9488', desc: 'Konservasi Air, Penghijauan Kampus & Gerakan Bebas Sampah' }
+  { id: 'pendidikan', name: 'Pendidikan', icon: '🎓', color: '#2563EB', desc: 'Beasiswa Mentari (TK–SMA), Beasiswa Sang Surya (mahasiswa S1), Beasiswa Sang Surya Cendekia LAZISMU UAD (mahasiswa S3), Peduli Guru/Bakti Guru, Save Our School, Lazismu Goes to School dan Kampus. (Ashnaf: Fakir, Miskin, Ibnu Sabil, Fisabilillah)' },
+  { id: 'dakwah', name: 'Sosial Dakwah', icon: '🔥', color: '#059669', desc: 'Pemberdayaan Disabilitas, Sayangi Lansia, Back to Masjid, Pemberdayaan Muallaf / Save Our Aqidah, Peduli Difabel, Senior Kajian Sosial Keagamaan, Bedah Rumah. (Ashnaf: Fakir, Miskin, Muallaf, Fisabilillah, Ibnu Sabil)' },
+  { id: 'kemanusiaan', name: 'Sosial Kemanusiaan', icon: '🤝', color: '#7C3AED', desc: 'Indonesia Siaga (Siaga Bencana/Tanggap Bencana), Muhammadiyah AID, Bantuan Darurat Kemanusiaan. (Ashnaf: Fakir, Miskin, Gharim, Ibnu Sabil, Riqab, Fisabilillah)' },
+  { id: 'ekonomi', name: 'Ekonomi', icon: '💼', color: '#D97706', desc: 'Pemberdayaan UMKM (Ekonomi Berdaya, Kontainer Dagang, PKM Pengembangan UMKM), MERAMU, Keuangan Mikro (LUNASMU). (Ashnaf: Fakir, Miskin, Gharim, Muallaf)' },
+  { id: 'kesehatan', name: 'Kesehatan', icon: '❤️', color: '#DC2626', desc: 'Peduli Kesehatan (khitan, donor darah, cek kesehatan gratis, PKM Peduli Kesehatan), Bantuan Biaya Pengobatan, Bantuan Alat Kesehatan, Indonesia Mobile Clinic, Rumah Singgah Pasien. (Ashnaf: Fakir, Miskin, Gharim, Muallaf, Ibnu Sabil, Fisabilillah)' },
+  { id: 'lingkungan', name: 'Lingkungan', icon: '🌿', color: '#0D9488', desc: 'Sayangi Daratmu (Save Our Earth), Bantuan Air Bersih, Bank Sampah Produktif, PKM Peduli Lingkungan. (Ashnaf: Fakir, Miskin, Fisabilillah)' }
 ];
 
 const STATUS_PROPOSAL = {
